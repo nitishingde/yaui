@@ -37,3 +37,9 @@ bin/
 
 # VS code settings
 .vscode
+
+# CMake
+cmake-build-*/
+
+# Intellij
+.idea/
