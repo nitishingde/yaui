@@ -1,3 +1,9 @@
 [submodule "lib/SDL2"]
 	path = lib/SDL2
 	url = git@github.com:SDL-mirror/SDL.git
+[submodule "lib/SDL2_image"]
+	path = lib/SDL2_image
+	url = git@github.com:SDL-mirror/SDL_image.git
+[submodule "lib/SDL2_ttf"]
+	path = lib/SDL2_ttf
+	url = git@github.com:SDL-mirror/SDL_ttf.git

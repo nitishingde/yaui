@@ -1,4 +1,6 @@
 #include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
 #include <iostream>
 
 int main(int argc, char *argv[]) {
@@ -8,13 +10,23 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
+    if(IMG_Init(IMG_InitFlags::IMG_INIT_PNG) < 0) {
+        std::cout<<"SDL2 couldn't initialize image  "<<SDL_GetError()<<std::endl;
+        return 0;
+    }
+
+    if(TTF_Init() < 0) {
+        std::cout<<"SDL2 couldn't initialize ttf "<<SDL_GetError()<<std::endl;
+        return 0;
+    }
+
     auto window = SDL_CreateWindow(
-        "TestSDL2",
-        SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        640,
-        480,
-        0
+            "TestSDL2",
+            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_UNDEFINED,
+            640,
+            480,
+            0
     );
 
     if(window == NULL) {
@@ -32,6 +44,9 @@ int main(int argc, char *argv[]) {
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+
+    IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
 
     return 0;
