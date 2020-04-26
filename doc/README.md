@@ -109,3 +109,30 @@ viewTree|-|-|map: hierarchical view-store|-|
 var/func|parameters|return|functionality|threading
 -|-|-|-|-
 parseView()|-|stringstream|parse->initialize view, return .cpp file|-|
+
+---
+
+## Entity Component System (ECS) architecture
+
+### Entity
+- View
+
+### Component
+- BoxModel
+    - Transform
+    - Padding
+    - Border
+    - Margin
+- Layout
+    - HorizontalLayout
+    - VerticalLayout
+- Renderer
+    - Texture
+    - Sprite
+    - Text
+
+### System
+- EventManager
+- LayoutManager
+- LayerManager
+- RenderingManager
