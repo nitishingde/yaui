@@ -30,7 +30,7 @@ add_library(yaui
 
 # yaui engine
 add_executable(yaui_engine
-    src/Entity/View.cpp src/Entity/View.h
+    src/Entity/ViewObject.cpp src/Entity/ViewObject.h
 
     src/System/LayoutManager.cpp src/System/LayoutManager.h
     src/System/RenderingManager.cpp src/System/RenderingManager.h

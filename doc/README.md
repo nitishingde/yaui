@@ -115,7 +115,7 @@ parseView()|-|stringstream|parse->initialize view, return .cpp file|-|
 ## Entity Component System (ECS) architecture
 
 ### Entity
-- View
+- ViewObject
 
 ### Component
 - BoxModel
