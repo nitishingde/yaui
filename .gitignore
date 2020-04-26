@@ -43,3 +43,6 @@ cmake-build-*/
 
 # Intellij
 .idea/
+
+# Experiment ground
+experiment/

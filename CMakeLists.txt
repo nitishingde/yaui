@@ -13,3 +13,6 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 
 # Unit tests
 add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
+
+# Testing ground for libraries or anything temporary, it is ignored by vcs
+add_subdirectory(${PROJECT_SOURCE_DIR}/experiment)
