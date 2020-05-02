@@ -7,3 +7,6 @@
 [submodule "lib/SDL2_ttf"]
 	path = lib/SDL2_ttf
 	url = git@github.com:SDL-mirror/SDL_ttf.git
+[submodule "lib/Catch2"]
+	path = lib/Catch2
+	url = git@github.com:catchorg/Catch2.git
