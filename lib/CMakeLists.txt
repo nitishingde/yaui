@@ -24,3 +24,6 @@ add_library(SDL2::IMAGE ALIAS SDL2_image)
 # SDL2_ttf
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/SDL2_ttf)
 add_library(SDL2::TTF ALIAS SDL2_ttf)
+
+# Catch2
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Catch2)
