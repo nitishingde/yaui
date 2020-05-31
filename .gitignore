@@ -46,3 +46,9 @@ cmake-build-*/
 
 # Experiment ground
 experiment/
+
+# Cache for tools
+.cache/
+
+# Used by language server
+compile_commands.json

@@ -10,3 +10,6 @@
 [submodule "lib/Catch2"]
 	path = lib/Catch2
 	url = git@github.com:catchorg/Catch2.git
+[submodule "lib/EnTT"]
+	path = lib/EnTT
+	url = https://github.com/skypjack/entt.git

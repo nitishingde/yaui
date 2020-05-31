@@ -1,5 +1,1 @@
-//
-// Created by nitishingde.
-//
-
-#include "ViewObject.h"
+#include "yaui/Entity/ViewObject.h"
