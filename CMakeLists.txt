@@ -28,6 +28,7 @@ target_link_libraries(yaui
         SDL2::SDL2
         SDL2::IMAGE
         SDL2::TTF
+        EnTT::EnTT
 )
 
 # Unit tests

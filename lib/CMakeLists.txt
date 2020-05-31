@@ -27,3 +27,6 @@ add_library(SDL2::TTF ALIAS SDL2_ttf)
 
 # Catch2
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Catch2)
+
+# EnTT
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/EnTT)
