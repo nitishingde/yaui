@@ -36,3 +36,9 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
 
 # Testing ground for libraries or anything temporary, it is ignored by vcs
 add_subdirectory(${PROJECT_SOURCE_DIR}/experiment)
+
+# Copmile database (compolie_commands.json) with compdb
+execute_process(
+    COMMAND compdb -p ${PROJECT_SOURCE_DIR}/build/ list
+    OUTPUT_FILE ${PROJECT_SOURCE_DIR}/compile_commands.json
+)
