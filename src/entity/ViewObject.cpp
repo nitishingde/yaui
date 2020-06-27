@@ -1,1 +1,1 @@
-#include "yaui/entity/ViewObjecy.h"
+#include "ViewObject.h"

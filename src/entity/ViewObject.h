@@ -2,6 +2,9 @@
 #define YAUI_VIEWOBJECT_H
 
 
+#include "component/Component.h"
+#include "Types.h"
+
 namespace yaui { namespace entity {
     class ViewObject {
 
@@ -12,6 +15,10 @@ namespace yaui { namespace entity {
 
         /** data **/
         private:
+            Entity mEntity;
+            yaui::system::Registry* mpRegistry = nullptr;
+            ArrayList<yaui::component::Component*> mBoxModelComponents;
+            ArrayList<yaui::component::Component*> mCustomComponents;
         protected:
         public:
 
@@ -19,6 +26,8 @@ namespace yaui { namespace entity {
         private:
         protected:
         public:
+            ViewObject();
+            void AddComponent(const yaui::component::Component &component);
     };
 }}
 

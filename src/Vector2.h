@@ -2,7 +2,10 @@
 #define YAUI_VECTOR2_H
 
 
+#include <utility>
+
 namespace yaui {
+    template<typename Type>
     class Vector2 {
 
         /** constants **/
@@ -14,11 +17,19 @@ namespace yaui {
         private:
         protected:
         public:
+            Type mX;
+            Type mY;
 
         /** methods **/
         private:
         protected:
         public:
+            Vector2(Type x = Type(0), Type y = Type(0)) noexcept
+                : mX(x)
+                , mY(y) {
+
+            }
+            ~Vector2() {};
     };
 }
 

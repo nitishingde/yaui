@@ -12,24 +12,34 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 # yaui library
 add_library(yaui
     SHARED
-        "src/entity/ViewObject.cpp"
+        src/component/Component.h
+
+        src/entity/ViewObject.h src/entity/ViewObject.cpp
+
+        src/system/Window.h src/system/Window.cpp
+
+        src/yaui.h
+        src/Types.h
+        src/Vector2.h
 )
 
 target_include_directories(yaui
     PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries(yaui
-    PRIVATE
+    PUBLIC
         SDL2::SDL2
         SDL2::IMAGE
         SDL2::TTF
         EnTT::EnTT
 )
+
+add_library(yaui::yaui ALIAS yaui)
+
+add_executable(qwerty unit_test/yaui/Test_yaui.cpp)
+target_link_libraries(qwerty PRIVATE yaui::yaui)
 
 # Unit tests
 add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
@@ -37,7 +47,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
 # Testing ground for libraries or anything temporary, it is ignored by vcs
 add_subdirectory(${PROJECT_SOURCE_DIR}/experiment)
 
-# Copmile database (compolie_commands.json) with compdb
+# Compile database (compile_commands.json) with compdb
 execute_process(
     COMMAND compdb -p ${PROJECT_SOURCE_DIR}/build/ list
     OUTPUT_FILE ${PROJECT_SOURCE_DIR}/compile_commands.json
