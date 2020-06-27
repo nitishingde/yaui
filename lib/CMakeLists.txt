@@ -29,4 +29,13 @@ add_library(SDL2::TTF ALIAS SDL2_ttf)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Catch2)
 
 # EnTT
+macro(add_subdirectory)
+    set(__add_subdirectory_list_var "${ARGV}")
+    if (test IN_LIST __add_subdirectory_list_var)
+        message("add_subdirectory trying to add test dir!!!")
+    else()
+        message("calling find_package(${ARGV})")
+        _add_subdirectory(${ARGV})
+    endif()
+endmacro()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/EnTT)
