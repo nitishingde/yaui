@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Director.h"
 
 yaui::system::Window::Window(
     const yaui::String &title,
@@ -7,7 +8,8 @@ yaui::system::Window::Window(
     const yaui::int32 &width,
     const yaui::int32 &height
 ) {
-    SDL_Init(SDL_INIT_VIDEO);
+    if(!Director::getInstance()->Init()) return;
+
     this->mpWindow = SDL_CreateWindow(
         title.c_str(),
         positionX,

@@ -8,6 +8,7 @@
 #include "Types.h"
 #include "entity/ViewObject.h"
 #include "component/Component.h"
+#include "system/Director.h"
 #include "system/Window.h"
 
 #endif //YAUI_YAUI_H
