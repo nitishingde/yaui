@@ -32,6 +32,10 @@ bool yaui::system::Window::Init() {
 
 void yaui::system::Window::PollInputs() {
     //TODO
+    SDL_Event sdlEvent;
+    while(SDL_PollEvent(&sdlEvent)) {
+        this->mEventQueue.emplace_back(sdlEvent);
+    }
 }
 
 void yaui::system::Window::Update() {

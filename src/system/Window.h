@@ -20,7 +20,7 @@ namespace yaui::system {
             SDL_Renderer *mpRenderer;
             yaui::system::Registry *mpRegistry;
             yaui::ArrayList<yaui::entity::ViewObject> mViewObjectStore;
-            yaui::ArrayList<SDL_Event*> mEventQueue;
+            yaui::ArrayList<SDL_Event> mEventQueue;
         protected:
         public:
 
