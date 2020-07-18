@@ -5,7 +5,7 @@
 #include "component/Component.h"
 #include "Types.h"
 
-namespace yaui { namespace entity {
+namespace yaui::entity {
     class ViewObject {
 
         /** constants **/
@@ -29,7 +29,7 @@ namespace yaui { namespace entity {
             ViewObject();
             void AddComponent(const yaui::component::Component &component);
     };
-}}
+}
 
 
 #endif // YAUI_VIEWOBJECT_H
