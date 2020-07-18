@@ -16,6 +16,7 @@ add_library(yaui
 
         src/entity/ViewObject.h src/entity/ViewObject.cpp
 
+        src/system/Director.cpp src/system/Director.h
         src/system/Window.h src/system/Window.cpp
 
         src/yaui.h
