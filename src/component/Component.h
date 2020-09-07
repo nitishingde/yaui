@@ -6,24 +6,24 @@ namespace yaui::component {
     class Component {
 
         /** constants **/
-        private:
-        protected:
-        public:
+    private:
+    protected:
+    public:
 
         /** data **/
-        private:
-        protected:
-        public:
+    private:
+    protected:
+    public:
 
         /** methods **/
-        private:
-        protected:
-        public:
-            virtual void Awake();
-            virtual void End();
-            virtual void Sleep();
-            virtual void Start();
-            virtual void Update();
+    private:
+    protected:
+    public:
+        virtual void awake() {};
+        virtual void end() {};
+        virtual void sleep() {};
+        virtual void start() {};
+        virtual void update() {};
     };
 }
 

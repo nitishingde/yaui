@@ -14,20 +14,15 @@ TEST_CASE("Testing Vector2", "[Vector2]") {
 }
 
 TEST_CASE("Testing Window Getters", "[Window]") {
-    auto window = yaui::system::Window("unit test", 100, 50, 640, 480);
+    auto window = yaui::system::Window("unit test");
+    window.setDimension(640, 480);
 
     for(yaui::int32 i=0; i<1000; i++)
-        window.Run();
+        window.run();
 
-    CHECK(window.GetPositionX() == 100);
-    CHECK(window.GetPositionY() == 50);
-    auto position = window.GetPosition();
-    CHECK(position.mX == 100);
-    CHECK(position.mY == 50);
-
-    CHECK(window.GetWidth() == 640);
-    CHECK(window.GetHeight() == 480);
-    auto dimension = window.GetDimension();
+    CHECK(window.getWidth() == 640);
+    CHECK(window.getHeight() == 480);
+    auto dimension = window.getDimension();
     CHECK(dimension.mX == 640);
     CHECK(dimension.mY == 480);
 }

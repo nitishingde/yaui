@@ -5,24 +5,24 @@
 namespace yaui::system {
     class Director {
         /** constants **/
-        private:
-        protected:
-        public:
+    private:
+    protected:
+    public:
 
         /** data **/
-        private:
-            bool mIsInitialised;
-        protected:
-        public:
+    private:
+        bool mIsInitialised;
+    protected:
+    public:
 
         /** methods **/
-        private:
-            Director();
-        protected:
-        public:
-            static Director* getInstance();
-            ~Director();
-            bool Init();
+    private:
+        Director();
+    protected:
+    public:
+        static Director* getInstance();
+        ~Director();
+        bool init();
     };
 }
 

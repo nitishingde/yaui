@@ -1,5 +1,6 @@
 #include "Director.h"
 #include "SDL.h"
+#include "SDL_ttf.h"
 
 yaui::system::Director* instance = nullptr;
 
@@ -17,10 +18,14 @@ yaui::system::Director *yaui::system::Director::getInstance() {
     return instance;
 }
 
-bool yaui::system::Director::Init() {
+bool yaui::system::Director::init() {
     if(this->mIsInitialised) return true;
 
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        return false;
+    }
+
+    if(TTF_Init() < 0) {
         return false;
     }
 
