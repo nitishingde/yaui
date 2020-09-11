@@ -12,16 +12,8 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 # yaui library
 add_library(yaui
     SHARED
-        src/component/Component.h
-
-        src/entity/ViewObject.h src/entity/ViewObject.cpp
-
-        src/system/Director.cpp src/system/Director.h
-        src/system/Window.h src/system/Window.cpp
-
         src/yaui.h
         src/Types.h
-        src/Vector2.h
 )
 
 target_include_directories(yaui
