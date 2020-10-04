@@ -12,6 +12,12 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 # yaui library
 add_library(yaui
     SHARED
+        # components
+        src/component/BoxModel.cpp src/component/BoxModel.h
+        src/component/Text.cpp src/component/Text.h
+        src/component/Texture2D.cpp src/component/Texture2D.h
+        src/component/Transform.cpp src/component/Transform.h
+
         src/yaui.h
         src/Types.h
 )
