@@ -12,6 +12,9 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 # yaui library
 add_library(yaui
     SHARED
+        # entity
+        src/entity/ViewFactory.cpp src/entity/ViewFactory.h
+
         # components
         src/component/BoxModel.cpp src/component/BoxModel.h
         src/component/Text.cpp src/component/Text.h
@@ -39,6 +42,8 @@ target_link_libraries(yaui
         SDL2::IMAGE
         SDL2::TTF
         EnTT::EnTT
+    INTERFACE
+        Catch2::Catch2
 )
 
 add_library(yaui::yaui ALIAS yaui)

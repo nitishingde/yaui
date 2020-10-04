@@ -5,6 +5,9 @@
 #include "SystemJobScheduler.h"
 #include "Types.h"
 
+// entity
+#include "entity/ViewFactory.h"
+
 // components
 #include "component/BoxModel.h"
 #include "component/Text.h"
