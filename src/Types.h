@@ -50,6 +50,11 @@ namespace yaui {
         uint32 right = 0;
         uint32 top = 0;
     };
+
+    namespace entity {
+        using Entity = entt::entity;
+        using Registry = entt::registry;
+    }
 }
 
 

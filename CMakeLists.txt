@@ -18,8 +18,14 @@ add_library(yaui
         src/component/Texture2D.cpp src/component/Texture2D.h
         src/component/Transform.cpp src/component/Transform.h
 
-        src/yaui.h
+        # systems
+        src/system/ISystem.cpp src/system/ISystem.h
+        src/system/RenderingSystem.cpp src/system/RenderingSystem.h
+
+        src/Director.cpp src/Director.h
+        src/SystemJobScheduler.cpp src/SystemJobScheduler.h
         src/Types.h
+        src/yaui.h
 )
 
 target_include_directories(yaui
