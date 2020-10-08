@@ -14,7 +14,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     const int32 &y
 ) {
     auto director = Director::getInstance();
-    auto pRenderer = director->getRenderer();
+    auto &renderer = director->getRenderer();
     auto &registry = director->getRegistry();
     auto entity = registry.create();
 
@@ -42,30 +42,30 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     };
 
     auto pSurface = TTF_RenderText_Blended(text.pFont, text.value.c_str(), text.colour);
-    auto pLabelTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
+    auto pLabelTexture = SDL_CreateTextureFromSurface(&renderer, pSurface);
     SDL_FreeSurface(pSurface);
 
     texture.pTexture = SDL_CreateTexture(
-        director->getRenderer(),
+        &director->getRenderer(),
         SDL_PIXELFORMAT_RGBA8888,
         SDL_TEXTUREACCESS_TARGET,
         transform.viewPort.w,
         transform.viewPort.h
     );
     texture.backgroundColour = backgroundColour;
-    SDL_SetRenderTarget(pRenderer, texture.pTexture);
-    SDL_SetRenderDrawColor(pRenderer, backgroundColour.r, backgroundColour.g, backgroundColour.b, backgroundColour.a);
-    SDL_RenderClear(pRenderer);
+    SDL_SetRenderTarget(&renderer, texture.pTexture);
+    SDL_SetRenderDrawColor(&renderer, backgroundColour.r, backgroundColour.g, backgroundColour.b, backgroundColour.a);
+    SDL_RenderClear(&renderer);
     SDL_Rect rect {int(padding.left+border.left), int(padding.top+border.top), width, height};
-    SDL_RenderCopy(pRenderer, pLabelTexture, nullptr, &rect);
-    SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
+    SDL_RenderCopy(&renderer, pLabelTexture, nullptr, &rect);
+    SDL_SetRenderDrawColor(&renderer, 0, 0, 0, 255);
     for(int32 i=0; i<std::max({border.bottom, border.left, border.right, border.top}); ++i) {
-        if(i<border.bottom) SDL_RenderDrawLine(pRenderer, 0, transform.viewPort.h-i, transform.viewPort.w, transform.viewPort.h-i);
-        if(i<border.left) SDL_RenderDrawLine(pRenderer, i, 0, i, transform.viewPort.h);
-        if(i<border.right) SDL_RenderDrawLine(pRenderer, transform.viewPort.w-i, 0, transform.viewPort.w-i, transform.viewPort.h);
-        if(i<border.top) SDL_RenderDrawLine(pRenderer, 0, i, transform.viewPort.w, i);
+        if(i<border.bottom) SDL_RenderDrawLine(&renderer, 0, transform.viewPort.h - i, transform.viewPort.w, transform.viewPort.h - i);
+        if(i<border.left) SDL_RenderDrawLine(&renderer, i, 0, i, transform.viewPort.h);
+        if(i<border.right) SDL_RenderDrawLine(&renderer, transform.viewPort.w - i, 0, transform.viewPort.w - i, transform.viewPort.h);
+        if(i<border.top) SDL_RenderDrawLine(&renderer, 0, i, transform.viewPort.w, i);
     }
-    SDL_SetRenderTarget(pRenderer, nullptr);
+    SDL_SetRenderTarget(&renderer, nullptr);
 
     return entity;
 }

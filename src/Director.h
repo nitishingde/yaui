@@ -18,9 +18,7 @@ namespace yaui {
         ~Director();
         static Director* getInstance();
         entity::Registry& getRegistry();
-        Renderer* getRenderer();
-        Window& getWindow();
-        Size getWindowSize() const;
+        Renderer& getRenderer();
         void run();
     };
 }

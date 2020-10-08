@@ -70,18 +70,8 @@ yaui::entity::Registry& yaui::Director::getRegistry() {
     return mRegistry;
 }
 
-yaui::Renderer* yaui::Director::getRenderer() {
-    return mpRenderer;
-}
-
-yaui::Window& yaui::Director::getWindow() {
-    return *mpWindow;
-}
-
-yaui::Size yaui::Director::getWindowSize() const {
-    int w, h;
-    SDL_GetWindowSize(mpWindow, &w, &h);
-    return yaui::Size{uint32(w), uint32(h)};
+yaui::Renderer& yaui::Director::getRenderer() {
+    return *mpRenderer;
 }
 
 void yaui::Director::run() {
