@@ -8,8 +8,8 @@ yaui::Director::Director() = default;
 
 yaui::Director::~Director() {
     mRegistry.clear();
-    if(mpRenerer) {
-        SDL_DestroyRenderer(mpRenerer);
+    if(mpRenderer) {
+        SDL_DestroyRenderer(mpRenderer);
         std::cout<<"DELETED| Renderer\n";
     }
     if(mpWindow) {
@@ -51,8 +51,8 @@ bool yaui::Director::init() {
     if(mpWindow == nullptr) return false;
     std::cout<<"INITIALISED| Window\n";
 
-    mpRenerer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_SOFTWARE);
-    if(mpRenerer == nullptr) return false;
+    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_SOFTWARE);
+    if(mpRenderer == nullptr) return false;
     std::cout<<"INITIALISED| Renderer\n";
 
     return true;
@@ -70,12 +70,12 @@ yaui::entity::Registry& yaui::Director::getRegistry() {
     return mRegistry;
 }
 
-yaui::Window& yaui::Director::getWindow() {
-    return *mpWindow;
+yaui::Renderer* yaui::Director::getRenderer() {
+    return mpRenderer;
 }
 
-yaui::Renderer* yaui::Director::getRenderer() {
-    return mpRenerer;
+yaui::Window& yaui::Director::getWindow() {
+    return *mpWindow;
 }
 
 yaui::Size yaui::Director::getWindowSize() const {
@@ -97,8 +97,4 @@ void yaui::Director::run() {
             }
         }
     }
-}
-
-void yaui::Director::destroy() {
-    delete this;
 }

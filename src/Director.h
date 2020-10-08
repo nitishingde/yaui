@@ -8,8 +8,8 @@ namespace yaui {
     class Director {
     private:
         entity::Registry mRegistry;
+        Renderer *mpRenderer;
         Window *mpWindow;
-        Renderer *mpRenerer;
 
     private:
         explicit Director();
@@ -18,11 +18,10 @@ namespace yaui {
         ~Director();
         static Director* getInstance();
         entity::Registry& getRegistry();
-        Window& getWindow();
         Renderer* getRenderer();
+        Window& getWindow();
         Size getWindowSize() const;
         void run();
-        void destroy();
     };
 }
 
