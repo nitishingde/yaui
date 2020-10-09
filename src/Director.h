@@ -3,13 +3,14 @@
 
 
 #include "Types.h"
+#include "Scene.h"
 
 namespace yaui {
     class Director {
     private:
-        entity::Registry mRegistry;
-        Renderer *mpRenderer;
-        Window *mpWindow;
+        Renderer *mpRenderer = nullptr;
+        Window *mpWindow = nullptr;
+        ArrayList<Scene*> mSceneStack;
 
     private:
         explicit Director();
@@ -17,8 +18,10 @@ namespace yaui {
     public:
         ~Director();
         static Director* getInstance();
-        entity::Registry& getRegistry();
-        Renderer& getRenderer();
+        [[nodiscard]] Renderer& getRenderer() const;
+        [[nodiscard]] Scene& getScene() const;
+        void popScene();
+        void pushScene(Scene *pScene);
         void run();
     };
 }

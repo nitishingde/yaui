@@ -26,6 +26,7 @@ add_library(yaui
         src/system/RenderingSystem.cpp src/system/RenderingSystem.h
 
         src/Director.cpp src/Director.h
+        src/Scene.cpp src/Scene.h
         src/SystemJobScheduler.cpp src/SystemJobScheduler.h
         src/Types.h
         src/yaui.h

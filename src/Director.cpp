@@ -7,27 +7,36 @@ static yaui::Director* instance = nullptr;
 yaui::Director::Director() = default;
 
 yaui::Director::~Director() {
-    mRegistry.clear();
+    for(auto pScene: mSceneStack) {
+        delete pScene;
+    }
+    mSceneStack.clear();
+
     if(mpRenderer) {
         SDL_DestroyRenderer(mpRenderer);
         std::cout<<"DELETED| Renderer\n";
     }
+
     if(mpWindow) {
         SDL_DestroyWindow(mpWindow);
         std::cout<<"DELETED| Window\n";
     }
+
     if(IMG_Init(0)&IMG_INIT_PNG) {
         IMG_Quit();
         std::cout<<"DELETED| IMG lib\n";
     }
+
     if(TTF_WasInit()) {
         TTF_Quit();
         std::cout<<"DELETED| TTF lib\n";
     }
+
     if(SDL_WasInit(SDL_INIT_VIDEO)) {
         SDL_Quit();
         std::cout<<"DELETED| SDL2 lib\n";
     }
+
     instance = nullptr;
     delete SystemJobScheduler::getInstance();
 }
@@ -66,12 +75,21 @@ yaui::Director *yaui::Director::getInstance() {
     return instance;
 }
 
-yaui::entity::Registry& yaui::Director::getRegistry() {
-    return mRegistry;
+yaui::Renderer& yaui::Director::getRenderer() const {
+    return *mpRenderer;
 }
 
-yaui::Renderer& yaui::Director::getRenderer() {
-    return *mpRenderer;
+yaui::Scene& yaui::Director::getScene() const {
+    return *mSceneStack.back();
+}
+
+void yaui::Director::popScene() {
+    delete mSceneStack.back();
+    mSceneStack.pop_back();
+}
+
+void yaui::Director::pushScene(yaui::Scene *pScene) {
+    mSceneStack.emplace_back(pScene);
 }
 
 void yaui::Director::run() {

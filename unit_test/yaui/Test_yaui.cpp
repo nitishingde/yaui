@@ -8,6 +8,7 @@ using namespace yaui;
 TEST_CASE("Test yaui", "[yaui][Label]") {
     Director *dir = Director::getInstance();
     REQUIRE(dir != nullptr);
+    dir->pushScene(new Scene("Test yaui"));
     entity::ViewFactory::produceLabel(
         "Hello World!",
         "OpenSans-Regular.ttf",

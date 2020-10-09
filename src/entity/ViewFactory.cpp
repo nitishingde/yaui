@@ -14,8 +14,8 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     const int32 &y
 ) {
     auto director = Director::getInstance();
-    auto &renderer = director->getRenderer();
-    auto &registry = director->getRegistry();
+    auto &renderer = director->getScene().getRenderer();
+    auto &registry = director->getScene().getRegistry();
     auto entity = registry.create();
 
     // create components

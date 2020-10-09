@@ -8,8 +8,8 @@ yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
 }
 
 void yaui::system::RenderingSystem::executeJob() {
-    auto &registry = Director::getInstance()->getRegistry();
-    auto &renderer = Director::getInstance()->getRenderer();
+    auto &registry = Director::getInstance()->getScene().getRegistry();
+    auto &renderer = Director::getInstance()->getScene().getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
     SDL_SetRenderDrawColor(&renderer, 64, 64, 64, 255);
     SDL_RenderClear(&renderer);
