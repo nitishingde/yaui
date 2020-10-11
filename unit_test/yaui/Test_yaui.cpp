@@ -10,6 +10,7 @@ TEST_CASE("Test yaui", "[yaui][Label]") {
     REQUIRE(dir != nullptr);
     dir->pushScene(new Scene("Test yaui"));
     entity::ViewFactory::produceLabel(
+        dir->getScene(),
         "Hello World!",
         "OpenSans-Regular.ttf",
         32,

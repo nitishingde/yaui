@@ -16,6 +16,7 @@ add_library(yaui
         src/entity/ViewFactory.cpp src/entity/ViewFactory.h
 
         # components
+        src/component/BehaviourTraits.cpp src/component/BehaviourTraits.h
         src/component/BoxModel.cpp src/component/BoxModel.h
         src/component/Text.cpp src/component/Text.h
         src/component/Texture2D.cpp src/component/Texture2D.h
@@ -23,9 +24,13 @@ add_library(yaui
 
         # systems
         src/system/ISystem.cpp src/system/ISystem.h
+        src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
         src/system/RenderingSystem.cpp src/system/RenderingSystem.h
 
+        src/Behaviour.cpp src/Behaviour.h
+        src/BehaviourFactory.cpp src/BehaviourFactory.h
         src/Director.cpp src/Director.h
+        src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
         src/SystemJobScheduler.cpp src/SystemJobScheduler.h
         src/Types.h

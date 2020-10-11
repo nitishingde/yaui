@@ -9,7 +9,6 @@ namespace yaui {
     private:
         String mName;
         entity::Registry mRegistry;
-        Renderer *mpRenderer = nullptr;
     public:
         explicit Scene(String name) noexcept;
         Scene(Scene &other) = delete;
@@ -18,7 +17,6 @@ namespace yaui {
         Scene& operator=(Scene &&other) noexcept;
         ~Scene();
         entity::Registry& getRegistry();
-        [[nodiscard]] Renderer& getRenderer() const;
     };
 }
 

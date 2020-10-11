@@ -1,5 +1,5 @@
 #include "SystemJobScheduler.h"
-#include "system/RenderingSystem.h"
+#include "yaui.h"
 
 static yaui::SystemJobScheduler* instance = nullptr;
 
@@ -15,6 +15,7 @@ yaui::SystemJobScheduler *yaui::SystemJobScheduler::getInstance() {
 }
 
 void yaui::SystemJobScheduler::init() {
+    mSystems.emplace_back(new system::BehaviourSystem(1));
     mSystems.emplace_back(new system::RenderingSystem(UINT32_MAX));
     std::sort(
         mSystems.begin(),

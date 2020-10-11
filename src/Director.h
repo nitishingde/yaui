@@ -18,6 +18,7 @@ namespace yaui {
     public:
         ~Director();
         static Director* getInstance();
+        [[nodiscard]] float getDelta() const;
         [[nodiscard]] Renderer& getRenderer() const;
         [[nodiscard]] Scene& getScene() const;
         void popScene();

@@ -55,6 +55,8 @@ namespace yaui {
         using Entity = entt::entity;
         using Registry = entt::registry;
     }
+
+    using UpdateFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, float delta);
 }
 
 

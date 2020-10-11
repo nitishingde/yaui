@@ -3,12 +3,13 @@
 
 
 #include "Types.h"
-#include "Director.h"
+#include "Scene.h"
 
 namespace yaui::entity {
     class ViewFactory {
     public:
         static Entity produceLabel(
+            Scene &scene,
             const String &textString,
             const String &fontName = "OpenSans-Regular.ttf",
             const uint32 &fontSize = 16,

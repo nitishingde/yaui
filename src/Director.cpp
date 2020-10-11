@@ -1,6 +1,8 @@
 #include "Director.h"
 #include "SystemJobScheduler.h"
 #include <iostream>
+#include <component/BehaviourTraits.h>
+#include <component/Text.h>
 
 static yaui::Director* instance = nullptr;
 
@@ -75,6 +77,10 @@ yaui::Director *yaui::Director::getInstance() {
     return instance;
 }
 
+float yaui::Director::getDelta() const {
+    return 0.f;
+}
+
 yaui::Renderer& yaui::Director::getRenderer() const {
     return *mpRenderer;
 }
@@ -98,10 +104,16 @@ void yaui::Director::run() {
         SDL_Delay(33);
         SDL_Event event;
         while(SDL_PollEvent(&event)) {
-            if(event.type == SDL_KEYDOWN and event.key.keysym.sym == SDLK_ESCAPE) {
+            if(event.type == SDL_KEYDOWN and event.key.keysym.sym == SDL_KeyCode::SDLK_ESCAPE) {
                 std::cout<<"EVENT| Escape Pressed\n";
                 delete this;
                 return;
+            } else if(event.type == SDL_KEYDOWN) {
+//                auto &reg = this->getScene().getRegistry();
+//                reg.view<component::Text, component::Behaviour>().each([&event](component::Text &text, auto &behaviour) {
+//                    text.value += char(event.key.keysym.sym);
+//                    behaviour.isUpdated = false;
+//                });
             }
         }
     }

@@ -1,7 +1,5 @@
 #include "RenderingSystem.h"
-#include "Director.h"
-#include "component/Texture2D.h"
-#include "component/Transform.h"
+#include "yaui.h"
 
 yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
     ISystem::mPriorityRank = priorityRank;
@@ -9,7 +7,7 @@ yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
 
 void yaui::system::RenderingSystem::executeJob() {
     auto &registry = Director::getInstance()->getScene().getRegistry();
-    auto &renderer = Director::getInstance()->getScene().getRenderer();
+    auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
     SDL_SetRenderDrawColor(&renderer, 64, 64, 64, 255);
     SDL_RenderClear(&renderer);
