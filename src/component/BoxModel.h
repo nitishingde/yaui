@@ -7,6 +7,7 @@
 namespace yaui::component {
     struct BoxModel {
         Rect border {0, 0, 0, 0};
+        Colour borderColour {0, 0, 0, 0};
         Rect padding {0, 0, 0, 0};
     };
 }
