@@ -5,7 +5,14 @@
 
 using namespace yaui;
 
-TEST_CASE("Test yaui", "[yaui][Label]") {
+TEST_CASE("Test yaui", "[yaui]") {
+    Director *dir = Director::getInstance();
+    REQUIRE(dir != nullptr);
+    dir->pushScene(new Scene("Test yaui"));
+    dir->run();
+}
+
+TEST_CASE("Test yaui Label", "[yaui][Label]") {
     Director *dir = Director::getInstance();
     REQUIRE(dir != nullptr);
     dir->pushScene(new Scene("Test yaui"));
