@@ -18,6 +18,7 @@ add_library(yaui
         # components
         src/component/BehaviourTraits.cpp src/component/BehaviourTraits.h
         src/component/BoxModel.cpp src/component/BoxModel.h
+        src/component/MouseEventListener.cpp src/component/MouseEventListener.h
         src/component/Text.cpp src/component/Text.h
         src/component/Texture2D.cpp src/component/Texture2D.h
         src/component/Transform.cpp src/component/Transform.h
@@ -25,6 +26,7 @@ add_library(yaui
         # systems
         src/system/ISystem.cpp src/system/ISystem.h
         src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
+        src/system/EventPollingSystem.cpp src/system/EventPollingSystem.h
         src/system/RenderingSystem.cpp src/system/RenderingSystem.h
 
         src/Behaviour.cpp src/Behaviour.h

@@ -98,23 +98,14 @@ void yaui::Director::pushScene(yaui::Scene *pScene) {
     mSceneStack.emplace_back(pScene);
 }
 
+void yaui::Director::quit() {
+    mEngineIgnitionOn = false;
+}
+
 void yaui::Director::run() {
-    while(true) {
+    while(mEngineIgnitionOn) {
         SystemJobScheduler::getInstance()->executeJobs();
-        SDL_Delay(33);
-        SDL_Event event;
-        while(SDL_PollEvent(&event)) {
-            if(event.type == SDL_KEYDOWN and event.key.keysym.sym == SDL_KeyCode::SDLK_ESCAPE) {
-                std::cout<<"EVENT| Escape Pressed\n";
-                delete this;
-                return;
-            } else if(event.type == SDL_KEYDOWN) {
-//                auto &reg = this->getScene().getRegistry();
-//                reg.view<component::Text, component::Behaviour>().each([&event](component::Text &text, auto &behaviour) {
-//                    text.value += char(event.key.keysym.sym);
-//                    behaviour.isUpdated = false;
-//                });
-            }
-        }
     }
+    std::cout<<"EVENT| Escape Pressed\n";
+    delete this;
 }

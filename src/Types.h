@@ -54,9 +54,11 @@ namespace yaui {
     namespace entity {
         using Entity = entt::entity;
         using Registry = entt::registry;
+        inline constexpr entt::null_t null{};
     }
 
     using UpdateFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, float delta);
+    using EventHandlerFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, const Event &event);
 }
 
 

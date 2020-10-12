@@ -14,12 +14,14 @@
 // components
 #include "component/BehaviourTraits.h"
 #include "component/BoxModel.h"
+#include "component/MouseEventListener.h"
 #include "component/Text.h"
 #include "component/Texture2D.h"
 #include "component/Transform.h"
 
 // systems
 #include "system/BehaviourSystem.h"
+#include "system/EventPollingSystem.h"
 #include "system/RenderingSystem.h"
 
 #endif //YAUI_YAUI_H

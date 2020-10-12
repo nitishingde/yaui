@@ -48,3 +48,21 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
 
     return entity;
 }
+
+yaui::entity::Entity yaui::entity::ViewFactory::produceButton(
+    yaui::Scene &scene,
+    const yaui::String &textString,
+    const yaui::String &fontName,
+    const yaui::uint32 &fontSize,
+    const yaui::Colour &foregroundColour,
+    const yaui::Colour &backgroundColour,
+    const yaui::Rect &padding,
+    const yaui::Rect &border,
+    const yaui::int32 &x,
+    const yaui::int32 &y
+) {
+    auto &registry = scene.getRegistry();
+    auto entity = produceLabel(scene, textString, fontName, fontSize, foregroundColour, backgroundColour, padding, border, x, y);
+    registry.emplace<component::MouseEventListener>(entity);
+    return entity;
+}

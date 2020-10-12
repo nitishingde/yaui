@@ -8,6 +8,7 @@
 namespace yaui {
     class Director {
     private:
+        bool mEngineIgnitionOn = true;
         Renderer *mpRenderer = nullptr;
         Window *mpWindow = nullptr;
         ArrayList<Scene*> mSceneStack;
@@ -23,6 +24,7 @@ namespace yaui {
         [[nodiscard]] Scene& getScene() const;
         void popScene();
         void pushScene(Scene *pScene);
+        void quit();
         void run();
     };
 }

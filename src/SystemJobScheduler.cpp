@@ -15,6 +15,7 @@ yaui::SystemJobScheduler *yaui::SystemJobScheduler::getInstance() {
 }
 
 void yaui::SystemJobScheduler::init() {
+    mSystems.emplace_back(new system::EventPollingSystem(0));
     mSystems.emplace_back(new system::BehaviourSystem(1));
     mSystems.emplace_back(new system::RenderingSystem(UINT32_MAX));
     std::sort(
