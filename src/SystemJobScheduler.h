@@ -11,7 +11,7 @@ namespace yaui {
         ArrayList<system::ISystem*> mSystems;
 
     private:
-        explicit SystemJobScheduler();
+        explicit SystemJobScheduler() = default;
         void init();
     public:
         static SystemJobScheduler* getInstance();

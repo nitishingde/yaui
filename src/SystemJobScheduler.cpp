@@ -3,8 +3,6 @@
 
 static yaui::SystemJobScheduler* instance = nullptr;
 
-yaui::SystemJobScheduler::SystemJobScheduler() {}
-
 yaui::SystemJobScheduler *yaui::SystemJobScheduler::getInstance() {
     if(instance == nullptr) {
         instance = new SystemJobScheduler();
