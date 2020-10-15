@@ -26,16 +26,19 @@ add_library(yaui
         # systems
         src/system/ISystem.cpp src/system/ISystem.h
         src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
-        src/system/EventPollingSystem.cpp src/system/EventPollingSystem.h
+        src/system/EventSystem.cpp src/system/EventSystem.h
         src/system/RenderingSystem.cpp src/system/RenderingSystem.h
 
         src/Behaviour.cpp src/Behaviour.h
         src/BehaviourFactory.cpp src/BehaviourFactory.h
         src/Director.cpp src/Director.h
+        src/IEventHandler.cpp src/IEventHandler.h
+        src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
         src/SystemJobScheduler.cpp src/SystemJobScheduler.h
         src/Types.h
+        src/WindowEventHandler.cpp src/WindowEventHandler.h
         src/yaui.h
 )
 

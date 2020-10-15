@@ -23,6 +23,7 @@ namespace yaui {
     using ArrayList = std::vector<Type, Alloc>;
     using Colour = SDL_Color;
     using Event = SDL_Event;
+    using EventType = SDL_EventType;
     using Font = TTF_Font;
     using FVec2 = SDL_FPoint;
     using FViewPort = SDL_FRect;

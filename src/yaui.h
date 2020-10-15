@@ -4,8 +4,10 @@
 #include "Behaviour.h"
 #include "BehaviourFactory.h"
 #include "Director.h"
+#include "MouseEventHandler.h"
 #include "RendererWrapper.h"
 #include "SystemJobScheduler.h"
+#include "WindowEventHandler.h"
 #include "Types.h"
 
 // entity
@@ -21,7 +23,7 @@
 
 // systems
 #include "system/BehaviourSystem.h"
-#include "system/EventPollingSystem.h"
+#include "system/EventSystem.h"
 #include "system/RenderingSystem.h"
 
 #endif //YAUI_YAUI_H
