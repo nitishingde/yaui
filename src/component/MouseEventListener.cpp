@@ -20,9 +20,17 @@ void yaui::component::MouseEventListener::onClick(yaui::entity::Registry &regist
     }
 }
 
-void yaui::component::MouseEventListener::onHover(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnButtonDownHandle) {
-        onButtonDown(registry, entity, event);
+void
+yaui::component::MouseEventListener::onHoverEnter(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
+    if(pOnHoverEnterHandle) {
+        pOnHoverEnterHandle(registry, entity, event);
+    }
+}
+
+void
+yaui::component::MouseEventListener::onHoverLeave(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
+    if(pOnHoverLeaveHandle) {
+        pOnHoverLeaveHandle(registry, entity, event);
     }
 }
 

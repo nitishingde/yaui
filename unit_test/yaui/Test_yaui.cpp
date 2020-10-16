@@ -54,5 +54,15 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
         backgroundColour.g = (backgroundColour.g+64)%256;
         registry.get<component::BehaviourTraits>(entity).isUpdated = false;
     };
+    mouseEventListener.pOnHoverEnterHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+        auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
+        backgroundColour.b = 255;
+        registry.get<component::BehaviourTraits>(entity).isUpdated = false;
+    };
+    mouseEventListener.pOnHoverLeaveHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+        auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
+        backgroundColour.b = 0;
+        registry.get<component::BehaviourTraits>(entity).isUpdated = false;
+    };
     dir->run();
 }
