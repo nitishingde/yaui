@@ -20,10 +20,9 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
         "Border",
         [](entity::Registry &registry, const entity::Entity &entity, float delta) {
             auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
-            auto [boxModel, transform, texture2D] = registry.get<component::BoxModel, component::Transform, component::Texture2D>(entity);
+            auto [boxModel, transform] = registry.get<component::BoxModel, component::Transform>(entity);
             auto &border = boxModel.border;
             auto &borderColour = boxModel.borderColour;
-            SDL_SetRenderTarget(&renderer, texture2D.pTexture);
             SDL_SetRenderDrawColor(&renderer, borderColour.r, borderColour.g, borderColour.b, borderColour.a);
             for(uint32 i=0, limit = std::max({border.bottom, border.left, border.right, border.top}); i < limit; ++i) {
                 if(i<border.bottom) SDL_RenderDrawLine(&renderer, 0, transform.viewPort.h - i, transform.viewPort.w, transform.viewPort.h - i);
@@ -31,7 +30,6 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
                 if(i<border.right) SDL_RenderDrawLine(&renderer, transform.viewPort.w - i, 0, transform.viewPort.w - i, transform.viewPort.h);
                 if(i<border.top) SDL_RenderDrawLine(&renderer, 0, i, transform.viewPort.w, i);
             }
-            SDL_SetRenderTarget(&renderer, nullptr);
         }
     );
 }
