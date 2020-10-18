@@ -9,9 +9,9 @@ namespace yaui {
     class Director {
     private:
         bool mEngineIgnitionOn = true;
+        ArrayList<Scene*> mSceneStack;
         Renderer *mpRenderer = nullptr;
         Window *mpWindow = nullptr;
-        ArrayList<Scene*> mSceneStack;
 
     private:
         explicit Director();
