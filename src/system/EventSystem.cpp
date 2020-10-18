@@ -10,6 +10,10 @@ yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
 
 yaui::system::EventSystem::~EventSystem() {
     std::cout<<"Deleted| EventSystem\n";
+    for(auto pEventHandlers: mEventHandlers) {
+        delete pEventHandlers;
+    }
+    mEventHandlers.clear();
 }
 
 void yaui::system::EventSystem::pollEvents() {
