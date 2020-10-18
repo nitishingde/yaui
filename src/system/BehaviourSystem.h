@@ -11,7 +11,9 @@ namespace yaui::system {
         void unlockTexture(entity::Registry &registry, const entity::Entity &entity, const float &delta);
     public:
         explicit BehaviourSystem(uint32 priorityRank);
+        ~BehaviourSystem() override;
         void executeJob() override;
+        [[nodiscard]] String getClassName() const override;
     };
 }
 

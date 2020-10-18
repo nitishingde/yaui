@@ -8,7 +8,9 @@ namespace yaui::system {
     class RenderingSystem: public ISystem {
     public:
         explicit RenderingSystem(uint32 priorityRank);
+        ~RenderingSystem() override;
         void executeJob() override;
+        [[nodiscard]] String getClassName() const override;
     };
 }
 

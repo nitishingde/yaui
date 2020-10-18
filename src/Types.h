@@ -27,6 +27,8 @@ namespace yaui {
     using Font = TTF_Font;
     using FVec2 = SDL_FPoint;
     using FViewPort = SDL_FRect;
+    template<typename key, typename value>
+    using HashMap = std::unordered_map<key, value>;
     using Renderer = SDL_Renderer;
     using String = std::string;
     using Surface = SDL_Surface;

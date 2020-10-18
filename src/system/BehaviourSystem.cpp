@@ -1,8 +1,13 @@
 #include "BehaviourSystem.h"
+#include <iostream>
 #include "yaui.h"
 
 yaui::system::BehaviourSystem::BehaviourSystem(yaui::uint32 priorityRank) {
-    ISystem::mPriorityRank = priorityRank;
+    ISystem::priorityRank = priorityRank;
+}
+
+yaui::system::BehaviourSystem::~BehaviourSystem() {
+    std::cout<<"Deleted| BehaviourSystem\n";
 }
 
 void
@@ -48,4 +53,8 @@ void yaui::system::BehaviourSystem::executeJob() {
             unlockTexture(registry, entity, delta);
         }
     }
+}
+
+yaui::String yaui::system::BehaviourSystem::getClassName() const {
+    return "BehaviourSystem";
 }

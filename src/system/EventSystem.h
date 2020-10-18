@@ -14,7 +14,9 @@ namespace yaui::system {
         void pollEvents();
     public:
         explicit EventSystem(uint32 priorityRank);
+        ~EventSystem() override;
         void executeJob() override;
+        [[nodiscard]] String getClassName() const override;
     };
 }
 

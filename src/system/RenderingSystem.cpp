@@ -1,8 +1,13 @@
 #include "RenderingSystem.h"
+#include <iostream>
 #include "yaui.h"
 
 yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
-    ISystem::mPriorityRank = priorityRank;
+    ISystem::priorityRank = priorityRank;
+}
+
+yaui::system::RenderingSystem::~RenderingSystem() {
+    std::cout<<"Deleted| RenderingSystem\n";
 }
 
 void yaui::system::RenderingSystem::executeJob() {
@@ -17,4 +22,8 @@ void yaui::system::RenderingSystem::executeJob() {
         }
     );
     SDL_RenderPresent(&renderer);
+}
+
+yaui::String yaui::system::RenderingSystem::getClassName() const {
+    return "RenderingSystem";
 }
