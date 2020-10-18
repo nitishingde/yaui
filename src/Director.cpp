@@ -1,8 +1,7 @@
 #include "Director.h"
-#include "SystemJobScheduler.h"
 #include <iostream>
-#include <component/BehaviourTraits.h>
-#include <component/Text.h>
+#include "SystemJobScheduler.h"
+#include "system/RenderingSystem.h"
 
 static yaui::Director* instance = nullptr;
 
@@ -13,6 +12,7 @@ yaui::Director::~Director() {
         delete pScene;
     }
     mSceneStack.clear();
+    delete SystemJobScheduler::getInstance();
 
     if(mpRenderer) {
         SDL_DestroyRenderer(mpRenderer);
@@ -40,7 +40,6 @@ yaui::Director::~Director() {
     }
 
     instance = nullptr;
-    delete SystemJobScheduler::getInstance();
 }
 
 bool yaui::Director::init() {
@@ -77,8 +76,18 @@ yaui::Director *yaui::Director::getInstance() {
     return instance;
 }
 
+void yaui::Director::disableStats() {
+    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+    if(renderingSystem) renderingSystem->displayStats(false);
+}
+
+void yaui::Director::enableStats() {
+    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+    if(renderingSystem) renderingSystem->displayStats(true);
+}
+
 float yaui::Director::getDelta() const {
-    return 0.f;
+    return mDelta;
 }
 
 yaui::Renderer& yaui::Director::getRenderer() const {
@@ -87,6 +96,12 @@ yaui::Renderer& yaui::Director::getRenderer() const {
 
 yaui::Scene& yaui::Director::getScene() const {
     return *mSceneStack.back();
+}
+
+yaui::Size yaui::Director::getWindowSize() const {
+    int32 width, height;
+    SDL_GetWindowSize(mpWindow, &width, &height);
+    return Size {uint32(height), uint32(width)};
 }
 
 void yaui::Director::popScene() {
@@ -98,13 +113,28 @@ void yaui::Director::pushScene(yaui::Scene *pScene) {
     mSceneStack.emplace_back(pScene);
 }
 
+void yaui::Director::setFPS(yaui::uint32 fps) {
+    mFps = fps;
+}
+
 void yaui::Director::quit() {
     mEngineIgnitionOn = false;
 }
 
 void yaui::Director::run() {
+    int64 ticksPerFrame = 1000/mFps;
+    mDelta = ticksPerFrame;
     while(mEngineIgnitionOn) {
+        auto start = SDL_GetTicks();
         SystemJobScheduler::getInstance()->executeJobs();
+        auto jobExecutionTime = SDL_GetTicks()-start;
+        if(jobExecutionTime < ticksPerFrame) {
+            // add time delay to maintain the fps
+            SDL_Delay(ticksPerFrame-jobExecutionTime);
+            mDelta = ticksPerFrame;
+        } else {
+            mDelta = jobExecutionTime;
+        }
     }
     std::cout<<"EVENT| Escape Pressed\n";
     delete this;

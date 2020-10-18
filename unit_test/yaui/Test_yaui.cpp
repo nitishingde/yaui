@@ -15,6 +15,8 @@ TEST_CASE("Test yaui", "[yaui]") {
 TEST_CASE("Test yaui Label", "[yaui][Label]") {
     Director *dir = Director::getInstance();
     REQUIRE(dir != nullptr);
+    dir->disableStats();
+    dir->setFPS(60);
     dir->pushScene(new Scene("Test yaui"));
     entity::ViewFactory::produceLabel(
         dir->getScene(),
@@ -34,6 +36,8 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
 TEST_CASE("Test yaui Button", "[yaui][Button]") {
     Director *dir = Director::getInstance();
     REQUIRE(dir != nullptr);
+    dir->enableStats();
+    dir->setFPS(60);
     dir->pushScene(new Scene("Test yaui"));
     auto entity = entity::ViewFactory::produceButton(
         dir->getScene(),
