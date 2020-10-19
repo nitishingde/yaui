@@ -14,6 +14,7 @@
 #include "entity/ViewFactory.h"
 
 // components
+#include "component/ActionItems.h"
 #include "component/BehaviourTraits.h"
 #include "component/BoxModel.h"
 #include "component/MouseEventListener.h"
@@ -22,6 +23,7 @@
 #include "component/Transform.h"
 
 // systems
+#include "system/ActionSystem.h"
 #include "system/BehaviourSystem.h"
 #include "system/EventSystem.h"
 #include "system/RenderingSystem.h"

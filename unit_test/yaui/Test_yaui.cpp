@@ -18,7 +18,7 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
     dir->disableStats();
     dir->setFPS(60);
     dir->pushScene(new Scene("Test yaui"));
-    entity::ViewFactory::produceLabel(
+    auto labelEntity = entity::ViewFactory::produceLabel(
         dir->getScene(),
         "Hello World!",
         "OpenSans-Regular.ttf",
@@ -30,6 +30,20 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
         40,
         30
     );
+    auto &registry = dir->getScene().getRegistry();
+    auto &actionItems = registry.emplace<component::ActionItems>(labelEntity);
+    actionItems.actions.emplace_back(Action(
+        "DiscoBackground",
+        1.f,
+        [](entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter) {
+            auto [texture2D, behaviourTraits] = registry.get<component::Texture2D, component::BehaviourTraits>(entity);
+            texture2D.backgroundColour.g = (texture2D.backgroundColour.g+32)%256;
+            texture2D.backgroundColour.b = (texture2D.backgroundColour.b+32)%256;
+            behaviourTraits.isUpdated = false;
+            std::cout<<"DiscoBackground (Delay, Counter) ("<<delay<<", "<<counter<<")\n";
+            return true;
+        }
+    ));
     dir->run();
 }
 

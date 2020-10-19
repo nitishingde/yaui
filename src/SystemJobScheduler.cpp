@@ -23,7 +23,8 @@ yaui::SystemJobScheduler *yaui::SystemJobScheduler::getInstance() {
 
 void yaui::SystemJobScheduler::init() {
     mSystems.emplace_back(new system::EventSystem(0));
-    mSystems.emplace_back(new system::BehaviourSystem(1));
+    mSystems.emplace_back(new system::ActionSystem(UINT32_MAX-2));
+    mSystems.emplace_back(new system::BehaviourSystem(UINT32_MAX-1));
     mSystems.emplace_back(new system::RenderingSystem(UINT32_MAX));
 
     for(auto &system: mSystems) {

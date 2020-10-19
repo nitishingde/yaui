@@ -60,6 +60,8 @@ namespace yaui {
         inline constexpr entt::null_t null{};
     }
 
+    // should return false to discontinue
+    using ActionUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter);
     using UpdateFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, float delta);
     using EventHandlerFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, const Event &event);
 }
