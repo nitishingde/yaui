@@ -12,9 +12,9 @@ namespace yaui {
     public:
         explicit RendererWrapper(Renderer *pRenderer) noexcept;
         RendererWrapper(RendererWrapper &&other) noexcept;
-        RendererWrapper &operator=(RendererWrapper &&other) noexcept;
+        RendererWrapper& operator=(RendererWrapper &&other) noexcept;
         RendererWrapper(const RendererWrapper &other) = delete;
-        RendererWrapper &operator=(const RendererWrapper &other) = delete;
+        RendererWrapper& operator=(const RendererWrapper &other) = delete;
         ~RendererWrapper();
         Renderer& getRenderer();
     };

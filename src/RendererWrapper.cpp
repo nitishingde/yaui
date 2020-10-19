@@ -8,7 +8,7 @@ yaui::RendererWrapper::RendererWrapper(yaui::RendererWrapper &&other) noexcept :
     other.mpRenderer = nullptr;
 }
 
-yaui::RendererWrapper &yaui::RendererWrapper::operator=(yaui::RendererWrapper &&other) noexcept {
+yaui::RendererWrapper& yaui::RendererWrapper::operator=(yaui::RendererWrapper &&other) noexcept {
     if(this != &other) {
         mpRenderer = other.mpRenderer;
         other.mpRenderer = nullptr;
