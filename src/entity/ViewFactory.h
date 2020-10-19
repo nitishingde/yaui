@@ -16,7 +16,7 @@ namespace yaui::entity {
             const Colour &foregroundColour = {255, 255, 255, 255},
             const Colour &backgroundColour = {0, 0, 0, 0},
             const Rect &padding = {0, 0, 0, 0},
-            const Rect &border = {0, 0 ,0 ,0},
+            const Rect &border = {0, 0, 0, 0},
             const int32 &x = 0,
             const int32 &y = 0
         );
@@ -29,7 +29,7 @@ namespace yaui::entity {
             const Colour &foregroundColour = {255, 255, 255, 255},
             const Colour &backgroundColour = {0, 0, 0, 0},
             const Rect &padding = {0, 0, 0, 0},
-            const Rect &border = {0, 0 ,0 ,0},
+            const Rect &border = {0, 0, 0, 0},
             const int32 &x = 0,
             const int32 &y = 0
         );
