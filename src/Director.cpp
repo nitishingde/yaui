@@ -56,12 +56,12 @@ bool yaui::Director::init() {
         SDL_WINDOWPOS_UNDEFINED,
         640,
         480,
-        0
+        SDL_WINDOW_RESIZABLE
     );
     if(mpWindow == nullptr) return false;
     std::cout<<"INITIALISED| Window\n";
 
-    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_SOFTWARE);
+    mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE);
     if(mpRenderer == nullptr) return false;
     std::cout<<"INITIALISED| Renderer\n";
 
