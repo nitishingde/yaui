@@ -27,6 +27,7 @@ yaui::system::BehaviourSystem::lockTexture(entity::Registry &registry, const ent
         transform.viewPort.h
     );
     // lock texture to the renderer
+    SDL_SetTextureBlendMode(texture2D.pTexture, SDL_BlendMode::SDL_BLENDMODE_BLEND);
     SDL_SetRenderTarget(&renderer, texture2D.pTexture);
 }
 

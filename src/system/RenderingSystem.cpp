@@ -43,6 +43,7 @@ void yaui::system::RenderingSystem::executeJob() {
     auto &registry = Director::getInstance()->getScene().getRegistry();
     auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
+    SDL_SetRenderDrawBlendMode(&renderer, SDL_BlendMode::SDL_BLENDMODE_NONE);
     SDL_SetRenderDrawColor(&renderer, 64, 64, 64, 255);
     SDL_RenderClear(&renderer);
     registry.view<component::Texture2D, component::Transform>().each(

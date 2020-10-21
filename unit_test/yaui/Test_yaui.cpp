@@ -39,6 +39,7 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
             auto [texture2D, behaviourTraits] = registry.get<component::Texture2D, component::BehaviourTraits>(entity);
             texture2D.backgroundColour.g = (texture2D.backgroundColour.g+32)%256;
             texture2D.backgroundColour.b = (texture2D.backgroundColour.b+32)%256;
+            texture2D.backgroundColour.a = (texture2D.backgroundColour.a+32)%256;
             behaviourTraits.isUpdated = false;
             std::cout<<"DiscoBackground (Delay, Counter) ("<<delay<<", "<<counter<<")\n";
             return true;
@@ -59,7 +60,7 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
         "OpenSans-Regular.ttf",
         32,
         {255, 255, 255, 255},
-        {255, 0, 0, 0},
+        {255, 0, 0, 127},
         {0, 10 , 10, 0},
         {5, 5 , 5, 5},
         40,

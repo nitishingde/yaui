@@ -30,6 +30,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
 
     boxModel.border = border;
     boxModel.padding = padding;
+    boxModel.borderColour = Colour {127, 127, 127, 127};
 
     text.colour = foregroundColour;
     text.value = textString;
