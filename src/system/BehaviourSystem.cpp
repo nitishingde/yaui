@@ -48,6 +48,7 @@ void yaui::system::BehaviourSystem::executeJob() {
         if(!behaviourTraits.isUpdated) {
             lockTexture(registry, entity, delta);
             for(auto &behaviour: behaviourTraits.behaviours) {
+                if(!behaviour.isEnabled) continue;
                 behaviour.update(registry, entity, delta);
             }
             behaviourTraits.isUpdated = true;

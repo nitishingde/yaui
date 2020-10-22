@@ -10,6 +10,7 @@ namespace yaui {
         UpdateFunctionPointer mpUpdateHandle = nullptr;
     public:
         String name;
+        bool isEnabled = true;
 
     public:
         explicit Behaviour(String name, UpdateFunctionPointer pUpdateFunctionPointer = nullptr) noexcept;
