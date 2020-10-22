@@ -40,7 +40,7 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
             texture2D.backgroundColour.g = (texture2D.backgroundColour.g+32)%256;
             texture2D.backgroundColour.b = (texture2D.backgroundColour.b+32)%256;
             texture2D.backgroundColour.a = (texture2D.backgroundColour.a+32)%256;
-            behaviourTraits.isUpdated = false;
+            behaviourTraits.trigger();
             std::cout<<"DiscoBackground (Delay, Counter) ("<<delay<<", "<<counter<<")\n";
             return true;
         }
@@ -71,17 +71,17 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
     mouseEventListener.pOnClickHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.g = (backgroundColour.g+64)%256;
-        registry.get<component::BehaviourTraits>(entity).isUpdated = false;
+        registry.get<component::BehaviourTraits>(entity).trigger();
     };
     mouseEventListener.pOnHoverEnterHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.b = 255;
-        registry.get<component::BehaviourTraits>(entity).isUpdated = false;
+        registry.get<component::BehaviourTraits>(entity).trigger();
     };
     mouseEventListener.pOnHoverLeaveHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.b = 0;
-        registry.get<component::BehaviourTraits>(entity).isUpdated = false;
+        registry.get<component::BehaviourTraits>(entity).trigger();
     };
     dir->run();
 }

@@ -23,7 +23,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     auto &texture = registry.emplace<component::Texture2D>(entity);
     auto &transform = registry.emplace<component::Transform>(entity);
 
-    behaviourTraits.isUpdated = false;
+    behaviourTraits.trigger();
     behaviourTraits.behaviours.emplace_back(BehaviourFactory::produceAddBackgroundColourBehaviour());
     behaviourTraits.behaviours.emplace_back(BehaviourFactory::produceAddTextBehaviour());
     behaviourTraits.behaviours.emplace_back(BehaviourFactory::produceAddBorderBehaviour());

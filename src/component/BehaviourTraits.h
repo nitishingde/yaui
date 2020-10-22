@@ -8,8 +8,9 @@
 namespace yaui::component {
     struct BehaviourTraits {
     public:
-        bool isUpdated = false;
+        bool isTriggered = true;
         ArrayList<Behaviour> behaviours;
+        void trigger();
     };
 }
 

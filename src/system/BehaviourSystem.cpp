@@ -45,13 +45,13 @@ void yaui::system::BehaviourSystem::executeJob() {
     auto view = registry.view<component::BehaviourTraits>();
     for(auto entity: view) {
         auto &behaviourTraits = view.get<component::BehaviourTraits>(entity);
-        if(!behaviourTraits.isUpdated) {
+        if(behaviourTraits.isTriggered) {
             lockTexture(registry, entity, delta);
             for(auto &behaviour: behaviourTraits.behaviours) {
                 if(!behaviour.isEnabled) continue;
                 behaviour.update(registry, entity, delta);
             }
-            behaviourTraits.isUpdated = true;
+            behaviourTraits.isTriggered = false;
             unlockTexture(registry, entity, delta);
         }
     }
