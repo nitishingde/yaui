@@ -4,7 +4,7 @@
 
 yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
-    mpFont = TTF_OpenFont("../resources/open-sans/OpenSans-Regular.ttf", 32);
+    mpFont = TTF_OpenFont("../../../resources/open-sans/OpenSans-Regular.ttf", 32);
 }
 
 yaui::system::RenderingSystem::~RenderingSystem() {

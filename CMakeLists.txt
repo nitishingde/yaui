@@ -57,9 +57,6 @@ target_link_libraries(yaui
 
 add_library(yaui::yaui ALIAS yaui)
 
-add_executable(qwerty unit_test/yaui/Test_yaui.cpp)
-target_link_libraries(qwerty PRIVATE yaui::yaui)
-
 # Unit tests
 add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
 
