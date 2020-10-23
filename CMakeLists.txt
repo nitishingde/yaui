@@ -16,13 +16,7 @@ add_library(yaui
         src/entity/ViewFactory.cpp src/entity/ViewFactory.h
 
         # components
-        src/component/ActionItems.cpp src/component/ActionItems.h
-        src/component/BehaviourTraits.cpp src/component/BehaviourTraits.h
-        src/component/BoxModel.cpp src/component/BoxModel.h
-        src/component/MouseEventListener.cpp src/component/MouseEventListener.h
-        src/component/Text.cpp src/component/Text.h
-        src/component/Texture2D.cpp src/component/Texture2D.h
-        src/component/Transform.cpp src/component/Transform.h
+        src/component/Components.cpp src/component/Components.h
 
         # systems
         src/system/ISystem.cpp src/system/ISystem.h

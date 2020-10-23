@@ -14,13 +14,7 @@
 #include "entity/ViewFactory.h"
 
 // components
-#include "component/ActionItems.h"
-#include "component/BehaviourTraits.h"
-#include "component/BoxModel.h"
-#include "component/MouseEventListener.h"
-#include "component/Text.h"
-#include "component/Texture2D.h"
-#include "component/Transform.h"
+#include "component/Components.h"
 
 // systems
 #include "system/ActionSystem.h"

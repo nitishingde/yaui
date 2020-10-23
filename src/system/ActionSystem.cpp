@@ -1,6 +1,6 @@
 #include "ActionSystem.h"
 #include <iostream>
-#include "component/ActionItems.h"
+#include "component/Components.h"
 #include "Director.h"
 
 yaui::system::ActionSystem::ActionSystem(yaui::uint32 priorityRank) {
