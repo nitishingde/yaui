@@ -20,6 +20,7 @@ add_library(yaui
 
         # systems
         src/system/ISystem.cpp src/system/ISystem.h
+        src/system/SystemJobScheduler.cpp src/system/SystemJobScheduler.h
         src/system/ActionSystem.cpp src/system/ActionSystem.h
         src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
         src/system/EventSystem.cpp src/system/EventSystem.h
@@ -33,7 +34,6 @@ add_library(yaui
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
-        src/SystemJobScheduler.cpp src/SystemJobScheduler.h
         src/Types.h
         src/WindowEventHandler.cpp src/WindowEventHandler.h
         src/yaui.h

@@ -1,6 +1,6 @@
 #include "Director.h"
 #include <iostream>
-#include "SystemJobScheduler.h"
+#include "system/SystemJobScheduler.h"
 #include "system/RenderingSystem.h"
 
 static yaui::Director* instance = nullptr;

@@ -6,7 +6,6 @@
 #include "Director.h"
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
-#include "SystemJobScheduler.h"
 #include "WindowEventHandler.h"
 #include "Types.h"
 
@@ -17,6 +16,7 @@
 #include "component/Components.h"
 
 // systems
+#include "system/SystemJobScheduler.h"
 #include "system/ActionSystem.h"
 #include "system/BehaviourSystem.h"
 #include "system/EventSystem.h"

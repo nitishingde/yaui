@@ -1,8 +1,8 @@
-#ifndef YAUI_SYSTEMJOBSCHEDULAR_H
-#define YAUI_SYSTEMJOBSCHEDULAR_H
+#ifndef YAUI_SYSTEM_SYSTEMJOBSCHEDULAR_H
+#define YAUI_SYSTEM_SYSTEMJOBSCHEDULAR_H
 
 
-#include "system/ISystem.h"
+#include "ISystem.h"
 #include "Types.h"
 
 namespace yaui {
@@ -22,4 +22,4 @@ namespace yaui {
     };
 }
 
-#endif //YAUI_SYSTEMJOBSCHEDULAR_H
+#endif //YAUI_SYSTEM_SYSTEMJOBSCHEDULAR_H
