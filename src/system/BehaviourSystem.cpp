@@ -43,6 +43,7 @@ void yaui::system::BehaviourSystem::executeJob() {
     auto &registry = scene.getRegistry();
     auto delta = Director::getInstance()->getDelta();
     auto view = registry.view<component::BehaviourTraits>();
+    auto shouldUpdateRenderPipeline = false;
     for(auto entity: view) {
         auto &behaviourTraits = view.get<component::BehaviourTraits>(entity);
         if(behaviourTraits.isTriggered) {
@@ -53,7 +54,13 @@ void yaui::system::BehaviourSystem::executeJob() {
             }
             behaviourTraits.isTriggered = false;
             unlockTexture(registry, entity, delta);
+            shouldUpdateRenderPipeline = true;
         }
+    }
+
+    if(shouldUpdateRenderPipeline) {
+        auto renderingSystem = dynamic_cast<RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+        renderingSystem->updateRenderPipeline();
     }
 }
 

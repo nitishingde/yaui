@@ -8,9 +8,10 @@ namespace yaui::system {
     class RenderingSystem: public ISystem {
     private:
         bool mDisplayStats = false;
+        float mFps = 0;
+        bool mShouldUpdateRenderPipeline = true;
         Font *mpFont = nullptr;
         Texture *mpStatsTexture = nullptr;
-        float mFps = 0;
 
     private:
         void displayStats();
@@ -20,6 +21,7 @@ namespace yaui::system {
         void executeJob() override;
         [[nodiscard]] String getClassName() const override;
         void displayStats(bool displayStats);
+        void updateRenderPipeline();
     };
 }
 

@@ -40,6 +40,7 @@ void yaui::system::RenderingSystem::displayStats() {
 }
 
 void yaui::system::RenderingSystem::executeJob() {
+    if(!mShouldUpdateRenderPipeline and !mDisplayStats) return;
     auto &registry = Director::getInstance()->getScene().getRegistry();
     auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
@@ -53,6 +54,7 @@ void yaui::system::RenderingSystem::executeJob() {
     );
     if(mDisplayStats) displayStats();
     SDL_RenderPresent(&renderer);
+    mShouldUpdateRenderPipeline = false;
 }
 
 yaui::String yaui::system::RenderingSystem::getClassName() const {
@@ -61,4 +63,8 @@ yaui::String yaui::system::RenderingSystem::getClassName() const {
 
 void yaui::system::RenderingSystem::displayStats(bool displayStats) {
     mDisplayStats = displayStats;
+}
+
+void yaui::system::RenderingSystem::updateRenderPipeline() {
+    mShouldUpdateRenderPipeline = true;
 }
