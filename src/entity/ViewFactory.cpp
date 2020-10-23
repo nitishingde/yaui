@@ -34,7 +34,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
 
     text.colour = foregroundColour;
     text.value = textString;
-    text.pFont = TTF_OpenFont(("../../../resources/open-sans/"+fontName).c_str(), fontSize);
+    text.pFont = TTF_OpenFont(("resources/open-sans/"+fontName).c_str(), fontSize);
 
     int width, height;
     TTF_SizeText(text.pFont, text.value.c_str(), &width, &height);
