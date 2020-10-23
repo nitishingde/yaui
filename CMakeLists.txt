@@ -52,6 +52,7 @@ target_link_libraries(yaui
         EnTT::EnTT
     INTERFACE
         Catch2::Catch2
+        spdlog::spdlog
 )
 
 add_library(yaui::yaui ALIAS yaui)
