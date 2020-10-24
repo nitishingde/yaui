@@ -18,8 +18,9 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
     dir->disableStats();
     dir->setFPS(60);
     dir->pushScene(new Scene("Test yaui"));
+    auto &registry = dir->getScene().getRegistry();
     auto labelEntity = entity::ViewFactory::produceLabel(
-        dir->getScene(),
+        registry,
         "Hello World!",
         "OpenSans-Regular.ttf",
         32,
@@ -27,10 +28,10 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
         {255, 0, 0, 0},
         {0, 10 , 10, 0},
         {5, 5 , 5, 5},
+        {127, 127, 127, 127},
         40,
         30
     );
-    auto &registry = dir->getScene().getRegistry();
     auto &actionItems = registry.emplace<component::ActionItems>(labelEntity);
     actionItems.actions.emplace_back(Action(
         "DiscoBackground",
@@ -54,8 +55,9 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
     dir->enableStats();
     dir->setFPS(60);
     dir->pushScene(new Scene("Test yaui"));
+    auto &registry = dir->getScene().getRegistry();
     auto entity = entity::ViewFactory::produceButton(
-        dir->getScene(),
+        registry,
         "Hello World!",
         "OpenSans-Regular.ttf",
         32,
@@ -63,10 +65,10 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
         {255, 0, 0, 127},
         {0, 10 , 10, 0},
         {5, 5 , 5, 5},
+        {127, 127, 127, 127},
         40,
         30
     );
-    auto &registry = dir->getScene().getRegistry();
     auto &mouseEventListener = registry.get<component::MouseEventListener>(entity);
     mouseEventListener.pOnClickHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;

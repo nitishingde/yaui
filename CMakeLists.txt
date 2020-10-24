@@ -13,6 +13,7 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 add_library(yaui
     SHARED
         # entity
+        src/entity/ViewBuilder.cpp src/entity/ViewBuilder.h
         src/entity/ViewFactory.cpp src/entity/ViewFactory.h
 
         # components

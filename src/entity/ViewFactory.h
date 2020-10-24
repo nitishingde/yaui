@@ -9,7 +9,7 @@ namespace yaui::entity {
     class ViewFactory {
     public:
         static Entity produceLabel(
-            Scene &scene,
+            Registry &registry,
             const String &textString,
             const String &fontName = "OpenSans-Regular.ttf",
             const uint32 &fontSize = 16,
@@ -17,12 +17,13 @@ namespace yaui::entity {
             const Colour &backgroundColour = {0, 0, 0, 0},
             const Rect &padding = {0, 0, 0, 0},
             const Rect &border = {0, 0, 0, 0},
+            const Colour &borderColour = {127, 127, 127, 127},
             const int32 &x = 0,
             const int32 &y = 0
         );
 
         static Entity produceButton(
-            Scene &scene,
+            Registry &registry,
             const String &textString,
             const String &fontName = "OpenSans-Regular.ttf",
             const uint32 &fontSize = 16,
@@ -30,6 +31,7 @@ namespace yaui::entity {
             const Colour &backgroundColour = {0, 0, 0, 0},
             const Rect &padding = {0, 0, 0, 0},
             const Rect &border = {0, 0, 0, 0},
+            const Colour &borderColour = {127, 127, 127, 127},
             const int32 &x = 0,
             const int32 &y = 0
         );
