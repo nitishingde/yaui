@@ -25,8 +25,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBehaviourTraitsCompon
     return *this;
 }
 
-yaui::entity::ViewBuilder&
-yaui::entity::ViewBuilder::buildBoxModelComponentComponent(
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBoxModelComponentComponent(
     const yaui::Rect &border,
     const yaui::Colour &borderColour,
     const yaui::Rect &padding
@@ -45,8 +44,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerCom
     return *this;
 }
 
-yaui::entity::ViewBuilder&
-yaui::entity::ViewBuilder::buildTextComponent(
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextComponent(
     yaui::String textString,
     yaui::String font,
     const yaui::int32 &fontSize,
