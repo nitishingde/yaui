@@ -38,13 +38,13 @@ namespace yaui {
     using Window = SDL_Window;
 
     struct Size {
-        uint32 height = 0;
         uint32 width = 0;
+        uint32 height = 0;
     };
 
     struct FSize {
-        float height = 0;
         float width = 0;
+        float height = 0;
     };
 
     struct Rect {

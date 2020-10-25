@@ -7,5 +7,5 @@ yaui::Size yaui::getDimensionForText(const component::Text &text, component::Box
         width += int(pBoxModel->border.left + pBoxModel->padding.left + pBoxModel->border.right + pBoxModel->padding.right);
         height += int(pBoxModel->border.bottom + pBoxModel->padding.bottom + pBoxModel->border.top + pBoxModel->padding.top);
     }
-    return Size{uint32(height), uint32(width)};
+    return Size{uint32(width), uint32(height)};
 }

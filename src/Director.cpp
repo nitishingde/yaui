@@ -101,7 +101,7 @@ yaui::Scene& yaui::Director::getScene() const {
 yaui::Size yaui::Director::getWindowSize() const {
     int32 width, height;
     SDL_GetWindowSize(mpWindow, &width, &height);
-    return Size {uint32(height), uint32(width)};
+    return Size {uint32(width), uint32(height)};
 }
 
 void yaui::Director::popScene() {
