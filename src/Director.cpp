@@ -1,5 +1,5 @@
 #include "Director.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include "system/SystemJobScheduler.h"
 #include "system/RenderingSystem.h"
 
@@ -16,27 +16,27 @@ yaui::Director::~Director() {
 
     if(mpRenderer) {
         SDL_DestroyRenderer(mpRenderer);
-        std::cout<<"DELETED| Renderer\n";
+        spdlog::info("DELETED| Renderer");
     }
 
     if(mpWindow) {
         SDL_DestroyWindow(mpWindow);
-        std::cout<<"DELETED| Window\n";
+        spdlog::info("DELETED| Window");
     }
 
     if(IMG_Init(0)&IMG_INIT_PNG) {
         IMG_Quit();
-        std::cout<<"DELETED| IMG lib\n";
+        spdlog::info("DELETED| IMG lib");
     }
 
     if(TTF_WasInit()) {
         TTF_Quit();
-        std::cout<<"DELETED| TTF lib\n";
+        spdlog::info("DELETED| TTF lib");
     }
 
     if(SDL_WasInit(SDL_INIT_VIDEO)) {
         SDL_Quit();
-        std::cout<<"DELETED| SDL2 lib\n";
+        spdlog::info("DELETED| SDL2 lib");
     }
 
     instance = nullptr;
@@ -44,11 +44,11 @@ yaui::Director::~Director() {
 
 bool yaui::Director::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
-    std::cout<<"INITIALISED| SDL lib\n";
+    spdlog::info("INITIALISED| SDL lib");
     if(TTF_Init() < 0) return false;
-    std::cout<<"INITIALISED| TTF lib\n";
+    spdlog::info("INITIALISED| TTF lib");
     if(IMG_Init(IMG_INIT_PNG) < 0) return false;
-    std::cout<<"INITIALISED| IMG lib\n";
+    spdlog::info("INITIALISED| IMG lib");
 
     mpWindow = SDL_CreateWindow(
         "YAUI",
@@ -59,11 +59,11 @@ bool yaui::Director::init() {
         SDL_WINDOW_RESIZABLE
     );
     if(mpWindow == nullptr) return false;
-    std::cout<<"INITIALISED| Window\n";
+    spdlog::info("INITIALISED| Window");
 
     mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE);
     if(mpRenderer == nullptr) return false;
-    std::cout<<"INITIALISED| Renderer\n";
+    spdlog::info("INITIALISED| Renderer");
 
     return true;
 }
@@ -136,6 +136,6 @@ void yaui::Director::run() {
             mDelta = jobExecutionTime;
         }
     }
-    std::cout<<"EVENT| Escape Pressed\n";
+    spdlog::info("EVENT| Escape Pressed");
     delete this;
 }

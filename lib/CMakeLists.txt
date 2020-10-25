@@ -41,4 +41,5 @@ endmacro()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/EnTT)
 
 # spdlog
+set(SPDLOG_BUILD_SHARED ON CACHE BOOL "" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/spdlog)

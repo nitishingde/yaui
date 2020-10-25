@@ -1,5 +1,5 @@
 #include "BehaviourSystem.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include "yaui.h"
 
 yaui::system::BehaviourSystem::BehaviourSystem(yaui::uint32 priorityRank) {
@@ -7,7 +7,7 @@ yaui::system::BehaviourSystem::BehaviourSystem(yaui::uint32 priorityRank) {
 }
 
 yaui::system::BehaviourSystem::~BehaviourSystem() {
-    std::cout<<"Deleted| BehaviourSystem\n";
+    spdlog::info("DELETED| BehaviourSystem");
 }
 
 void

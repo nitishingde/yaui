@@ -52,9 +52,10 @@ target_link_libraries(yaui
         SDL2::IMAGE
         SDL2::TTF
         EnTT::EnTT
+    PRIVATE
+        spdlog::spdlog
     INTERFACE
         Catch2::Catch2
-        spdlog::spdlog
 )
 
 add_library(yaui::yaui ALIAS yaui)

@@ -1,5 +1,5 @@
 #include "RenderingSystem.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include "yaui.h"
 
 yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
@@ -12,7 +12,7 @@ yaui::system::RenderingSystem::~RenderingSystem() {
     mpFont = nullptr;
     if(mpStatsTexture) SDL_DestroyTexture(mpStatsTexture);
     mpStatsTexture = nullptr;
-    std::cout<<"Deleted| RenderingSystem\n";
+    spdlog::info("DELETED| RenderingSystem");
 }
 
 void yaui::system::RenderingSystem::displayStats() {
@@ -26,7 +26,7 @@ void yaui::system::RenderingSystem::displayStats() {
             ("FPS: "+std::to_string(int(fps))+"  ").c_str(),
             Colour {255, 0, 0, 255}
         );
-        std::cout<<"FPS: "<<fps<<'\n';
+        spdlog::info("FPS: {:.3f}", fps);
         if(mpStatsTexture) SDL_DestroyTexture(mpStatsTexture);
         mpStatsTexture = SDL_CreateTextureFromSurface(&renderer, pSurface);
         SDL_FreeSurface(pSurface);

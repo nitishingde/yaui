@@ -1,5 +1,5 @@
 #include "EventSystem.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include "yaui.h"
 
 yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
@@ -9,7 +9,7 @@ yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
 }
 
 yaui::system::EventSystem::~EventSystem() {
-    std::cout<<"Deleted| EventSystem\n";
+    spdlog::info("DELETED| EventSystem");
     for(auto pEventHandlers: mEventHandlers) {
         delete pEventHandlers;
     }

@@ -1,5 +1,5 @@
 #include "Components.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 void yaui::component::BehaviourTraits::trigger() {
     isTriggered = true;
@@ -51,7 +51,7 @@ yaui::component::Text::Text(yaui::component::Text &&other) noexcept
     , value(std::move(other.value))
     , pFont(other.pFont) {
     other.pFont = nullptr;
-    std::cout<<"MOVED| component::Text\n";
+    spdlog::info("MOVED| component::Text");
 }
 
 yaui::component::Text& yaui::component::Text::operator=(yaui::component::Text &&other) noexcept {
@@ -60,7 +60,7 @@ yaui::component::Text& yaui::component::Text::operator=(yaui::component::Text &&
         value = std::move(other.value);
         pFont = other.pFont;
         other.pFont = nullptr;
-        std::cout<<"MOVE_ASSIGNED| component::Text\n";
+        spdlog::info("MOVE_ASSIGNED| component::Text");
     }
     return *this;
 }
@@ -69,7 +69,7 @@ yaui::component::Text::~Text() {
     if(pFont) {
         TTF_CloseFont(pFont);
         pFont = nullptr;
-        std::cout<<"DELETED| component::Text\n";
+        spdlog::info("DELETED| component::Text");
     }
 }
 
@@ -78,7 +78,7 @@ yaui::component::Texture2D::Texture2D(yaui::component::Texture2D &&other) noexce
     , zIndex(other.zIndex)
     , pTexture(other.pTexture) {
     other.pTexture = nullptr;
-    std::cout<<"MOVED| component::Texture2D\n";
+    spdlog::info("MOVED| component::Texture2D");
 }
 
 yaui::component::Texture2D& yaui::component::Texture2D::operator=(yaui::component::Texture2D &&other) noexcept {
@@ -87,7 +87,7 @@ yaui::component::Texture2D& yaui::component::Texture2D::operator=(yaui::componen
         this->zIndex = other.zIndex;
         this->pTexture = other.pTexture;
         other.pTexture = nullptr;
-        std::cout<<"MOVE_ASSIGNED| component::Texture2D\n";
+        spdlog::info("MOVE_ASSIGNED| component::Texture2D");
     }
     return *this;
 }
@@ -96,6 +96,6 @@ yaui::component::Texture2D::~Texture2D() {
     if(pTexture) {
         SDL_DestroyTexture(pTexture);
         pTexture = nullptr;
-        std::cout<<"DELETED| component::Texture2D\n";
+        spdlog::info("DELETED| component::Texture2D");
     }
 }

@@ -1,5 +1,5 @@
 #include "ActionSystem.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include "component/Components.h"
 #include "Director.h"
 
@@ -8,7 +8,7 @@ yaui::system::ActionSystem::ActionSystem(yaui::uint32 priorityRank) {
 }
 
 yaui::system::ActionSystem::~ActionSystem() {
-    std::cout<<"Deleted| ActionSystem\n";
+    spdlog::info("DELETED| ActionSystem");
 }
 
 void yaui::system::ActionSystem::executeJob() {

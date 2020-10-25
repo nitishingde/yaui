@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 
-#include "catch2/catch.hpp"
+#include <catch2/catch.hpp>
+#include <spdlog/spdlog.h>
 #include "yaui.h"
 
 using namespace yaui;
@@ -42,7 +43,7 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
             texture2D.backgroundColour.b = (texture2D.backgroundColour.b+32)%256;
             texture2D.backgroundColour.a = (texture2D.backgroundColour.a+32)%256;
             behaviourTraits.trigger();
-            std::cout<<"DiscoBackground (Delay, Counter) ("<<delay<<", "<<counter<<")\n";
+            spdlog::info("DiscoBackground (Delay = {:.2f}, Counter = {})", delay, counter);
             return true;
         }
     ));
