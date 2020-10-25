@@ -62,6 +62,7 @@ namespace yaui {
 
     // should return false to discontinue
     using ActionUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter);
+    using BehaviourUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay);
     using TextureTransformationUpdateFunctionPointer = void(*)(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta);
     using EventHandlerFunctionPointer = void(*)(entity::Registry &registry, const entity::Entity &entity, const Event &event);
 }

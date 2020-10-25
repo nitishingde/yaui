@@ -2,12 +2,17 @@
 #define YAUI_COMPONENT_COMPONENTS_H
 
 #include "Action.h"
+#include "Behaviour.h"
 #include "TextureTransformation.h"
 #include "Types.h"
 
 namespace yaui::component {
     struct ActionItems {
         ArrayList<Action> actions;
+    };
+
+    struct BehaviourTraits {
+        ArrayList<Behaviour> behaviours;
     };
 
     struct BoxModel {

@@ -2,6 +2,7 @@
 #define YAUI_YAUI_H
 
 #include "Action.h"
+#include "Behaviour.h"
 #include "Director.h"
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
@@ -20,6 +21,7 @@
 // systems
 #include "system/SystemJobScheduler.h"
 #include "system/ActionSystem.h"
+#include "system/BehaviourSystem.h"
 #include "system/EventSystem.h"
 #include "system/RenderingSystem.h"
 #include "system/TextureTransformationSystem.h"
