@@ -15,7 +15,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     const int32 &x,
     const int32 &y
 ) {
-    return ViewBuilder::initiateBaseView(registry)
+    auto entity = ViewBuilder::initiateBaseView(registry)
         .buildBoxModelComponentComponent(border, borderColour, padding)
         .buildBehaviourTraitsComponent({
             BehaviourFactory::produceAddBackgroundColourBehaviour(),
@@ -24,8 +24,15 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
         })
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTexture2DComponent(backgroundColour)
-        .buildTransformComponent({x, y, 213, 54})
+        .buildTransformComponent({x, y, 0, 0})
         .buildView();
+
+    auto &transform = registry.get<component::Transform>(entity);
+    auto dimension = getDimensionForText(registry.get<component::Text>(entity), registry.try_get<component::BoxModel>(entity));
+    transform.viewPort.w = dimension.width;
+    transform.viewPort.h = dimension.height;
+
+    return entity;
 }
 
 yaui::entity::Entity yaui::entity::ViewFactory::produceButton(

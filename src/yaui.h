@@ -6,6 +6,7 @@
 #include "Director.h"
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
+#include "Utility.h"
 #include "WindowEventHandler.h"
 #include "Types.h"
 

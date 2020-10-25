@@ -36,6 +36,7 @@ add_library(yaui
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
         src/Types.h
+        src/Utility.cpp src/Utility.h
         src/WindowEventHandler.cpp src/WindowEventHandler.h
         src/yaui.h
 )
