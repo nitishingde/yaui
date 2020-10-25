@@ -41,8 +41,9 @@ void yaui::system::RenderingSystem::displayStats() {
 
 void yaui::system::RenderingSystem::executeJob() {
     if(!mShouldUpdateRenderPipeline and !mDisplayStats) return;
-    auto &registry = Director::getInstance()->getScene().getRegistry();
-    auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
+    auto &scene = Director::getInstance()->getScene();
+    auto &registry = scene.getRegistry();
+    auto &renderer = scene.getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
     SDL_SetRenderDrawBlendMode(&renderer, SDL_BlendMode::SDL_BLENDMODE_NONE);
     SDL_SetRenderDrawColor(&renderer, 64, 64, 64, 255);

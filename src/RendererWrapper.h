@@ -5,6 +5,9 @@
 #include "Types.h"
 
 namespace yaui {
+    /**
+     * DON'T USE FOR NOW
+     */
     class RendererWrapper {
     private:
         Renderer *mpRenderer = nullptr;

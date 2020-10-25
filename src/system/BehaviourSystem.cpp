@@ -10,9 +10,12 @@ yaui::system::BehaviourSystem::~BehaviourSystem() {
     spdlog::info("DELETED| BehaviourSystem");
 }
 
-void
-yaui::system::BehaviourSystem::lockTexture(entity::Registry &registry, const entity::Entity &entity, const float &delta) {
-    auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
+void yaui::system::BehaviourSystem::lockTexture(
+    Renderer &renderer,
+    entity::Registry &registry,
+    const entity::Entity &entity,
+    const float &delta
+) {
     auto [texture2D, transform] = registry.get<component::Texture2D, component::Transform>(entity);
     // delete old texture and create a new one
     if(texture2D.pTexture) {
@@ -31,29 +34,33 @@ yaui::system::BehaviourSystem::lockTexture(entity::Registry &registry, const ent
     SDL_SetRenderTarget(&renderer, texture2D.pTexture);
 }
 
-void
-yaui::system::BehaviourSystem::unlockTexture(entity::Registry &registry, const entity::Entity &entity, const float &delta) {
+void yaui::system::BehaviourSystem::unlockTexture(
+    Renderer &renderer,
+    entity::Registry &registry,
+    const entity::Entity &entity,
+    const float &delta
+) {
     // unlock texture from the renderer
-    auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
 }
 
 void yaui::system::BehaviourSystem::executeJob() {
     auto &scene = Director::getInstance()->getScene();
     auto &registry = scene.getRegistry();
+    auto &renderer = scene.getRenderer();
     auto delta = Director::getInstance()->getDelta();
     auto view = registry.view<component::BehaviourTraits>();
     auto shouldUpdateRenderPipeline = false;
     for(auto entity: view) {
         auto &behaviourTraits = view.get<component::BehaviourTraits>(entity);
         if(behaviourTraits.isTriggered) {
-            lockTexture(registry, entity, delta);
+            lockTexture(renderer, registry, entity, delta);
             for(auto &behaviour: behaviourTraits.behaviours) {
                 if(!behaviour.isEnabled) continue;
-                behaviour.update(registry, entity, delta);
+                behaviour.update(renderer, registry, entity, delta);
             }
             behaviourTraits.isTriggered = false;
-            unlockTexture(registry, entity, delta);
+            unlockTexture(renderer, registry, entity, delta);
             shouldUpdateRenderPipeline = true;
         }
     }

@@ -7,8 +7,8 @@
 namespace yaui::system {
     class BehaviourSystem: public ISystem {
     private:
-        void lockTexture(entity::Registry &registry, const entity::Entity &entity, const float &delta);
-        void unlockTexture(entity::Registry &registry, const entity::Entity &entity, const float &delta);
+        void lockTexture(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, const float &delta);
+        void unlockTexture(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, const float &delta);
     public:
         explicit BehaviourSystem(uint32 priorityRank);
         ~BehaviourSystem() override;

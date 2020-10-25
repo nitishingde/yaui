@@ -4,8 +4,7 @@
 yaui::Behaviour yaui::BehaviourFactory::produceAddBackgroundColourBehaviour() {
     return yaui::Behaviour(
         "Background",
-        [](entity::Registry &registry, const entity::Entity &entity, float delta) {
-            auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
+        [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
             auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
 
             // apply background colour
@@ -18,8 +17,7 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBackgroundColourBehaviour() {
 yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
     return yaui::Behaviour(
         "Border",
-        [](entity::Registry &registry, const entity::Entity &entity, float delta) {
-            auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
+        [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
             auto [boxModel, transform] = registry.get<component::BoxModel, component::Transform>(entity);
             auto &border = boxModel.border;
             auto &borderColour = boxModel.borderColour;
@@ -37,9 +35,8 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
 yaui::Behaviour yaui::BehaviourFactory::produceAddTextBehaviour() {
     return Behaviour(
         "Label",
-        [](entity::Registry &registry, const entity::Entity &entity, float delta) {
-            // get the renderer and all required components
-            auto &renderer = registry.ctx<RendererWrapper>().getRenderer();
+        [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
+            // get all the required components
             auto [boxModel, text] = registry.get<component::BoxModel, component::Text>(entity);
             auto &padding = boxModel.padding;
             auto &border = boxModel.border;

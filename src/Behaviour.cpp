@@ -10,8 +10,8 @@ void yaui::Behaviour::setUpdateHandle(yaui::UpdateFunctionPointer pUpdateFunctio
 }
 
 void
-yaui::Behaviour::update(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, float delta) const {
+yaui::Behaviour::update(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) const {
     if(mpUpdateHandle) {
-        mpUpdateHandle(registry, entity, delta);
+        mpUpdateHandle(renderer, registry, entity, delta);
     }
 }

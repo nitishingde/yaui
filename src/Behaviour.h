@@ -15,7 +15,7 @@ namespace yaui {
     public:
         explicit Behaviour(String name, UpdateFunctionPointer pUpdateFunctionPointer = nullptr) noexcept;
         void setUpdateHandle(UpdateFunctionPointer pUpdateFunctionPointer);
-        void update(entity::Registry &registry, const entity::Entity &entity, float delta) const;
+        void update(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) const;
     };
 }
 
