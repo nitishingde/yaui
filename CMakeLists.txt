@@ -23,18 +23,18 @@ add_library(yaui
         src/system/ISystem.cpp src/system/ISystem.h
         src/system/SystemJobScheduler.cpp src/system/SystemJobScheduler.h
         src/system/ActionSystem.cpp src/system/ActionSystem.h
-        src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
         src/system/EventSystem.cpp src/system/EventSystem.h
         src/system/RenderingSystem.cpp src/system/RenderingSystem.h
+        src/system/TextureTransformationSystem.cpp src/system/TextureTransformationSystem.h
 
         src/Action.cpp src/Action.h
-        src/Behaviour.cpp src/Behaviour.h
-        src/BehaviourFactory.cpp src/BehaviourFactory.h
         src/Director.cpp src/Director.h
         src/IEventHandler.cpp src/IEventHandler.h
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
+        src/TextureTransformation.cpp src/TextureTransformation.h
+        src/TextureTransformationFactory.cpp src/TextureTransformationFactory.h
         src/Types.h
         src/Utility.cpp src/Utility.h
         src/WindowEventHandler.cpp src/WindowEventHandler.h

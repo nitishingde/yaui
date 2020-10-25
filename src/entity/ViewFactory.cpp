@@ -17,10 +17,10 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
 ) {
     auto entity = ViewBuilder::initiateBaseView(registry)
         .buildBoxModelComponentComponent(border, borderColour, padding)
-        .buildBehaviourTraitsComponent({
-            BehaviourFactory::produceAddBackgroundColourBehaviour(),
-            BehaviourFactory::produceAddTextBehaviour(),
-            BehaviourFactory::produceAddBorderBehaviour()
+        .buildTextureTransformationComponent({
+             TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
+             TextureTransformationFactory::produceAddTextTextureTransformation(),
+             TextureTransformationFactory::produceAddBorderTextureTransformation()
         })
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTexture2DComponent(backgroundColour)

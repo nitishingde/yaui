@@ -17,10 +17,10 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildActionItemsComponent(
     return *this;
 }
 
-yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBehaviourTraitsComponent(ArrayList<Behaviour> &&behaviours) {
-    auto &behaviourTraits = mpRegistry->emplace_or_replace<component::BehaviourTraits>(mEntity);
-    behaviourTraits.behaviours = std::move(behaviours);
-    behaviourTraits.trigger();
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextureTransformationComponent(ArrayList<TextureTransformation> &&behaviours) {
+    auto &textureTransformationJobs = mpRegistry->emplace_or_replace<component::TextureTransformationJobs>(mEntity);
+    textureTransformationJobs.textureTransformations = std::move(behaviours);
+    textureTransformationJobs.trigger();
 
     return *this;
 }

@@ -38,11 +38,11 @@ TEST_CASE("Test yaui Label", "[yaui][Label]") {
         "DiscoBackground",
         1.f,
         [](entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter) {
-            auto [texture2D, behaviourTraits] = registry.get<component::Texture2D, component::BehaviourTraits>(entity);
+            auto [texture2D, textureTransformationJobs] = registry.get<component::Texture2D, component::TextureTransformationJobs>(entity);
             texture2D.backgroundColour.g = (texture2D.backgroundColour.g+32)%256;
             texture2D.backgroundColour.b = (texture2D.backgroundColour.b+32)%256;
             texture2D.backgroundColour.a = (texture2D.backgroundColour.a+32)%256;
-            behaviourTraits.trigger();
+            textureTransformationJobs.trigger();
             spdlog::info("DiscoBackground (Delay = {:.2f}, Counter = {})", delay, counter);
             return true;
         }
@@ -74,17 +74,17 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
     mouseEventListener.pOnClickHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.g = (backgroundColour.g+64)%256;
-        registry.get<component::BehaviourTraits>(entity).trigger();
+        registry.get<component::TextureTransformationJobs>(entity).trigger();
     };
     mouseEventListener.pOnHoverEnterHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.b = 255;
-        registry.get<component::BehaviourTraits>(entity).trigger();
+        registry.get<component::TextureTransformationJobs>(entity).trigger();
     };
     mouseEventListener.pOnHoverLeaveHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
         auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
         backgroundColour.b = 0;
-        registry.get<component::BehaviourTraits>(entity).trigger();
+        registry.get<component::TextureTransformationJobs>(entity).trigger();
     };
     dir->run();
 }

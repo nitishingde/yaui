@@ -1,10 +1,6 @@
 #include "Components.h"
 #include <spdlog/spdlog.h>
 
-void yaui::component::BehaviourTraits::trigger() {
-    isTriggered = true;
-}
-
 void
 yaui::component::MouseEventListener::onButtonDown(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event)const {
     if(pOnButtonDownHandle) {
@@ -98,4 +94,8 @@ yaui::component::Texture2D::~Texture2D() {
         pTexture = nullptr;
         spdlog::info("DELETED| component::Texture2D");
     }
+}
+
+void yaui::component::TextureTransformationJobs::trigger() {
+    isTriggered = true;
 }

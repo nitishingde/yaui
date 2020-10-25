@@ -2,18 +2,12 @@
 #define YAUI_COMPONENT_COMPONENTS_H
 
 #include "Action.h"
-#include "Behaviour.h"
+#include "TextureTransformation.h"
 #include "Types.h"
 
 namespace yaui::component {
     struct ActionItems {
         ArrayList<Action> actions;
-    };
-
-    struct BehaviourTraits {
-        bool isTriggered = true;
-        ArrayList<Behaviour> behaviours;
-        void trigger();
     };
 
     struct BoxModel {
@@ -56,6 +50,12 @@ namespace yaui::component {
         Texture2D(Texture2D &&other) noexcept;
         Texture2D& operator=(Texture2D &&other) noexcept;
         ~Texture2D();
+    };
+
+    struct TextureTransformationJobs {
+        bool isTriggered = true;
+        ArrayList<TextureTransformation> textureTransformations;
+        void trigger();
     };
 
     struct Transform {

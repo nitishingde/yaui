@@ -15,7 +15,7 @@ namespace yaui::entity {
     public:
         static ViewBuilder initiateBaseView(Registry &registry);
         ViewBuilder& buildActionItemsComponent(ArrayList<Action> &&actions = {});
-        ViewBuilder& buildBehaviourTraitsComponent(ArrayList<Behaviour> &&behaviours = {});
+        ViewBuilder& buildTextureTransformationComponent(ArrayList<TextureTransformation> &&behaviours = {});
         ViewBuilder& buildBoxModelComponentComponent(const Rect &border = {0, 0, 0, 0}, const Colour &borderColour = {0, 0, 0, 255}, const Rect &padding = {0, 0, 0, 0});
         ViewBuilder& buildMouseEventListenerComponent();
         ViewBuilder& buildTextComponent(String textString, String font = "OpenSans-Regular.ttf", const int32 &fontSize = 24, const Colour &fontColour = {0, 0, 0, 255});

@@ -1,13 +1,13 @@
 #ifndef YAUI_YAUI_H
 #define YAUI_YAUI_H
 
-#include "Behaviour.h"
-#include "BehaviourFactory.h"
 #include "Director.h"
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
 #include "Utility.h"
 #include "WindowEventHandler.h"
+#include "TextureTransformation.h"
+#include "TextureTransformationFactory.h"
 #include "Types.h"
 
 // entity
@@ -19,8 +19,8 @@
 // systems
 #include "system/SystemJobScheduler.h"
 #include "system/ActionSystem.h"
-#include "system/BehaviourSystem.h"
 #include "system/EventSystem.h"
 #include "system/RenderingSystem.h"
+#include "system/TextureTransformationSystem.h"
 
 #endif //YAUI_YAUI_H

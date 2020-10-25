@@ -1,8 +1,8 @@
-#include "BehaviourFactory.h"
+#include "TextureTransformationFactory.h"
 #include "yaui.h"
 
-yaui::Behaviour yaui::BehaviourFactory::produceAddBackgroundColourBehaviour() {
-    return yaui::Behaviour(
+yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddBackgroundColourTextureTransformation() {
+    return yaui::TextureTransformation(
         "Background",
         [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
             auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
@@ -14,8 +14,8 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBackgroundColourBehaviour() {
     );
 }
 
-yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
-    return yaui::Behaviour(
+yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddBorderTextureTransformation() {
+    return yaui::TextureTransformation(
         "Border",
         [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
             auto [boxModel, transform] = registry.get<component::BoxModel, component::Transform>(entity);
@@ -32,8 +32,8 @@ yaui::Behaviour yaui::BehaviourFactory::produceAddBorderBehaviour() {
     );
 }
 
-yaui::Behaviour yaui::BehaviourFactory::produceAddTextBehaviour() {
-    return Behaviour(
+yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddTextTextureTransformation() {
+    return TextureTransformation(
         "Label",
         [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
             // get all the required components

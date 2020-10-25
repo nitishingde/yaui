@@ -1,16 +1,16 @@
-#include "BehaviourSystem.h"
+#include "TextureTransformationSystem.h"
 #include <spdlog/spdlog.h>
 #include "yaui.h"
 
-yaui::system::BehaviourSystem::BehaviourSystem(yaui::uint32 priorityRank) {
+yaui::system::TextureTransformationSystem::TextureTransformationSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
 }
 
-yaui::system::BehaviourSystem::~BehaviourSystem() {
-    spdlog::info("DELETED| BehaviourSystem");
+yaui::system::TextureTransformationSystem::~TextureTransformationSystem() {
+    spdlog::info("DELETED| TextureTransformationSystem");
 }
 
-void yaui::system::BehaviourSystem::lockTexture(
+void yaui::system::TextureTransformationSystem::lockTexture(
     Renderer &renderer,
     entity::Registry &registry,
     const entity::Entity &entity,
@@ -34,7 +34,7 @@ void yaui::system::BehaviourSystem::lockTexture(
     SDL_SetRenderTarget(&renderer, texture2D.pTexture);
 }
 
-void yaui::system::BehaviourSystem::unlockTexture(
+void yaui::system::TextureTransformationSystem::unlockTexture(
     Renderer &renderer,
     entity::Registry &registry,
     const entity::Entity &entity,
@@ -44,22 +44,22 @@ void yaui::system::BehaviourSystem::unlockTexture(
     SDL_SetRenderTarget(&renderer, nullptr);
 }
 
-void yaui::system::BehaviourSystem::executeJob() {
+void yaui::system::TextureTransformationSystem::executeJob() {
     auto &scene = Director::getInstance()->getScene();
     auto &registry = scene.getRegistry();
     auto &renderer = scene.getRenderer();
     auto delta = Director::getInstance()->getDelta();
-    auto view = registry.view<component::BehaviourTraits>();
+    auto view = registry.view<component::TextureTransformationJobs>();
     auto shouldUpdateRenderPipeline = false;
     for(auto entity: view) {
-        auto &behaviourTraits = view.get<component::BehaviourTraits>(entity);
-        if(behaviourTraits.isTriggered) {
+        auto &textureTransformationJobs = view.get<component::TextureTransformationJobs>(entity);
+        if(textureTransformationJobs.isTriggered) {
             lockTexture(renderer, registry, entity, delta);
-            for(auto &behaviour: behaviourTraits.behaviours) {
-                if(!behaviour.isEnabled) continue;
-                behaviour.update(renderer, registry, entity, delta);
+            for(auto &textureTransformation: textureTransformationJobs.textureTransformations) {
+                if(!textureTransformation.isEnabled) continue;
+                textureTransformation.update(renderer, registry, entity, delta);
             }
-            behaviourTraits.isTriggered = false;
+            textureTransformationJobs.isTriggered = false;
             unlockTexture(renderer, registry, entity, delta);
             shouldUpdateRenderPipeline = true;
         }
@@ -71,6 +71,6 @@ void yaui::system::BehaviourSystem::executeJob() {
     }
 }
 
-yaui::String yaui::system::BehaviourSystem::getClassName() const {
-    return "BehaviourSystem";
+yaui::String yaui::system::TextureTransformationSystem::getClassName() const {
+    return "TextureTransformationSystem";
 }
