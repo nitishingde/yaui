@@ -1,6 +1,7 @@
 #ifndef YAUI_YAUI_H
 #define YAUI_YAUI_H
 
+#include "Action.h"
 #include "Director.h"
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
