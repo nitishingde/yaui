@@ -32,7 +32,7 @@ yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddBorder
     );
 }
 
-yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddTextTextureTransformation() {
+yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddLabelTextureTransformation() {
     return TextureTransformation(
         "Label",
         [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {

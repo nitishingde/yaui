@@ -19,7 +19,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
         .buildBoxModelComponentComponent(border, borderColour, padding)
         .buildTextureTransformationComponent({
              TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
-             TextureTransformationFactory::produceAddTextTextureTransformation(),
+             TextureTransformationFactory::produceAddLabelTextureTransformation(),
              TextureTransformationFactory::produceAddBorderTextureTransformation()
         })
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)

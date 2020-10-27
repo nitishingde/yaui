@@ -9,7 +9,7 @@ namespace yaui {
     public:
         static TextureTransformation produceAddBackgroundColourTextureTransformation();
         static TextureTransformation produceAddBorderTextureTransformation();
-        static TextureTransformation produceAddTextTextureTransformation();
+        static TextureTransformation produceAddLabelTextureTransformation();
     };
 }
 
