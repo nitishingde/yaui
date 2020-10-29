@@ -16,7 +16,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceLabel(
     const int32 &y
 ) {
     auto entity = ViewBuilder::initiateBaseView(registry)
-        .buildBoxModelComponentComponent(border, borderColour, padding)
+        .buildBoxModelComponent(border, borderColour, padding)
         .buildTextureTransformationComponent({
              TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
              TextureTransformationFactory::produceAddLabelTextureTransformation(),
@@ -78,7 +78,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                 return true;
             }
         )})
-        .buildBoxModelComponentComponent(border, borderColour, padding)
+        .buildBoxModelComponent(border, borderColour, padding)
         .buildCaretComponent()
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTextureTransformationComponent({

@@ -25,7 +25,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextureTransformation
     return *this;
 }
 
-yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBoxModelComponentComponent(
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBoxModelComponent(
     const yaui::Rect &border,
     const yaui::Colour &borderColour,
     const yaui::Rect &padding
