@@ -55,3 +55,60 @@ yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddLabelT
         }
     );
 }
+
+yaui::TextureTransformation yaui::TextureTransformationFactory::produceAddTextFieldTextureTransformation() {
+    return yaui::TextureTransformation(
+        "TextField",
+        [](Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta) {
+            // get all the required components
+            auto [boxModel, caret, text, transform] = registry.get<
+                component::BoxModel,
+                component::Caret,
+                component::Text,
+                component::Transform
+            >(entity);
+            if(text.value.empty()) return;
+            auto &padding = boxModel.padding;
+            auto &border = boxModel.border;
+
+            // create a texture with the text
+            auto pSurface = TTF_RenderText_Blended(text.pFont, text.value.c_str(), text.colour);
+            auto pLabelTexture = SDL_CreateTextureFromSurface(&renderer, pSurface);
+            SDL_FreeSurface(pSurface);
+
+            // calculate width, height and add padding
+            auto &viewPort = transform.viewPort;
+            int textWidth, textHeight;
+            SDL_QueryTexture(pLabelTexture, nullptr, nullptr, &textWidth, &textHeight);
+            auto leftSpace = int32(padding.left+border.left);
+            auto rightSpace = int32(padding.right+border.right);
+            auto topSpace = int32(padding.top+border.top);
+            auto bottomSpace = int32(padding.bottom+border.bottom);
+
+            ViewPort contentRect {
+                leftSpace,
+                std::max(topSpace, (viewPort.h-textHeight)/2),
+                std::min(textWidth, viewPort.w-leftSpace-rightSpace),
+                std::min(textHeight, viewPort.h-topSpace-bottomSpace)
+            };
+
+            ViewPort srcRect {
+                std::max(0, textWidth-contentRect.w),
+                0,
+                std::min(textWidth, contentRect.w),
+                std::min(textHeight, contentRect.h)
+            };
+
+            SDL_RenderCopy(&renderer, pLabelTexture, &srcRect, &contentRect);
+            SDL_DestroyTexture(pLabelTexture);
+
+            if(caret.isVisible) {
+                caret.rect.x = contentRect.x+srcRect.w;
+                caret.rect.y = contentRect.y;
+                caret.rect.h = contentRect.h;
+                SDL_SetRenderDrawColor(&renderer, caret.colour.r, caret.colour.g, caret.colour.b, caret.colour.a);
+                SDL_RenderFillRect(&renderer, &caret.rect);
+            }
+        }
+    );
+}

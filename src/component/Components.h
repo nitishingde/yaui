@@ -15,6 +15,12 @@ namespace yaui::component {
         ArrayList<Behaviour> behaviours;
     };
 
+    struct Caret {
+        Colour colour {128, 128, 128, 128};
+        bool isVisible = true;
+        ViewPort rect {0, 0, 5, 32};
+    };
+
     struct BoxModel {
         Rect border {0, 0, 0, 0};
         Colour borderColour {0, 0, 0, 0};
@@ -45,6 +51,15 @@ namespace yaui::component {
         Text(Text &&other) noexcept;
         Text& operator=(Text &&other) noexcept;
         ~Text();
+    };
+
+    struct TextInputEventListener {
+        bool isSelected = false;
+        EventHandlerFunctionPointer pOnCharacterEntered;
+        EventHandlerFunctionPointer pOnSpecialKeyPressed;
+
+        void onCharacterEntered(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
+        void onSpecialKeyPressed(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
     };
 
     struct Texture2D {

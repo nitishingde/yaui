@@ -1,9 +1,12 @@
 #include "EventSystem.h"
 #include <spdlog/spdlog.h>
-#include "yaui.h"
+#include "MouseEventHandler.h"
+#include "TextInputEventHandler.h"
+#include "WindowEventHandler.h"
 
 yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
+    mEventHandlers.emplace_back(new TextInputEventHandler());
     mEventHandlers.emplace_back(new MouseEventHandler());
     mEventHandlers.emplace_back(new WindowEventHandler());
 }

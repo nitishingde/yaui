@@ -7,10 +7,11 @@
 #include "MouseEventHandler.h"
 #include "RendererWrapper.h"
 #include "Utility.h"
-#include "WindowEventHandler.h"
+#include "TextInputEventHandler.h"
 #include "TextureTransformation.h"
 #include "TextureTransformationFactory.h"
 #include "Types.h"
+#include "WindowEventHandler.h"
 
 // entity
 #include "entity/ViewFactory.h"

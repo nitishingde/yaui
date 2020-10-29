@@ -35,6 +35,7 @@ add_library(yaui
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h
+        src/TextInputEventHandler.cpp src/TextInputEventHandler.h
         src/TextureTransformation.cpp src/TextureTransformation.h
         src/TextureTransformationFactory.cpp src/TextureTransformationFactory.h
         src/Types.h

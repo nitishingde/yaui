@@ -88,3 +88,27 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
     };
     dir->run();
 }
+
+TEST_CASE("Test yaui TextField", "[yaui][TextField]") {
+    Director *dir = Director::getInstance();
+    REQUIRE(dir != nullptr);
+    dir->enableStats();
+    dir->setFPS(60);
+    dir->pushScene(new Scene("Test yaui"));
+    auto &registry = dir->getScene().getRegistry();
+    entity::ViewFactory::produceTextField(
+        registry,
+        "Hello!",
+        "OpenSans-Regular.ttf",
+        32,
+        {0, 255, 0, 255},
+        {255, 255, 255, 127},
+        {0, 10, 10, 0},
+        {5, 5, 5, 5},
+        {127, 127, 127, 127},
+        40,
+        30,
+        {256, 64}
+    );
+    dir->run();
+}

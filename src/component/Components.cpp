@@ -69,6 +69,18 @@ yaui::component::Text::~Text() {
     }
 }
 
+void yaui::component::TextInputEventListener::onCharacterEntered(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
+    if(isSelected and pOnCharacterEntered) {
+        pOnCharacterEntered(registry, entity, event);
+    }
+}
+
+void yaui::component::TextInputEventListener::onSpecialKeyPressed(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
+    if(isSelected and pOnSpecialKeyPressed) {
+        pOnSpecialKeyPressed(registry, entity, event);
+    }
+}
+
 yaui::component::Texture2D::Texture2D(yaui::component::Texture2D &&other) noexcept
     : backgroundColour(other.backgroundColour)
     , zIndex(other.zIndex)
