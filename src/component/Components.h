@@ -55,8 +55,8 @@ namespace yaui::component {
 
     struct TextInputEventListener {
         bool isSelected = false;
-        EventHandlerFunctionPointer pOnCharacterEntered;
-        EventHandlerFunctionPointer pOnSpecialKeyPressed;
+        EventHandlerFunctionPointer pOnCharacterEntered = nullptr;
+        EventHandlerFunctionPointer pOnSpecialKeyPressed = nullptr;
 
         void onCharacterEntered(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
         void onSpecialKeyPressed(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
