@@ -10,6 +10,7 @@ namespace yaui {
         ArrayList<Event> mEventQueue;
 
     public:
+        virtual ~IEventHandler() = default;
         void enqueueEvent(const Event &event);
         virtual bool isEventTypeSupported(const EventType &eventType) = 0;
         virtual void handleEvents() = 0;
