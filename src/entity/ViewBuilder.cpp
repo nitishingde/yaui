@@ -11,14 +11,14 @@ yaui::entity::ViewBuilder yaui::entity::ViewBuilder::initiateBaseView(yaui::enti
 }
 
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildActionItemsComponent(ArrayList<Action> &&actions) {
-    auto &actionItems = mpRegistry->emplace_or_replace<component::ActionItems>(mEntity);
+    auto &actionItems = mpRegistry->get_or_emplace<component::ActionItems>(mEntity);
     actionItems.actions = std::move(actions);
 
     return *this;
 }
 
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextureTransformationComponent(ArrayList<TextureTransformation> &&behaviours) {
-    auto &textureTransformationJobs = mpRegistry->emplace_or_replace<component::TextureTransformationJobs>(mEntity);
+    auto &textureTransformationJobs = mpRegistry->get_or_emplace<component::TextureTransformationJobs>(mEntity);
     textureTransformationJobs.textureTransformations = std::move(behaviours);
     textureTransformationJobs.trigger();
 
@@ -30,7 +30,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBoxModelComponent(
     const yaui::Colour &borderColour,
     const yaui::Rect &padding
 ) {
-    auto &boxModel = mpRegistry->emplace_or_replace<component::BoxModel>(mEntity);
+    auto &boxModel = mpRegistry->get_or_emplace<component::BoxModel>(mEntity);
     boxModel.border = border;
     boxModel.borderColour = borderColour;
     boxModel.padding = padding;
@@ -40,7 +40,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildBoxModelComponent(
 
 yaui::entity::ViewBuilder&
 yaui::entity::ViewBuilder::buildCaretComponent(const yaui::Colour &colour, const yaui::ViewPort &rect) {
-    auto &caret = mpRegistry->emplace_or_replace<component::Caret>(mEntity);
+    auto &caret = mpRegistry->get_or_emplace<component::Caret>(mEntity);
     caret.colour = colour;
     caret.rect = rect;
 
@@ -48,7 +48,7 @@ yaui::entity::ViewBuilder::buildCaretComponent(const yaui::Colour &colour, const
 }
 
 [[maybe_unused]] yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent() {
-    mpRegistry->emplace_or_replace<component::MouseEventListener>(mEntity);
+    mpRegistry->get_or_emplace<component::MouseEventListener>(mEntity);
 
     return *this;
 }
@@ -59,7 +59,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextComponent(
     const yaui::int32 &fontSize,
     const yaui::Colour &fontColour
 ) {
-    auto &text = mpRegistry->emplace_or_replace<component::Text>(mEntity);
+    auto &text = mpRegistry->get_or_emplace<component::Text>(mEntity);
     text.value = textString;
     text.pFont = TTF_OpenFont(("resources/open-sans/"+font).c_str(), fontSize);
     text.colour = fontColour;
@@ -83,7 +83,7 @@ yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildTextInputEventListene
 
 yaui::entity::ViewBuilder&
 yaui::entity::ViewBuilder::buildTexture2DComponent(const yaui::Colour &backgroundColour, yaui::uint32 zIndex) {
-    auto &texture2D = mpRegistry->emplace_or_replace<component::Texture2D>(mEntity);
+    auto &texture2D = mpRegistry->get_or_emplace<component::Texture2D>(mEntity);
     texture2D.backgroundColour = backgroundColour;
     texture2D.zIndex = zIndex;
 
@@ -92,7 +92,7 @@ yaui::entity::ViewBuilder::buildTexture2DComponent(const yaui::Colour &backgroun
 
 yaui::entity::ViewBuilder&
 yaui::entity::ViewBuilder::buildTransformComponent(const yaui::ViewPort &viewPort, const yaui::FVec2 &scale) {
-    auto &transform = mpRegistry->emplace_or_replace<component::Transform>(mEntity);
+    auto &transform = mpRegistry->get_or_emplace<component::Transform>(mEntity);
     transform.scale = scale;
     transform.viewPort = viewPort;
 
