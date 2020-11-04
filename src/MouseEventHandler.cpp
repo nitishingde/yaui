@@ -31,7 +31,7 @@ void yaui::MouseEventHandler::handleEvents() {
         if(mPreviousTargetEntity == targetEntity);
         else if(mpPreviousTargetRegistry == &registry and mPreviousTargetEntity != entity::null) {
             auto pMouseEventListener = registry.try_get<component::MouseEventListener>(mPreviousTargetEntity);
-            if(pMouseEventListener) pMouseEventListener->pOnHoverLeaveHandle(registry, mPreviousTargetEntity, event);
+            if(pMouseEventListener) pMouseEventListener->onHoverLeave(registry, mPreviousTargetEntity, event);
             mPreviousTargetEntity = entity::null;
         }
 

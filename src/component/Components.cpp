@@ -3,42 +3,42 @@
 
 void
 yaui::component::MouseEventListener::onButtonDown(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event)const {
-    if(pOnButtonDownHandle) {
-        pOnButtonDownHandle(registry, entity, event);
+    for(auto &eventListener: onButtonDownListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void
 yaui::component::MouseEventListener::onButtonUp(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnButtonUpHandle) {
-        pOnButtonUpHandle(registry, entity, event);
+    for(auto &eventListener: onButtonUpListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void yaui::component::MouseEventListener::onClick(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnClickHandle) {
-        pOnClickHandle(registry, entity, event);
+    for(auto &eventListener: onClickListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void
 yaui::component::MouseEventListener::onHoverEnter(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnHoverEnterHandle) {
-        pOnHoverEnterHandle(registry, entity, event);
+    for(auto &eventListener: onHoverEnterListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void
 yaui::component::MouseEventListener::onHoverLeave(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnHoverLeaveHandle) {
-        pOnHoverLeaveHandle(registry, entity, event);
+    for(auto &eventListener: onHoverLeaveListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void
 yaui::component::MouseEventListener::onScroll(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(pOnScrollHandle) {
-        pOnScrollHandle(registry, entity, event);
+    for(auto &eventListener: onScrollListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
@@ -70,14 +70,16 @@ yaui::component::Text::~Text() {
 }
 
 void yaui::component::TextInputEventListener::onCharacterEntered(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(isSelected and pOnCharacterEntered) {
-        pOnCharacterEntered(registry, entity, event);
+    if(!isSelected) return;
+    for(auto &eventListener: onCharacterEnteredListeners) {
+        eventListener(registry, entity, event);
     }
 }
 
 void yaui::component::TextInputEventListener::onSpecialKeyPressed(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(isSelected and pOnSpecialKeyPressed) {
-        pOnSpecialKeyPressed(registry, entity, event);
+    if(!isSelected) return;
+    for(auto &eventListener: onSpecialKeyPressedListeners) {
+        eventListener(registry, entity, event);
     }
 }
 

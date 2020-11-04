@@ -71,21 +71,27 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
         30
     );
     auto &mouseEventListener = registry.get<component::MouseEventListener>(entity);
-    mouseEventListener.pOnClickHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
-        auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
-        backgroundColour.g = (backgroundColour.g+64)%256;
-        registry.get<component::TextureTransformationJobs>(entity).trigger();
-    };
-    mouseEventListener.pOnHoverEnterHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
-        auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
-        backgroundColour.b = 255;
-        registry.get<component::TextureTransformationJobs>(entity).trigger();
-    };
-    mouseEventListener.pOnHoverLeaveHandle = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
-        auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
-        backgroundColour.b = 0;
-        registry.get<component::TextureTransformationJobs>(entity).trigger();
-    };
+    mouseEventListener.onClickListeners.emplace_back(
+        [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+            auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
+            backgroundColour.g = (backgroundColour.g+64)%256;
+            registry.get<component::TextureTransformationJobs>(entity).trigger();
+        }
+    );
+    mouseEventListener.onHoverEnterListeners.emplace_back(
+        [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+            auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
+            backgroundColour.b = 255;
+            registry.get<component::TextureTransformationJobs>(entity).trigger();
+        }
+    );
+    mouseEventListener.onHoverLeaveListeners.emplace_back(
+        [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+            auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
+            backgroundColour.b = 0;
+            registry.get<component::TextureTransformationJobs>(entity).trigger();
+        }
+    );
     dir->run();
 }
 

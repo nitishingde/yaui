@@ -47,7 +47,7 @@ yaui::entity::ViewBuilder::buildCaretComponent(const yaui::Colour &colour, const
     return *this;
 }
 
-yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent() {
+[[maybe_unused]] yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent() {
     mpRegistry->emplace_or_replace<component::MouseEventListener>(mEntity);
 
     return *this;
@@ -72,10 +72,11 @@ yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildTextInputEventListene
     EventHandlerFunctionPointer pOnCharacterEntered,
     EventHandlerFunctionPointer pOnSpecialKeyPressed
 ) {
-    auto &textInputEventListener = mpRegistry->emplace_or_replace<component::TextInputEventListener>(mEntity);
+
+    auto &textInputEventListener = mpRegistry->get_or_emplace<component::TextInputEventListener>(mEntity);
     textInputEventListener.isSelected = isSelected;
-    textInputEventListener.pOnCharacterEntered = pOnCharacterEntered;
-    textInputEventListener.pOnSpecialKeyPressed = pOnSpecialKeyPressed;
+    textInputEventListener.onCharacterEnteredListeners.emplace_back(pOnCharacterEntered);
+    textInputEventListener.onSpecialKeyPressedListeners.emplace_back(pOnSpecialKeyPressed);
 
     return *this;
 }

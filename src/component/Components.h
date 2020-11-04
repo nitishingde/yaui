@@ -28,12 +28,12 @@ namespace yaui::component {
     };
 
     struct MouseEventListener {
-        EventHandlerFunctionPointer pOnButtonDownHandle = nullptr;
-        EventHandlerFunctionPointer pOnButtonUpHandle = nullptr;
-        EventHandlerFunctionPointer pOnClickHandle = nullptr;
-        EventHandlerFunctionPointer pOnHoverEnterHandle = nullptr;
-        EventHandlerFunctionPointer pOnHoverLeaveHandle = nullptr;
-        EventHandlerFunctionPointer pOnScrollHandle = nullptr;
+        ArrayList<EventHandlerFunctionPointer> onButtonDownListeners;
+        ArrayList<EventHandlerFunctionPointer> onButtonUpListeners;
+        ArrayList<EventHandlerFunctionPointer> onClickListeners;
+        ArrayList<EventHandlerFunctionPointer> onHoverEnterListeners;
+        ArrayList<EventHandlerFunctionPointer> onHoverLeaveListeners;
+        ArrayList<EventHandlerFunctionPointer> onScrollListeners;
 
         void onButtonDown(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
         void onButtonUp(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
@@ -55,8 +55,8 @@ namespace yaui::component {
 
     struct TextInputEventListener {
         bool isSelected = false;
-        EventHandlerFunctionPointer pOnCharacterEntered = nullptr;
-        EventHandlerFunctionPointer pOnSpecialKeyPressed = nullptr;
+        ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
+        ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
 
         void onCharacterEntered(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
         void onSpecialKeyPressed(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
