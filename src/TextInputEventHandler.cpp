@@ -14,14 +14,18 @@ void yaui::TextInputEventHandler::handleEvents() {
         switch(event.type) {
             case EventType::SDL_TEXTINPUT:
                 for(auto &entity: view) {
-                    view.get(entity).onCharacterEntered(registry, entity, event);
+                    auto &textInputEventListeners = view.get(entity);
+                    if(!textInputEventListeners.isSelected) continue;
+                    handleEventListeners(textInputEventListeners.onCharacterEnteredListeners, registry, entity, event);
                 }
                 break;
 
             case EventType::SDL_KEYDOWN:
                 if(event.key.keysym.sym != SDL_KeyCode::SDLK_BACKSPACE) break;
                 for(auto &entity: view) {
-                    view.get(entity).onSpecialKeyPressed(registry, entity, event);
+                    auto &textInputEventListeners = view.get(entity);
+                    if(!textInputEventListeners.isSelected) continue;
+                    handleEventListeners(textInputEventListeners.onSpecialKeyPressedListeners, registry, entity, event);
                 }
                 break;
         }

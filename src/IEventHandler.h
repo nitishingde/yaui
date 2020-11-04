@@ -9,6 +9,8 @@ namespace yaui {
     protected:
         ArrayList<Event> mEventQueue;
 
+    protected:
+        virtual void handleEventListeners(ArrayList<EventHandlerFunctionPointer> &eventListeners, entity::Registry &registry, const entity::Entity &entity, const Event &event);
     public:
         virtual ~IEventHandler() = default;
         void enqueueEvent(const Event &event);

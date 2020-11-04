@@ -76,6 +76,7 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
             auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
             backgroundColour.g = (backgroundColour.g+64)%256;
             registry.get<component::TextureTransformationJobs>(entity).trigger();
+            return true;
         }
     );
     mouseEventListener.onHoverEnterListeners.emplace_back(
@@ -83,6 +84,7 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
             auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
             backgroundColour.b = 255;
             registry.get<component::TextureTransformationJobs>(entity).trigger();
+            return true;
         }
     );
     mouseEventListener.onHoverLeaveListeners.emplace_back(
@@ -90,6 +92,7 @@ TEST_CASE("Test yaui Button", "[yaui][Button]") {
             auto &backgroundColour = registry.get<component::Texture2D>(entity).backgroundColour;
             backgroundColour.b = 0;
             registry.get<component::TextureTransformationJobs>(entity).trigger();
+            return true;
         }
     );
     dir->run();

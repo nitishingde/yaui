@@ -31,7 +31,7 @@ void yaui::MouseEventHandler::handleEvents() {
         if(mPreviousTargetEntity == targetEntity);
         else if(mpPreviousTargetRegistry == &registry and mPreviousTargetEntity != entity::null) {
             auto pMouseEventListener = registry.try_get<component::MouseEventListener>(mPreviousTargetEntity);
-            if(pMouseEventListener) pMouseEventListener->onHoverLeave(registry, mPreviousTargetEntity, event);
+            if(pMouseEventListener) handleEventListeners(pMouseEventListener->onHoverLeaveListeners, registry, mPreviousTargetEntity, event);
             mPreviousTargetEntity = entity::null;
         }
 
@@ -41,22 +41,22 @@ void yaui::MouseEventHandler::handleEvents() {
         if(pMouseEventListener == nullptr) continue;
 
         mPreviousTargetEntity = targetEntity;
-        pMouseEventListener->onHoverEnter(registry, targetEntity, event);
+        handleEventListeners(pMouseEventListener->onHoverEnterListeners, registry, targetEntity, event);
         switch(event.type) {
             case SDL_EventType::SDL_MOUSEBUTTONDOWN:
-                pMouseEventListener->onButtonDown(registry, targetEntity, event);
+                handleEventListeners(pMouseEventListener->onButtonDownListeners, registry, targetEntity, event);
                 break;
 
             case SDL_EventType::SDL_MOUSEBUTTONUP:
-                pMouseEventListener->onButtonUp(registry, targetEntity, event);
-                pMouseEventListener->onClick(registry, targetEntity, event);
+                handleEventListeners(pMouseEventListener->onButtonUpListeners, registry, targetEntity, event);
+                handleEventListeners(pMouseEventListener->onClickListeners, registry, targetEntity, event);
                 break;
 
             case SDL_EventType::SDL_MOUSEMOTION:
                 break;
 
             case SDL_EventType::SDL_MOUSEWHEEL:
-                pMouseEventListener->onScroll(registry, targetEntity, event);
+                handleEventListeners(pMouseEventListener->onScrollListeners, registry, targetEntity, event);
                 break;
         }
     }

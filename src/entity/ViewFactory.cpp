@@ -92,6 +92,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                 auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
                 text.value += event.text.text;
                 textureTransformationJobs.trigger();
+                return true;
             },
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
                 if(event.key.keysym.sym == SDL_KeyCode::SDLK_BACKSPACE) {
@@ -101,6 +102,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                         textureTransformationJobs.trigger();
                     }
                 }
+                return true;
             }
         )
         .buildTexture2DComponent(backgroundColour, 0)

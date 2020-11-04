@@ -1,47 +1,6 @@
 #include "Components.h"
 #include <spdlog/spdlog.h>
 
-void
-yaui::component::MouseEventListener::onButtonDown(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event)const {
-    for(auto &eventListener: onButtonDownListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void
-yaui::component::MouseEventListener::onButtonUp(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    for(auto &eventListener: onButtonUpListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void yaui::component::MouseEventListener::onClick(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    for(auto &eventListener: onClickListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void
-yaui::component::MouseEventListener::onHoverEnter(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    for(auto &eventListener: onHoverEnterListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void
-yaui::component::MouseEventListener::onHoverLeave(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    for(auto &eventListener: onHoverLeaveListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void
-yaui::component::MouseEventListener::onScroll(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    for(auto &eventListener: onScrollListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
 yaui::component::Text::Text(yaui::component::Text &&other) noexcept
     : colour(other.colour)
     , value(std::move(other.value))
@@ -66,20 +25,6 @@ yaui::component::Text::~Text() {
         TTF_CloseFont(pFont);
         pFont = nullptr;
         spdlog::info("DELETED| component::Text");
-    }
-}
-
-void yaui::component::TextInputEventListener::onCharacterEntered(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(!isSelected) return;
-    for(auto &eventListener: onCharacterEnteredListeners) {
-        eventListener(registry, entity, event);
-    }
-}
-
-void yaui::component::TextInputEventListener::onSpecialKeyPressed(yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) const {
-    if(!isSelected) return;
-    for(auto &eventListener: onSpecialKeyPressedListeners) {
-        eventListener(registry, entity, event);
     }
 }
 

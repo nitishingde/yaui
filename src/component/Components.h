@@ -34,13 +34,6 @@ namespace yaui::component {
         ArrayList<EventHandlerFunctionPointer> onHoverEnterListeners;
         ArrayList<EventHandlerFunctionPointer> onHoverLeaveListeners;
         ArrayList<EventHandlerFunctionPointer> onScrollListeners;
-
-        void onButtonDown(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onButtonUp(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onClick(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onHoverEnter(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onHoverLeave(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onScroll(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
     };
 
     struct Text {
@@ -57,9 +50,6 @@ namespace yaui::component {
         bool isSelected = false;
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
         ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
-
-        void onCharacterEntered(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
-        void onSpecialKeyPressed(entity::Registry &registry, const entity::Entity &entity, const Event &event) const;
     };
 
     struct Texture2D {
