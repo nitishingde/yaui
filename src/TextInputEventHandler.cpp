@@ -16,7 +16,7 @@ void yaui::TextInputEventHandler::handleEvents() {
                 for(auto &entity: view) {
                     auto &textInputEventListeners = view.get(entity);
                     if(!textInputEventListeners.isSelected) continue;
-                    handleEventListeners(textInputEventListeners.onCharacterEnteredListeners, registry, entity, event);
+                    IEventHandler::invokeEventListeners(textInputEventListeners.onCharacterEnteredListeners, registry, entity, event);
                 }
                 break;
 
@@ -25,7 +25,7 @@ void yaui::TextInputEventHandler::handleEvents() {
                 for(auto &entity: view) {
                     auto &textInputEventListeners = view.get(entity);
                     if(!textInputEventListeners.isSelected) continue;
-                    handleEventListeners(textInputEventListeners.onSpecialKeyPressedListeners, registry, entity, event);
+                    IEventHandler::invokeEventListeners(textInputEventListeners.onSpecialKeyPressedListeners, registry, entity, event);
                 }
                 break;
         }

@@ -6,7 +6,7 @@ void yaui::IEventHandler::enqueueEvent(const yaui::Event &event) {
     mEventQueue.emplace_back(event);
 }
 
-void yaui::IEventHandler::handleEventListeners(
+void yaui::IEventHandler::invokeEventListeners(
     ArrayList<EventHandlerFunctionPointer> &eventListeners,
     entity::Registry &registry,
     const entity::Entity &entity,
