@@ -1,5 +1,7 @@
 #include "ViewBuilder.h"
 
+#include <utility>
+
 yaui::entity::ViewBuilder::ViewBuilder(Entity entity, Registry *pRegistry) noexcept
     : mEntity(entity)
     , mpRegistry(pRegistry) {
@@ -68,12 +70,12 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerCom
 
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextComponent(
     yaui::String textString,
-    yaui::String font,
+    const yaui::String& font,
     const yaui::int32 &fontSize,
     const yaui::Colour &fontColour
 ) {
     auto &text = mpRegistry->get_or_emplace<component::Text>(mEntity);
-    text.value = textString;
+    text.value = std::move(textString);
     text.pFont = TTF_OpenFont(("resources/open-sans/"+font).c_str(), fontSize);
     text.colour = fontColour;
 
