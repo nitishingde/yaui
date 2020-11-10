@@ -1,5 +1,6 @@
 #include "Components.h"
 #include <spdlog/spdlog.h>
+#include "EventDispatcher.h"
 
 yaui::component::Text::Text(yaui::component::Text &&other) noexcept
     : colour(other.colour)
@@ -26,6 +27,18 @@ yaui::component::Text::~Text() {
         pFont = nullptr;
         spdlog::info("DELETED| component::Text");
     }
+}
+
+void
+yaui::component::TextInputEventListener::registerListener(entity::Registry &registry, const entity::Entity &entity) {
+    isSelected = true;
+    EventDispatcher::getInstance()->registerListener(YAUI_TO_STRING(TextInputEventListener), registry, entity);
+}
+
+void
+yaui::component::TextInputEventListener::unregisterListener(entity::Registry &registry, const entity::Entity &entity) {
+    isSelected = false;
+    EventDispatcher::getInstance()->unregisterListener(YAUI_TO_STRING(TextInputEventListener), registry, entity);
 }
 
 yaui::component::Texture2D::Texture2D(yaui::component::Texture2D &&other) noexcept

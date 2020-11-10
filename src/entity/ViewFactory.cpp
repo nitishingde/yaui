@@ -72,14 +72,38 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
             "Caret Blink",
             1.0f,
             [](entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter) {
-                auto [caret, textureTransformationJobs] = registry.get<component::Caret, component::TextureTransformationJobs>(entity);
-                caret.isVisible = !caret.isVisible;
-                textureTransformationJobs.trigger();
+                auto [caret, textInputEventListener, textureTransformationJobs] = registry.get<
+                    component::Caret,
+                    component::TextInputEventListener,
+                    component::TextureTransformationJobs
+                >(entity);
+                bool oldIsVisible = caret.isVisible;
+                if(textInputEventListener.isSelected) caret.isVisible = !caret.isVisible;
+                else caret.isVisible = false;
+                if(oldIsVisible != caret.isVisible) textureTransformationJobs.trigger();
                 return true;
             }
         )})
         .buildBoxModelComponent(border, borderColour, padding)
         .buildCaretComponent()
+        .buildMouseEventListenerComponent(
+            nullptr,
+            nullptr,
+            [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
+                if(auto textInputListener = registry.try_get<component::TextInputEventListener>(entity); textInputListener != nullptr) {
+                    textInputListener->registerListener(registry, entity);
+                }
+                return true;
+            },
+            nullptr,
+            [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
+                if(auto textInputListener = registry.try_get<component::TextInputEventListener>(entity); textInputListener != nullptr) {
+                    textInputListener->unregisterListener(registry, entity);
+                }
+                return true;
+            },
+            nullptr
+        )
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTextureTransformationComponent({
             TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
@@ -87,7 +111,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
             TextureTransformationFactory::produceAddBorderTextureTransformation()
         })
         .buildTextInputEventListener(
-            true,
+            false,
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
                 auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
                 text.value += event.text.text;

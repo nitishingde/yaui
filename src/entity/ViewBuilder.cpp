@@ -47,8 +47,21 @@ yaui::entity::ViewBuilder::buildCaretComponent(const yaui::Colour &colour, const
     return *this;
 }
 
-[[maybe_unused]] yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent() {
-    mpRegistry->get_or_emplace<component::MouseEventListener>(mEntity);
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent(
+    EventHandlerFunctionPointer pOnButtonDown,
+    EventHandlerFunctionPointer pOnButtonUp,
+    EventHandlerFunctionPointer pOnClick,
+    EventHandlerFunctionPointer pOnHoverEnter,
+    EventHandlerFunctionPointer pOnHoverLeave,
+    EventHandlerFunctionPointer pOnScroll
+) {
+    auto &mouseEventListener = mpRegistry->get_or_emplace<component::MouseEventListener>(mEntity);
+    if(pOnButtonDown) mouseEventListener.onButtonDownListeners.emplace_back(pOnButtonDown);
+    if(pOnButtonUp) mouseEventListener.onButtonUpListeners.emplace_back(pOnButtonUp);
+    if(pOnClick) mouseEventListener.onClickListeners.emplace_back(pOnClick);
+    if(pOnHoverEnter) mouseEventListener.onHoverEnterListeners.emplace_back(pOnHoverEnter);
+    if(pOnHoverLeave) mouseEventListener.onHoverLeaveListeners.emplace_back(pOnHoverLeave);
+    if(pOnScroll) mouseEventListener.onScrollListeners.emplace_back(pOnScroll);
 
     return *this;
 }

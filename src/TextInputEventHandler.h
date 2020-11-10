@@ -6,8 +6,6 @@
 
 namespace yaui {
     class TextInputEventHandler: public IEventHandler {
-    // FIXME
-    // Register TextInputListeners rather than iterating on all of them
     public:
         bool isEventTypeSupported(const EventType &eventType) override;
         void handleEvents() override;

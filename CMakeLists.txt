@@ -31,6 +31,7 @@ add_library(yaui
         src/Action.cpp src/Action.h
         src/Behaviour.cpp src/Behaviour.h
         src/Director.cpp src/Director.h
+        src/EventDispatcher.cpp src/EventDispatcher.h
         src/IEventHandler.cpp src/IEventHandler.h
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h

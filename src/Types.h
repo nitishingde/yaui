@@ -9,6 +9,8 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 
+#define YAUI_TO_STRING(x) #x
+
 namespace yaui {
     using int8 = int8_t;
     using uint8 = uint8_t;

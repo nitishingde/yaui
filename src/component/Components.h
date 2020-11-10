@@ -17,7 +17,7 @@ namespace yaui::component {
 
     struct Caret {
         Colour colour {128, 128, 128, 128};
-        bool isVisible = true;
+        bool isVisible = false;
         ViewPort rect {0, 0, 5, 32};
     };
 
@@ -46,10 +46,13 @@ namespace yaui::component {
         ~Text();
     };
 
+    // FIXME: unregister this listener when the component is destroyed
     struct TextInputEventListener {
-        bool isSelected = false;
+        bool isSelected = false;// FIXME: move this to another component
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
         ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
+        void registerListener(entity::Registry &registry, const entity::Entity &entity);
+        void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
     };
 
     struct Texture2D {

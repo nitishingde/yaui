@@ -18,7 +18,14 @@ namespace yaui::entity {
         ViewBuilder& buildTextureTransformationComponent(ArrayList<TextureTransformation> &&behaviours = {});
         ViewBuilder& buildBoxModelComponent(const Rect &border = {0, 0, 0, 0}, const Colour &borderColour = {0, 0, 0,255}, const Rect &padding = {0, 0, 0, 0});
         ViewBuilder& buildCaretComponent(const Colour &colour = {128, 128, 128, 128}, const ViewPort &rect = {0, 0, 5, 32});
-        ViewBuilder& buildMouseEventListenerComponent();
+        ViewBuilder& buildMouseEventListenerComponent(
+            EventHandlerFunctionPointer pOnButtonDown = nullptr,
+            EventHandlerFunctionPointer pOnButtonUp = nullptr,
+            EventHandlerFunctionPointer pOnClick = nullptr,
+            EventHandlerFunctionPointer pOnHoverEnter = nullptr,
+            EventHandlerFunctionPointer pOnHoverLeave = nullptr,
+            EventHandlerFunctionPointer pOnScroll = nullptr
+        );
         ViewBuilder& buildTextComponent(String textString, String font = "OpenSans-Regular.ttf", const int32 &fontSize = 24, const Colour &fontColour = {0, 0, 0, 255});
         ViewBuilder& buildTextInputEventListener(bool isSelected = false, EventHandlerFunctionPointer pOnCharacterEntered = nullptr, EventHandlerFunctionPointer pOnSpecialKeyPressed = nullptr);
         ViewBuilder& buildTexture2DComponent(const Colour &backgroundColour = {255, 255, 255, 255}, uint32 zIndex = 0);
