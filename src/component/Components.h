@@ -51,7 +51,7 @@ namespace yaui::component {
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
         ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
         ~TextInputEventListener() noexcept;
-        String getClassName() const override;
+        [[nodiscard]] String getClassName() const override;
         void registerListener(entity::Registry &registry, const entity::Entity &entity);
         void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
     };
