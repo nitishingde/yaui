@@ -24,5 +24,5 @@ void yaui::system::BehaviourSystem::executeJob() {
 }
 
 yaui::String yaui::system::BehaviourSystem::getClassName() const {
-    return "BehaviourSystem";
+    return YAUI_TO_STRING(BehaviourSystem);
 }

@@ -34,5 +34,5 @@ void yaui::system::ActionSystem::executeJob() {
 }
 
 yaui::String yaui::system::ActionSystem::getClassName() const {
-    return "ActionsSystem";
+    return YAUI_TO_STRING(ActionSystem);
 }

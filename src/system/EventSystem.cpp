@@ -38,5 +38,5 @@ void yaui::system::EventSystem::executeJob() {
 }
 
 yaui::String yaui::system::EventSystem::getClassName() const {
-    return "EventSystem";
+    return YAUI_TO_STRING(EventSystem);
 }

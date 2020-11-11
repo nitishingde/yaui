@@ -72,5 +72,5 @@ void yaui::system::TextureTransformationSystem::executeJob() {
 }
 
 yaui::String yaui::system::TextureTransformationSystem::getClassName() const {
-    return "TextureTransformationSystem";
+    return YAUI_TO_STRING(TextureTransformationSystem);
 }

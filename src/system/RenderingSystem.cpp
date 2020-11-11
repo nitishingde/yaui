@@ -59,7 +59,7 @@ void yaui::system::RenderingSystem::executeJob() {
 }
 
 yaui::String yaui::system::RenderingSystem::getClassName() const {
-    return "RenderingSystem";
+    return YAUI_TO_STRING(RenderingSystem);
 }
 
 void yaui::system::RenderingSystem::displayStats(bool displayStats) {
