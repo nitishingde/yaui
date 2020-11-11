@@ -29,16 +29,24 @@ yaui::component::Text::~Text() {
     }
 }
 
+yaui::component::TextInputEventListener::~TextInputEventListener() noexcept {
+    EventDispatcher::getInstance()->unregisterListener(*this);
+}
+
+yaui::String yaui::component::TextInputEventListener::getClassName() const {
+    return YAUI_TO_STRING(TextInputEventListener);
+}
+
 void
 yaui::component::TextInputEventListener::registerListener(entity::Registry &registry, const entity::Entity &entity) {
     isSelected = true;
-    EventDispatcher::getInstance()->registerListener(YAUI_TO_STRING(TextInputEventListener), registry, entity);
+    EventDispatcher::getInstance()->registerListener(*this, registry, entity);
 }
 
 void
 yaui::component::TextInputEventListener::unregisterListener(entity::Registry &registry, const entity::Entity &entity) {
     isSelected = false;
-    EventDispatcher::getInstance()->unregisterListener(YAUI_TO_STRING(TextInputEventListener), registry, entity);
+    EventDispatcher::getInstance()->unregisterListener(*this, registry, entity);
 }
 
 yaui::component::Texture2D::Texture2D(yaui::component::Texture2D &&other) noexcept

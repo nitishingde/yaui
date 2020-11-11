@@ -62,6 +62,12 @@ namespace yaui {
         inline constexpr entt::null_t null{};
     }
 
+    struct Object {
+        [[nodiscard]] virtual String getClassName() const = 0;
+    };
+
+    using IEventListener = Object;
+
     // should return false to discontinue
     using ActionUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter);
     using BehaviourUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay);

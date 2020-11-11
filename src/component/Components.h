@@ -46,11 +46,12 @@ namespace yaui::component {
         ~Text();
     };
 
-    // FIXME: unregister this listener when the component is destroyed
-    struct TextInputEventListener {
+    struct TextInputEventListener: public IEventListener {
         bool isSelected = false;// FIXME: move this to another component
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
         ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
+        ~TextInputEventListener() noexcept;
+        String getClassName() const override;
         void registerListener(entity::Registry &registry, const entity::Entity &entity);
         void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
     };
