@@ -1,14 +1,15 @@
 #include "BehaviourSystem.h"
-#include <spdlog/spdlog.h>
 #include "Director.h"
 #include "component/Components.h"
+#include "LoggerConstants.h"
 
 yaui::system::BehaviourSystem::BehaviourSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
+    spdlog::info("{} {}", Logger::kConstructed, BehaviourSystem::getClassName());
 }
 
 yaui::system::BehaviourSystem::~BehaviourSystem() {
-    spdlog::info("DELETED| BehaviourSystem");
+    spdlog::info("{} {}", Logger::kDestructed, BehaviourSystem::getClassName());
 }
 
 void yaui::system::BehaviourSystem::executeJob() {
@@ -24,5 +25,5 @@ void yaui::system::BehaviourSystem::executeJob() {
 }
 
 yaui::String yaui::system::BehaviourSystem::getClassName() const {
-    return YAUI_TO_STRING(BehaviourSystem);
+    return YAUI_TO_STRING(yaui::system::BehaviourSystem);
 }

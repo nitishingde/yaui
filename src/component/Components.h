@@ -40,7 +40,7 @@ namespace yaui::component {
         Colour colour {0, 0, 0, 255};
         String value;
         Font *pFont = nullptr;
-        explicit Text() = default;
+        explicit Text() noexcept;
         Text(Text &&other) noexcept;
         Text& operator=(Text &&other) noexcept;
         ~Text();
@@ -60,7 +60,7 @@ namespace yaui::component {
         Colour backgroundColour{0, 0, 0, 0};
         uint32 zIndex = 0;
         Texture *pTexture = nullptr;
-        explicit Texture2D() = default;
+        explicit Texture2D() noexcept;
         Texture2D(Texture2D &&other) noexcept;
         Texture2D& operator=(Texture2D &&other) noexcept;
         ~Texture2D();

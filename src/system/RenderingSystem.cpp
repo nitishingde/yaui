@@ -1,10 +1,11 @@
 #include "RenderingSystem.h"
-#include <spdlog/spdlog.h>
+#include "LoggerConstants.h"
 #include "yaui.h"
 
 yaui::system::RenderingSystem::RenderingSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
     mpFont = TTF_OpenFont("resources/open-sans/OpenSans-Regular.ttf", 32);
+    spdlog::info("{} {}", Logger::kConstructed, RenderingSystem::getClassName());
 }
 
 yaui::system::RenderingSystem::~RenderingSystem() {
@@ -12,7 +13,7 @@ yaui::system::RenderingSystem::~RenderingSystem() {
     mpFont = nullptr;
     if(mpStatsTexture) SDL_DestroyTexture(mpStatsTexture);
     mpStatsTexture = nullptr;
-    spdlog::info("DELETED| RenderingSystem");
+    spdlog::info("{} {}", Logger::kDestructed, RenderingSystem::getClassName());
 }
 
 void yaui::system::RenderingSystem::displayStats() {
@@ -26,7 +27,7 @@ void yaui::system::RenderingSystem::displayStats() {
             ("FPS: "+std::to_string(int(fps))+"  ").c_str(),
             Colour {255, 0, 0, 255}
         );
-        spdlog::info("FPS: {:.3f}", fps);
+        spdlog::info("{} FPS = {:.3f}", Logger::kStats, fps);
         if(mpStatsTexture) SDL_DestroyTexture(mpStatsTexture);
         mpStatsTexture = SDL_CreateTextureFromSurface(&renderer, pSurface);
         SDL_FreeSurface(pSurface);
@@ -59,7 +60,7 @@ void yaui::system::RenderingSystem::executeJob() {
 }
 
 yaui::String yaui::system::RenderingSystem::getClassName() const {
-    return YAUI_TO_STRING(RenderingSystem);
+    return YAUI_TO_STRING(yaui::system::RenderingSystem);
 }
 
 void yaui::system::RenderingSystem::displayStats(bool displayStats) {

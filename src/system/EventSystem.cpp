@@ -1,5 +1,5 @@
 #include "EventSystem.h"
-#include <spdlog/spdlog.h>
+#include "LoggerConstants.h"
 #include "MouseEventHandler.h"
 #include "TextInputEventHandler.h"
 #include "WindowEventHandler.h"
@@ -9,14 +9,15 @@ yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
     mEventHandlers.emplace_back(new TextInputEventHandler());
     mEventHandlers.emplace_back(new MouseEventHandler());
     mEventHandlers.emplace_back(new WindowEventHandler());
+    spdlog::info("{} {}", Logger::kConstructed, EventSystem::getClassName());
 }
 
 yaui::system::EventSystem::~EventSystem() {
-    spdlog::info("DELETED| EventSystem");
     for(auto pEventHandlers: mEventHandlers) {
         delete pEventHandlers;
     }
     mEventHandlers.clear();
+    spdlog::info("{} {}", Logger::kDestructed, EventSystem::getClassName());
 }
 
 void yaui::system::EventSystem::pollEvents() {
@@ -38,5 +39,5 @@ void yaui::system::EventSystem::executeJob() {
 }
 
 yaui::String yaui::system::EventSystem::getClassName() const {
-    return YAUI_TO_STRING(EventSystem);
+    return YAUI_TO_STRING(yaui::system::EventSystem);
 }

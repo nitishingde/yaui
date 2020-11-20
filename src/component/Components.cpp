@@ -1,13 +1,17 @@
 #include "Components.h"
-#include <spdlog/spdlog.h>
 #include "EventDispatcher.h"
+#include "LoggerConstants.h"
+
+yaui::component::Text::Text() noexcept {
+    spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::component::Text));
+}
 
 yaui::component::Text::Text(yaui::component::Text &&other) noexcept
     : colour(other.colour)
     , value(std::move(other.value))
     , pFont(other.pFont) {
     other.pFont = nullptr;
-    spdlog::info("MOVED| component::Text");
+    spdlog::info("{} {}", Logger::kMoved, YAUI_TO_STRING(yaui::component::Text));
 }
 
 yaui::component::Text& yaui::component::Text::operator=(yaui::component::Text &&other) noexcept {
@@ -16,7 +20,7 @@ yaui::component::Text& yaui::component::Text::operator=(yaui::component::Text &&
         value = std::move(other.value);
         pFont = other.pFont;
         other.pFont = nullptr;
-        spdlog::info("MOVE_ASSIGNED| component::Text");
+        spdlog::info("{}{} {}", Logger::kMoved, Logger::kAssigned, YAUI_TO_STRING(yaui::component::Text));
     }
     return *this;
 }
@@ -25,8 +29,8 @@ yaui::component::Text::~Text() {
     if(pFont) {
         TTF_CloseFont(pFont);
         pFont = nullptr;
-        spdlog::info("DELETED| component::Text");
     }
+    spdlog::info("{} {}", Logger::kDestructed, YAUI_TO_STRING(yaui::component::Text));
 }
 
 yaui::component::TextInputEventListener::~TextInputEventListener() noexcept {
@@ -49,12 +53,16 @@ yaui::component::TextInputEventListener::unregisterListener(entity::Registry &re
     EventDispatcher::getInstance()->unregisterListener(*this, registry, entity);
 }
 
+yaui::component::Texture2D::Texture2D() noexcept {
+    spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::component::Texture2D));
+}
+
 yaui::component::Texture2D::Texture2D(yaui::component::Texture2D &&other) noexcept
     : backgroundColour(other.backgroundColour)
     , zIndex(other.zIndex)
     , pTexture(other.pTexture) {
     other.pTexture = nullptr;
-    spdlog::info("MOVED| component::Texture2D");
+    spdlog::info("{} {}", Logger::kMoved, YAUI_TO_STRING(yaui::component::Texture2D));
 }
 
 yaui::component::Texture2D& yaui::component::Texture2D::operator=(yaui::component::Texture2D &&other) noexcept {
@@ -63,7 +71,7 @@ yaui::component::Texture2D& yaui::component::Texture2D::operator=(yaui::componen
         this->zIndex = other.zIndex;
         this->pTexture = other.pTexture;
         other.pTexture = nullptr;
-        spdlog::info("MOVE_ASSIGNED| component::Texture2D");
+        spdlog::info("{}{} {}", Logger::kMoved, Logger::kAssigned, YAUI_TO_STRING(yaui::component::Texture2D));
     }
     return *this;
 }
@@ -72,8 +80,8 @@ yaui::component::Texture2D::~Texture2D() {
     if(pTexture) {
         SDL_DestroyTexture(pTexture);
         pTexture = nullptr;
-        spdlog::info("DELETED| component::Texture2D");
     }
+    spdlog::info("{} {}", Logger::kDestructed, YAUI_TO_STRING(yaui::component::Texture2D));
 }
 
 void yaui::component::TextureTransformationJobs::trigger() {

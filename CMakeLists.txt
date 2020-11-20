@@ -33,6 +33,7 @@ add_library(yaui
         src/Director.cpp src/Director.h
         src/EventDispatcher.cpp src/EventDispatcher.h
         src/IEventHandler.cpp src/IEventHandler.h
+        src/LoggerConstants.h
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h
         src/Scene.cpp src/Scene.h

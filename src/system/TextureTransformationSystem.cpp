@@ -1,13 +1,15 @@
 #include "TextureTransformationSystem.h"
-#include <spdlog/spdlog.h>
+#include "LoggerConstants.h"
+#include <typeinfo>
 #include "yaui.h"
 
 yaui::system::TextureTransformationSystem::TextureTransformationSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
+    spdlog::info("{} {}", Logger::kConstructed, TextureTransformationSystem::getClassName());
 }
 
 yaui::system::TextureTransformationSystem::~TextureTransformationSystem() {
-    spdlog::info("DELETED| TextureTransformationSystem");
+    spdlog::info("{} {}", Logger::kDestructed, TextureTransformationSystem::getClassName());
 }
 
 void yaui::system::TextureTransformationSystem::lockTexture(
@@ -66,11 +68,11 @@ void yaui::system::TextureTransformationSystem::executeJob() {
     }
 
     if(shouldUpdateRenderPipeline) {
-        auto renderingSystem = dynamic_cast<RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+        auto renderingSystem = dynamic_cast<RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem(YAUI_TO_STRING(yaui::system::RenderingSystem)));
         renderingSystem->updateRenderPipeline();
     }
 }
 
 yaui::String yaui::system::TextureTransformationSystem::getClassName() const {
-    return YAUI_TO_STRING(TextureTransformationSystem);
+    return YAUI_TO_STRING(yaui::system::TextureTransformationSystem);
 }

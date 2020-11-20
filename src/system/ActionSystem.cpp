@@ -1,14 +1,15 @@
 #include "ActionSystem.h"
-#include <spdlog/spdlog.h>
 #include "component/Components.h"
 #include "Director.h"
+#include "LoggerConstants.h"
 
 yaui::system::ActionSystem::ActionSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
+    spdlog::info("{} {}", Logger::kConstructed, ActionSystem::getClassName());
 }
 
 yaui::system::ActionSystem::~ActionSystem() {
-    spdlog::info("DELETED| ActionSystem");
+    spdlog::info("{} {}", Logger::kDestructed, ActionSystem::getClassName());
 }
 
 void yaui::system::ActionSystem::executeJob() {
@@ -34,5 +35,5 @@ void yaui::system::ActionSystem::executeJob() {
 }
 
 yaui::String yaui::system::ActionSystem::getClassName() const {
-    return YAUI_TO_STRING(ActionSystem);
+    return YAUI_TO_STRING(yaui::system::ActionSystem);
 }

@@ -1,5 +1,5 @@
 #include "Director.h"
-#include <spdlog/spdlog.h>
+#include "LoggerConstants.h"
 #include "system/SystemJobScheduler.h"
 #include "system/RenderingSystem.h"
 
@@ -16,27 +16,27 @@ yaui::Director::~Director() {
 
     if(mpRenderer) {
         SDL_DestroyRenderer(mpRenderer);
-        spdlog::info("DELETED| Renderer");
+        spdlog::info("{} {}", Logger::kDestructed, YAUI_TO_STRING(yaui::Renderer));
     }
 
     if(mpWindow) {
         SDL_DestroyWindow(mpWindow);
-        spdlog::info("DELETED| Window");
+        spdlog::info("{} {}", Logger::kDestructed, YAUI_TO_STRING(yaui::Window));
     }
 
     if(IMG_Init(0)&IMG_INIT_PNG) {
         IMG_Quit();
-        spdlog::info("DELETED| IMG lib");
+        spdlog::info("{} IMG lib", Logger::kDestructed);
     }
 
     if(TTF_WasInit()) {
         TTF_Quit();
-        spdlog::info("DELETED| TTF lib");
+        spdlog::info("{} TTF lib", Logger::kDestructed);
     }
 
     if(SDL_WasInit(SDL_INIT_VIDEO)) {
         SDL_Quit();
-        spdlog::info("DELETED| SDL2 lib");
+        spdlog::info("{} SDL2 lib", Logger::kDestructed);
     }
 
     instance = nullptr;
@@ -44,11 +44,11 @@ yaui::Director::~Director() {
 
 bool yaui::Director::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
-    spdlog::info("INITIALISED| SDL lib");
+    spdlog::info("{} SDL lib", Logger::kInitialised);
     if(TTF_Init() < 0) return false;
-    spdlog::info("INITIALISED| TTF lib");
+    spdlog::info("{} TTF lib", Logger::kInitialised);
     if(IMG_Init(IMG_INIT_PNG) < 0) return false;
-    spdlog::info("INITIALISED| IMG lib");
+    spdlog::info("{} IMG lib", Logger::kInitialised);
 
     mpWindow = SDL_CreateWindow(
         "YAUI",
@@ -59,11 +59,11 @@ bool yaui::Director::init() {
         SDL_WINDOW_RESIZABLE
     );
     if(mpWindow == nullptr) return false;
-    spdlog::info("INITIALISED| Window");
+    spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::Window));
 
     mpRenderer = SDL_CreateRenderer(mpWindow, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_TARGETTEXTURE);
     if(mpRenderer == nullptr) return false;
-    spdlog::info("INITIALISED| Renderer");
+    spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::Renderer));
 
     return true;
 }
@@ -77,12 +77,12 @@ yaui::Director *yaui::Director::getInstance() {
 }
 
 void yaui::Director::disableStats() {
-    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem(YAUI_TO_STRING(yaui::system::RenderingSystem)));
     if(renderingSystem) renderingSystem->displayStats(false);
 }
 
 void yaui::Director::enableStats() {
-    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem("RenderingSystem"));
+    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(SystemJobScheduler::getInstance()->getSystem(YAUI_TO_STRING(yaui::system::RenderingSystem)));
     if(renderingSystem) renderingSystem->displayStats(true);
 }
 
@@ -136,6 +136,5 @@ void yaui::Director::run() {
             mDelta = jobExecutionTime;
         }
     }
-    spdlog::info("EVENT| Escape Pressed");
     delete this;
 }
