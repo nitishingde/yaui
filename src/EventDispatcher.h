@@ -9,7 +9,7 @@ namespace yaui {
     private:
         struct ListenerIdentity {
             entity::Entity entity = entity::null;
-            IEventListener *pListener;
+            IEventListener *pListener = nullptr;
             entity::Registry *pRegistry = nullptr;
             bool operator==(const ListenerIdentity &other) const {
                 return pListener == other.pListener or (entity == other.entity and pRegistry == other.pRegistry);
