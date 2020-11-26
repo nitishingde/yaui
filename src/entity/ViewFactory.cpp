@@ -72,13 +72,14 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
             "Caret Blink",
             1.0f,
             [](entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter) {
-                auto [caret, textInputEventListener, textureTransformationJobs] = registry.get<
+                auto[caret, focusEventListener, textInputEventListener, textureTransformationJobs] = registry.get<
                     component::Caret,
+                    component::FocusEventListener,
                     component::TextInputEventListener,
                     component::TextureTransformationJobs
                 >(entity);
                 bool oldIsVisible = caret.isVisible;
-                if(textInputEventListener.isSelected) caret.isVisible = !caret.isVisible;
+                if(focusEventListener.isInFocus()) caret.isVisible = !caret.isVisible;
                 else caret.isVisible = false;
                 if(oldIsVisible != caret.isVisible) textureTransformationJobs.trigger();
                 return true;
@@ -86,24 +87,22 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
         )})
         .buildBoxModelComponent(border, borderColour, padding)
         .buildCaretComponent()
-        .buildMouseEventListenerComponent(
-            nullptr,
-            nullptr,
+        .buildFocusEventListenerComponent(true, false)
+        .buildFocusEventListenerComponent(
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
-                if(auto textInputListener = registry.try_get<component::TextInputEventListener>(entity); textInputListener != nullptr) {
-                    textInputListener->registerListener(registry, entity);
+                if(auto textInputEventListener = registry.try_get<component::TextInputEventListener>(entity); textInputEventListener) {
+                    textInputEventListener->registerListener(registry, entity);
                 }
                 return true;
             },
-            nullptr,
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
-                if(auto textInputListener = registry.try_get<component::TextInputEventListener>(entity); textInputListener != nullptr) {
-                    textInputListener->unregisterListener(registry, entity);
+                if(auto textInputEventListener = registry.try_get<component::TextInputEventListener>(entity); textInputEventListener) {
+                    textInputEventListener->unregisterListener(registry, entity);
                 }
                 return true;
-            },
-            nullptr
+            }
         )
+        .buildMouseEventListenerComponent()
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTextureTransformationComponent({
             TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
@@ -111,7 +110,6 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
             TextureTransformationFactory::produceAddBorderTextureTransformation()
         })
         .buildTextInputEventListener(
-            false,
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
                 auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
                 text.value += event.text.text;

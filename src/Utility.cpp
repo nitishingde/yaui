@@ -9,3 +9,9 @@ yaui::Size yaui::getDimensionForText(const component::Text &text, component::Box
     }
     return Size{uint32(width), uint32(height)};
 }
+
+bool yaui::isColliding(const yaui::ViewPort &viewPort, const yaui::Vec2 &point) {
+    if(point.x < viewPort.x or viewPort.x+viewPort.w < point.x) return false;
+    if(point.y < viewPort.y or viewPort.y+viewPort.h < point.y) return false;
+    return true;
+}

@@ -49,6 +49,25 @@ yaui::entity::ViewBuilder::buildCaretComponent(const yaui::Colour &colour, const
     return *this;
 }
 
+yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildFocusEventListenerComponent(bool isEnabled, bool isInFocus) {
+    auto &focus = mpRegistry->get_or_emplace<component::FocusEventListener>(mEntity);
+    focus.isEnabled = isEnabled;
+    focus.isFocused = isInFocus;
+
+    return *this;
+}
+
+yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildFocusEventListenerComponent(
+    yaui::EventHandlerFunctionPointer pOnFocus,
+    yaui::EventHandlerFunctionPointer pOnUnFocus
+) {
+    auto &focus = mpRegistry->get_or_emplace<component::FocusEventListener>(mEntity);
+    if(pOnFocus) focus.onFocusListeners.emplace_back(pOnFocus);
+    if(pOnUnFocus) focus.onUnFocusListeners.emplace_back(pOnUnFocus);
+
+    return *this;
+}
+
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent(
     EventHandlerFunctionPointer pOnButtonDown,
     EventHandlerFunctionPointer pOnButtonUp,
@@ -83,12 +102,10 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextComponent(
 }
 
 yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildTextInputEventListener(
-    bool isSelected,
     EventHandlerFunctionPointer pOnCharacterEntered,
     EventHandlerFunctionPointer pOnSpecialKeyPressed
 ) {
     auto &textInputEventListener = mpRegistry->get_or_emplace<component::TextInputEventListener>(mEntity);
-    textInputEventListener.isSelected = isSelected;
     if(pOnCharacterEntered) textInputEventListener.onCharacterEnteredListeners.emplace_back(pOnCharacterEntered);
     if(pOnSpecialKeyPressed) textInputEventListener.onSpecialKeyPressedListeners.emplace_back(pOnSpecialKeyPressed);
 

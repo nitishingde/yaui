@@ -7,6 +7,7 @@
 
 namespace yaui {
     Size getDimensionForText(const component::Text &text, component::BoxModel *pBoxModel = nullptr);
+    bool isColliding(const ViewPort &viewPort, const Vec2 &point);
 }
 
 

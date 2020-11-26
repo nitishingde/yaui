@@ -32,6 +32,7 @@ add_library(yaui
         src/Behaviour.cpp src/Behaviour.h
         src/Director.cpp src/Director.h
         src/EventDispatcher.cpp src/EventDispatcher.h
+        src/FocusEventHandler.cpp src/FocusEventHandler.h
         src/IEventHandler.cpp src/IEventHandler.h
         src/LoggerConstants.h
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp

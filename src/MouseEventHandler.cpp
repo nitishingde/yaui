@@ -47,6 +47,11 @@ void yaui::MouseEventHandler::handleEvents() {
         switch(event.type) {
             case SDL_EventType::SDL_MOUSEBUTTONDOWN:
                 IEventHandler::invokeEventListeners(pMouseEventListener->onButtonDownListeners, registry, targetEntity, event);
+                // FIXME: this should not be here
+                if(auto focusEventListener = registry.try_get<component::FocusEventListener>(targetEntity); focusEventListener and focusEventListener->isEnabled and !focusEventListener->isFocused) {
+                    focusEventListener->isFocused = true;
+                    IEventHandler::invokeEventListeners(focusEventListener->onFocusListeners, registry, targetEntity, event);
+                }
                 break;
 
             case SDL_EventType::SDL_MOUSEBUTTONUP:

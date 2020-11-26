@@ -27,6 +27,14 @@ namespace yaui::component {
         Rect padding {0, 0, 0, 0};
     };
 
+    struct FocusEventListener {
+        bool isEnabled = false;
+        bool isFocused = false;
+        ArrayList<EventHandlerFunctionPointer> onFocusListeners;
+        ArrayList<EventHandlerFunctionPointer> onUnFocusListeners;
+        [[nodiscard]] bool isInFocus() const;
+    };
+
     struct MouseEventListener {
         ArrayList<EventHandlerFunctionPointer> onButtonDownListeners;
         ArrayList<EventHandlerFunctionPointer> onButtonUpListeners;
@@ -47,7 +55,6 @@ namespace yaui::component {
     };
 
     struct TextInputEventListener: public IEventListener {
-        bool isSelected = false;// FIXME: move this to another component
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
         ArrayList<EventHandlerFunctionPointer> onSpecialKeyPressedListeners;
         ~TextInputEventListener() noexcept;

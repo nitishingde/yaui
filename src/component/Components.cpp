@@ -2,6 +2,10 @@
 #include "EventDispatcher.h"
 #include "LoggerConstants.h"
 
+bool yaui::component::FocusEventListener::isInFocus() const {
+    return isEnabled and isFocused;
+}
+
 yaui::component::Text::Text() noexcept {
     spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::component::Text));
 }
@@ -43,13 +47,11 @@ yaui::String yaui::component::TextInputEventListener::getClassName() const {
 
 void
 yaui::component::TextInputEventListener::registerListener(entity::Registry &registry, const entity::Entity &entity) {
-    isSelected = true;
     EventDispatcher::getInstance()->registerListener(*this, registry, entity);
 }
 
 void
 yaui::component::TextInputEventListener::unregisterListener(entity::Registry &registry, const entity::Entity &entity) {
-    isSelected = false;
     EventDispatcher::getInstance()->unregisterListener(*this, registry, entity);
 }
 
