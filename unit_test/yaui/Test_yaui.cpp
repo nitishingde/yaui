@@ -121,3 +121,121 @@ TEST_CASE("Test yaui TextField", "[yaui][TextField]") {
     );
     dir->run();
 }
+
+TEST_CASE("Test calculator application", "[yaui][app]") {
+    struct CalculatorModal {
+        double result = 0;
+        String _operator;
+    };
+
+    auto dir = Director::getInstance();
+    dir->setFPS(60);
+    dir->pushScene(new Scene("Calculator"));
+    dir->setWindowBackgroundColour({64, 64, 64, 255});
+    dir->setWindowSize(Size{512+40, 512+64+48});
+    auto &scene = dir->getScene();
+    auto resultDisplayLabel = entity::ViewBuilder::initiateBaseView(scene.getRegistry())
+        .buildBoxModelComponent({0, 0, 0, 0}, {0, 0, 0, 0}, {0, 32, 32, 0})
+        .buildTextureTransformationComponent(
+            {
+                TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
+                TextureTransformationFactory::produceAddLabelTextureTransformation()
+            }
+        )
+        .buildTextComponent("0", "OpenSans-Regular.ttf", 32, {255, 255, 255, 255})
+        .buildTexture2DComponent({127, 127, 127, 255})
+        .buildTransformComponent({8, 8, 512+24, 64})
+        .buildView();
+
+    scene.getRegistry().emplace<CalculatorModal>(resultDisplayLabel);
+
+    int y = 80;
+    for(auto &row: ArrayList<ArrayList<String>>{{"7", "8", "9", "+"}, {"4", "5", "6", "-"}, {"1", "2", "3", "*"}, {"0", ".", "=", "/"}}) {
+        int x = 8;
+        for(auto &digit: row) {
+            auto onClick = [resultDisplayLabel](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+                auto calculate = [](double operand1, const String &_operator, double operand2) {
+                    if(_operator == "+") return operand1+operand2;
+                    if(_operator == "-") return operand1-operand2;
+                    if(_operator == "*") return operand1*operand2;
+                    if(_operator == "/") return operand1/operand2;
+                    return operand2;
+                };
+                if(auto buttonText = registry.get<component::Text>(entity).value; buttonText == "+") {
+                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
+                    modal.result = calculate(
+                        modal.result,
+                        modal._operator,
+                        std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
+                    );
+                    modal._operator = "+";
+                    registry.get<component::Text>(resultDisplayLabel).value = "0";
+                } else if(buttonText == "-") {
+                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
+                    modal.result = calculate(
+                        modal.result,
+                        modal._operator,
+                        std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
+                    );
+                    modal._operator = "-";
+                    registry.get<component::Text>(resultDisplayLabel).value = "0";
+                } else if(buttonText == "*") {
+                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
+                    modal.result = calculate(
+                        modal.result,
+                        modal._operator,
+                        std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
+                    );
+                    modal._operator = "*";
+                    registry.get<component::Text>(resultDisplayLabel).value = "0";
+                } else if(buttonText == "/") {
+                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
+                    modal.result = calculate(
+                        modal.result,
+                        modal._operator,
+                        std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
+                    );
+                    modal._operator = "/";
+                    registry.get<component::Text>(resultDisplayLabel).value = "0";
+                } else if(buttonText == ".") {
+                    if(auto &displayText = registry.get<component::Text>(resultDisplayLabel); displayText.value.find_first_of(".", 0) == String::npos) {
+                        displayText.value += ".";
+                    }
+                } else if (buttonText == "=") {
+                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
+                    modal.result = calculate(
+                        modal.result,
+                        modal._operator,
+                        std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
+                    );
+                    registry.get<component::Text>(resultDisplayLabel).value = std::to_string(modal.result);
+                    modal._operator = "=";
+                } else {
+                    if(auto &displayText = registry.get<component::Text>(resultDisplayLabel); displayText.value == "0") {
+                        displayText.value = registry.get<component::Text>(entity).value;
+                    } else {
+                        displayText.value += registry.get<component::Text>(entity).value;
+                    }
+                }
+                registry.get<component::TextureTransformationJobs>(resultDisplayLabel).trigger();
+                return true;
+            };
+            entity::ViewBuilder::initiateBaseView(scene.getRegistry())
+                .buildBoxModelComponent({0, 0, 0, 0}, {0, 0, 0, 0}, {0, 32, 0, 16})
+                .buildTextureTransformationComponent(
+                    {
+                        TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
+                        TextureTransformationFactory::produceAddLabelTextureTransformation()
+                    }
+                )
+                .buildTextComponent(digit, "OpenSans-Regular.ttf", 64, {255, 255, 255, 255})
+                .emplaceBackListenersToMouseEventListenerComponent(onClick)
+                .buildTransformComponent({x, y, 128, 128})
+                .buildTexture2DComponent({32, 32, 32, 255}, 0)
+                .buildView();
+            x += 136;
+        }
+        y += 136;
+    }
+    dir->run();
+}
