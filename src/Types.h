@@ -10,6 +10,7 @@
 #include "SDL_image.h"
 
 #define YAUI_TO_STRING(x) #x
+#define YAUI_USE_FUNCTION_POINTER 0
 
 namespace yaui {
     using int8 = int8_t;
@@ -69,10 +70,17 @@ namespace yaui {
     using IEventListener = Object;
 
     // should return false to discontinue
+#if YAUI_USE_FUNCTION_POINTER
     using ActionUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter);
     using BehaviourUpdateFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, float delay);
     using TextureTransformationUpdateFunctionPointer = void(*)(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta);
     using EventHandlerFunctionPointer = bool(*)(entity::Registry &registry, const entity::Entity &entity, const Event &event);
+#else
+    using ActionUpdateFunctionPointer = std::function<bool(entity::Registry &registry, const entity::Entity &entity, float delay, uint64 counter)>;
+    using BehaviourUpdateFunctionPointer = std::function<bool(entity::Registry &registry, const entity::Entity &entity, float delay)>;
+    using TextureTransformationUpdateFunctionPointer = std::function<void(Renderer &renderer, entity::Registry &registry, const entity::Entity &entity, float delta)>;
+    using EventHandlerFunctionPointer = std::function<bool(entity::Registry &registry, const entity::Entity &entity, const Event &event)>;
+#endif
 }
 
 

@@ -47,7 +47,7 @@ void yaui::system::RenderingSystem::executeJob() {
     auto &renderer = scene.getRenderer();
     SDL_SetRenderTarget(&renderer, nullptr);
     SDL_SetRenderDrawBlendMode(&renderer, SDL_BlendMode::SDL_BLENDMODE_NONE);
-    SDL_SetRenderDrawColor(&renderer, 64, 64, 64, 255);
+    SDL_SetRenderDrawColor(&renderer, mWindowBackgroundColour.r, mWindowBackgroundColour.g, mWindowBackgroundColour.b, mWindowBackgroundColour.a);
     SDL_RenderClear(&renderer);
     registry.view<component::Texture2D, component::Transform>().each(
         [&renderer](component::Texture2D &texture2D, component::Transform transform) {
@@ -65,6 +65,10 @@ yaui::String yaui::system::RenderingSystem::getClassName() const {
 
 void yaui::system::RenderingSystem::displayStats(bool displayStats) {
     mDisplayStats = displayStats;
+}
+
+void yaui::system::RenderingSystem::setWindowBackgroundColour(const Colour &colour) {
+    mWindowBackgroundColour = colour;
 }
 
 void yaui::system::RenderingSystem::updateRenderPipeline() {

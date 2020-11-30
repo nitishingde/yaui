@@ -14,6 +14,7 @@
 #include "WindowEventHandler.h"
 
 // entity
+#include "entity/ViewBuilder.h"
 #include "entity/ViewFactory.h"
 
 // components

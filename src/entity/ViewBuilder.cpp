@@ -9,7 +9,12 @@ yaui::entity::ViewBuilder::ViewBuilder(Entity entity, Registry *pRegistry) noexc
 }
 
 yaui::entity::ViewBuilder yaui::entity::ViewBuilder::initiateBaseView(yaui::entity::Registry &registry) {
-    return ViewBuilder(registry.create(), &registry);
+    auto viewBuilder = ViewBuilder(registry.create(), &registry);
+    return viewBuilder
+        .buildTransformComponent()
+        .buildBoxModelComponent()
+        .buildTexture2DComponent()
+        .buildTextureTransformationComponent();
 }
 
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildActionItemsComponent(ArrayList<Action> &&actions) {
@@ -57,7 +62,7 @@ yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildFocusEventListenerCom
     return *this;
 }
 
-yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildFocusEventListenerComponent(
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::emplaceBackListenersToFocusEventListenerComponent(
     yaui::EventHandlerFunctionPointer pOnFocus,
     yaui::EventHandlerFunctionPointer pOnUnFocus
 ) {
@@ -68,7 +73,7 @@ yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildFocusEventListenerCom
     return *this;
 }
 
-yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildMouseEventListenerComponent(
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::emplaceBackListenersToMouseEventListenerComponent(
     EventHandlerFunctionPointer pOnButtonDown,
     EventHandlerFunctionPointer pOnButtonUp,
     EventHandlerFunctionPointer pOnClick,
@@ -101,7 +106,7 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildTextComponent(
     return *this;
 }
 
-yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildTextInputEventListener(
+yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::emplaceBackListenersToTextInputEventListener(
     EventHandlerFunctionPointer pOnCharacterEntered,
     EventHandlerFunctionPointer pOnSpecialKeyPressed
 ) {

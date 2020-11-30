@@ -117,6 +117,17 @@ void yaui::Director::setFPS(yaui::uint32 fps) {
     mFps = fps;
 }
 
+void yaui::Director::setWindowBackgroundColour(const yaui::Colour &colour) {
+    auto renderingSystem = dynamic_cast<system::RenderingSystem*>(
+        SystemJobScheduler::getInstance()->getSystem(YAUI_TO_STRING(yaui::system::RenderingSystem))
+    );
+    if(renderingSystem) renderingSystem->setWindowBackgroundColour(colour);
+}
+
+void yaui::Director::setWindowSize(const yaui::Size &size) {
+    SDL_SetWindowSize(mpWindow, size.width, size.height);
+}
+
 void yaui::Director::quit() {
     mEngineIgnitionOn = false;
 }

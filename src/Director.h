@@ -30,6 +30,8 @@ namespace yaui {
         void popScene();
         void pushScene(Scene *pScene);
         void setFPS(uint32 fps);
+        void setWindowBackgroundColour(const Colour &colour);
+        void setWindowSize(const Size &size);
         void quit();
         void run();
     };

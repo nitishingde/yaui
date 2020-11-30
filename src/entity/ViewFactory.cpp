@@ -88,7 +88,7 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
         .buildBoxModelComponent(border, borderColour, padding)
         .buildCaretComponent()
         .buildFocusEventListenerComponent(true, false)
-        .buildFocusEventListenerComponent(
+        .emplaceBackListenersToFocusEventListenerComponent(
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
                 if(auto textInputEventListener = registry.try_get<component::TextInputEventListener>(entity); textInputEventListener) {
                     textInputEventListener->registerListener(registry, entity);
@@ -102,14 +102,14 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                 return true;
             }
         )
-        .buildMouseEventListenerComponent()
+        .emplaceBackListenersToMouseEventListenerComponent()
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTextureTransformationComponent({
             TextureTransformationFactory::produceAddBackgroundColourTextureTransformation(),
             TextureTransformationFactory::produceAddTextFieldTextureTransformation(),
             TextureTransformationFactory::produceAddBorderTextureTransformation()
         })
-        .buildTextInputEventListener(
+        .emplaceBackListenersToTextInputEventListener(
             [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
                 auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
                 text.value += event.text.text;
