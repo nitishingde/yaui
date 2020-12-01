@@ -126,6 +126,7 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
     struct CalculatorModel {
         double result = 0;
         String _operator;
+        entity::Entity resultDisplayLabel = entity::null;
     };
 
     auto dir = Director::getInstance();
@@ -134,6 +135,8 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
     dir->setWindowBackgroundColour({64, 64, 64, 255});
     dir->setWindowSize(Size{512+40, 512+64+48});
     auto &scene = dir->getScene();
+    auto &calculatorModel = scene.getRegistry().set<CalculatorModel>();
+
     auto resultDisplayLabel = entity::ViewBuilder::initiateBaseView(scene.getRegistry())
         .buildBoxModelComponent({0, 0, 0, 0}, {0, 0, 0, 0}, {0, 32, 32, 0})
         .buildTextureTransformationComponent(
@@ -146,14 +149,15 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
         .buildTexture2DComponent({127, 127, 127, 255})
         .buildTransformComponent({8, 8, 512+24, 64})
         .buildView();
-
-    scene.getRegistry().emplace<CalculatorModel>(resultDisplayLabel);
+    calculatorModel.resultDisplayLabel = resultDisplayLabel;
 
     int y = 80;
     for(auto &row: ArrayList<ArrayList<String>>{{"7", "8", "9", "+"}, {"4", "5", "6", "-"}, {"1", "2", "3", "*"}, {"0", ".", "=", "/"}}) {
         int x = 8;
         for(auto &digit: row) {
-            auto onClick = [resultDisplayLabel](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+            auto onClick = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
+                auto &model = registry.ctx<CalculatorModel>();
+                auto resultDisplayLabel = model.resultDisplayLabel;
                 auto calculate = [](double operand1, const String &_operator, double operand2) {
                     if(_operator == "+") return operand1+operand2;
                     if(_operator == "-") return operand1-operand2;
@@ -162,7 +166,6 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     return operand2;
                 };
                 if(auto buttonText = registry.get<component::Text>(entity).value; buttonText == "+") {
-                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -171,7 +174,6 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     model._operator = "+";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "-") {
-                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -180,7 +182,6 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     model._operator = "-";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "*") {
-                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -189,7 +190,6 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     model._operator = "*";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "/") {
-                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -202,7 +202,6 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                         displayText.value += ".";
                     }
                 } else if (buttonText == "=") {
-                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
                     model.result = calculate(
                         model.result,
                         model._operator,

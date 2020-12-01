@@ -10,7 +10,7 @@
 #include "SDL_image.h"
 
 #define YAUI_TO_STRING(x) #x
-#define YAUI_USE_FUNCTION_POINTER 0
+#define YAUI_USE_FUNCTION_POINTER 1
 
 namespace yaui {
     using int8 = int8_t;
