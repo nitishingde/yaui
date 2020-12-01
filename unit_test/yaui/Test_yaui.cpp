@@ -123,7 +123,7 @@ TEST_CASE("Test yaui TextField", "[yaui][TextField]") {
 }
 
 TEST_CASE("Test calculator application", "[yaui][app]") {
-    struct CalculatorModal {
+    struct CalculatorModel {
         double result = 0;
         String _operator;
     };
@@ -147,7 +147,7 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
         .buildTransformComponent({8, 8, 512+24, 64})
         .buildView();
 
-    scene.getRegistry().emplace<CalculatorModal>(resultDisplayLabel);
+    scene.getRegistry().emplace<CalculatorModel>(resultDisplayLabel);
 
     int y = 80;
     for(auto &row: ArrayList<ArrayList<String>>{{"7", "8", "9", "+"}, {"4", "5", "6", "-"}, {"1", "2", "3", "*"}, {"0", ".", "=", "/"}}) {
@@ -162,54 +162,54 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     return operand2;
                 };
                 if(auto buttonText = registry.get<component::Text>(entity).value; buttonText == "+") {
-                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
-                    modal.result = calculate(
-                        modal.result,
-                        modal._operator,
+                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
+                    model.result = calculate(
+                        model.result,
+                        model._operator,
                         std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
                     );
-                    modal._operator = "+";
+                    model._operator = "+";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "-") {
-                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
-                    modal.result = calculate(
-                        modal.result,
-                        modal._operator,
+                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
+                    model.result = calculate(
+                        model.result,
+                        model._operator,
                         std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
                     );
-                    modal._operator = "-";
+                    model._operator = "-";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "*") {
-                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
-                    modal.result = calculate(
-                        modal.result,
-                        modal._operator,
+                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
+                    model.result = calculate(
+                        model.result,
+                        model._operator,
                         std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
                     );
-                    modal._operator = "*";
+                    model._operator = "*";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == "/") {
-                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
-                    modal.result = calculate(
-                        modal.result,
-                        modal._operator,
+                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
+                    model.result = calculate(
+                        model.result,
+                        model._operator,
                         std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
                     );
-                    modal._operator = "/";
+                    model._operator = "/";
                     registry.get<component::Text>(resultDisplayLabel).value = "0";
                 } else if(buttonText == ".") {
                     if(auto &displayText = registry.get<component::Text>(resultDisplayLabel); displayText.value.find_first_of(".", 0) == String::npos) {
                         displayText.value += ".";
                     }
                 } else if (buttonText == "=") {
-                    auto &modal = registry.get<CalculatorModal>(resultDisplayLabel);
-                    modal.result = calculate(
-                        modal.result,
-                        modal._operator,
+                    auto &model = registry.get<CalculatorModel>(resultDisplayLabel);
+                    model.result = calculate(
+                        model.result,
+                        model._operator,
                         std::atof(registry.get<component::Text>(resultDisplayLabel).value.c_str())
                     );
-                    registry.get<component::Text>(resultDisplayLabel).value = std::to_string(modal.result);
-                    modal._operator = "=";
+                    registry.get<component::Text>(resultDisplayLabel).value = std::to_string(model.result);
+                    model._operator = "=";
                 } else {
                     if(auto &displayText = registry.get<component::Text>(resultDisplayLabel); displayText.value == "0") {
                         displayText.value = registry.get<component::Text>(entity).value;
