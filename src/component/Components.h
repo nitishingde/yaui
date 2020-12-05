@@ -83,6 +83,11 @@ namespace yaui::component {
         ViewPort viewPort {0, 0, 0, 0};
         FVec2 scale {1.f, 1.f};
     };
+
+    // Context variables
+    struct MouseEventState {
+        entity::Entity targetEntity = entity::null;
+    };
 }
 
 #endif //YAUI_COMPONENT_COMPONENTS_H

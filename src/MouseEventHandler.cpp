@@ -28,13 +28,12 @@ void yaui::MouseEventHandler::handleEvents() {
             break;
         }
 
-        if(mPreviousTargetEntity == targetEntity);
-        else if(mpPreviousTargetRegistry == &registry and mPreviousTargetEntity != entity::null) {
-            auto pMouseEventListener = registry.try_get<component::MouseEventListener>(mPreviousTargetEntity);
-            if(pMouseEventListener) {
-                IEventHandler::invokeEventListeners(pMouseEventListener->onHoverLeaveListeners, registry, mPreviousTargetEntity, event);
+        auto &mouseEventState = registry.ctx_or_set<component::MouseEventState>();
+        auto &previousTargetEntity = mouseEventState.targetEntity;
+        if(previousTargetEntity != targetEntity and previousTargetEntity != entity::null) {
+            if(auto pMouseEventListener = registry.try_get<component::MouseEventListener>(previousTargetEntity); pMouseEventListener) {
+                IEventHandler::invokeEventListeners(pMouseEventListener->onHoverLeaveListeners, registry, previousTargetEntity, event);
             }
-            mPreviousTargetEntity = entity::null;
         }
 
         // validate entity and check if the entity has a MouseEventListener component
@@ -42,7 +41,7 @@ void yaui::MouseEventHandler::handleEvents() {
         auto pMouseEventListener = registry.try_get<component::MouseEventListener>(targetEntity);
         if(pMouseEventListener == nullptr) continue;
 
-        mPreviousTargetEntity = targetEntity;
+        previousTargetEntity = targetEntity;
         IEventHandler::invokeEventListeners(pMouseEventListener->onHoverEnterListeners, registry, targetEntity, event);
         switch(event.type) {
             case SDL_EventType::SDL_MOUSEBUTTONDOWN:
@@ -67,6 +66,5 @@ void yaui::MouseEventHandler::handleEvents() {
                 break;
         }
     }
-    mpPreviousTargetRegistry = &registry;
     mEventQueue.clear();
 }

@@ -13,8 +13,6 @@ namespace yaui {
             EventType::SDL_MOUSEMOTION,
             EventType::SDL_MOUSEWHEEL
         };
-        entity::Registry *mpPreviousTargetRegistry = nullptr;
-        entity::Entity mPreviousTargetEntity = entity::null;
 
     private:
         [[nodiscard]] bool isWithinBoundaries(const ViewPort &viewPort, const Vec2 &mousePosition) const;
