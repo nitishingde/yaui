@@ -1,40 +1,39 @@
 #include "FocusEventHandler.h"
 #include "component/Components.h"
 #include "Director.h"
-#include "Utility.h"
 
 bool yaui::FocusEventHandler::isEventTypeSupported(const yaui::EventType &eventType) {
-    return eventType == EventType::SDL_MOUSEBUTTONDOWN or eventType == EventType::SDL_KEYDOWN;
+    return false;
 }
 
 void yaui::FocusEventHandler::handleEvents() {
     auto &scene = Director::getInstance()->getScene();
     auto &registry = scene.getRegistry();
-    auto view = registry.view<component::FocusEventListener, component::Transform>();
+    auto view = registry.view<component::FocusEventListener>();
+    auto &focusEventState = registry.ctx_or_set<component::FocusEventState>();
+    auto &mouseEventState = registry.ctx_or_set<component::MouseEventState>();
 
-    for(const auto &event: mEventQueue) {
-        switch(event.type) {
-            case EventType::SDL_MOUSEBUTTONDOWN:
-                for(auto &entity: view) {
-                    if(auto &focusEventListener = view.get<component::FocusEventListener>(entity); focusEventListener.isInFocus()) {
-                        if(!isColliding(registry.get<component::Transform>(entity).viewPort, Vec2{event.button.x, event.button.y})) {
-                            focusEventListener.isFocused = false;
-                            IEventHandler::invokeEventListeners(focusEventListener.onUnFocusListeners, registry, entity, event);
-                        }
-                    }
-                }
-                break;
-
-            case EventType::SDL_KEYDOWN:
-                if(event.key.keysym.sym != SDL_KeyCode::SDLK_TAB) continue;
-                for(auto &entity: view) {
-                    if(auto &focusEventListener = view.get<component::FocusEventListener>(entity); focusEventListener.isInFocus()) {
-                        focusEventListener.isFocused = false;
-                        IEventHandler::invokeEventListeners(focusEventListener.onUnFocusListeners, registry, entity, event);
-                    }
-                }
-                break;
+    if(mouseEventState.eventTriggerForTargetEntity.type == EventType::SDL_MOUSEBUTTONDOWN) {
+        for(auto entity: view) {
+            auto &focusEventHandler = view.get(entity);
+            if(entity == mouseEventState.targetEntity) {
+                if(focusEventHandler.isInFocus()) continue;
+                focusEventHandler.isFocused = true;
+                IEventHandler::invokeEventListeners(
+                    focusEventHandler.onFocusListeners,
+                    registry,
+                    entity,
+                    mouseEventState.eventTriggerForTargetEntity
+                );
+            } else {
+                focusEventHandler.isFocused = false;
+                IEventHandler::invokeEventListeners(
+                    focusEventHandler.onUnFocusListeners,
+                    registry,
+                    entity,
+                    mouseEventState.eventTriggerForTargetEntity
+                );
+            }
         }
     }
-    mEventQueue.clear();
 }

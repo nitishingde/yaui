@@ -1,5 +1,6 @@
 #include "MouseEventHandler.h"
-#include "yaui.h"
+#include "component/Components.h"
+#include "Director.h"
 
 bool yaui::MouseEventHandler::isWithinBoundaries(const yaui::ViewPort &viewPort, const yaui::Vec2 &mousePosition) const {
     if(mousePosition.x < viewPort.x or viewPort.x+viewPort.w < mousePosition.x) return false;
@@ -16,11 +17,16 @@ bool yaui::MouseEventHandler::isEventTypeSupported(const yaui::EventType &eventT
 void yaui::MouseEventHandler::handleEvents() {
     auto &scene = Director::getInstance()->getScene();
     auto &registry = scene.getRegistry();
+    auto &mouseEventState = registry.ctx_or_set<component::MouseEventState>();
+    mouseEventState.previousTargetEntity = mouseEventState.targetEntity;
+    mouseEventState.targetEntity = entity::null;
+    mouseEventState.eventTriggerForTargetEntity = Event{};
 
-    for(auto &event: mEventQueue) {
+    for(const auto &event: mEventQueue) {
         Vec2 mousePosition = {event.motion.x, event.motion.y};
         auto view = registry.view<component::Transform>();
-        entity::Entity targetEntity = entity::null;
+        auto &targetEntity = mouseEventState.targetEntity = entity::null;
+        mouseEventState.eventTriggerForTargetEntity = event;
         for(auto entityIterator = view.rbegin(); entityIterator != view.rend(); entityIterator++) {
             auto transform = view.get(*entityIterator);
             if(!isWithinBoundaries(transform.viewPort, mousePosition)) continue;
@@ -28,8 +34,7 @@ void yaui::MouseEventHandler::handleEvents() {
             break;
         }
 
-        auto &mouseEventState = registry.ctx_or_set<component::MouseEventState>();
-        auto &previousTargetEntity = mouseEventState.targetEntity;
+        auto &previousTargetEntity = mouseEventState.previousTargetEntity;
         if(previousTargetEntity != targetEntity and previousTargetEntity != entity::null) {
             if(auto pMouseEventListener = registry.try_get<component::MouseEventListener>(previousTargetEntity); pMouseEventListener) {
                 IEventHandler::invokeEventListeners(pMouseEventListener->onHoverLeaveListeners, registry, previousTargetEntity, event);
@@ -41,28 +46,15 @@ void yaui::MouseEventHandler::handleEvents() {
         auto pMouseEventListener = registry.try_get<component::MouseEventListener>(targetEntity);
         if(pMouseEventListener == nullptr) continue;
 
-        previousTargetEntity = targetEntity;
         IEventHandler::invokeEventListeners(pMouseEventListener->onHoverEnterListeners, registry, targetEntity, event);
         switch(event.type) {
             case SDL_EventType::SDL_MOUSEBUTTONDOWN:
                 IEventHandler::invokeEventListeners(pMouseEventListener->onButtonDownListeners, registry, targetEntity, event);
-                // FIXME: this should not be here
-                if(auto focusEventListener = registry.try_get<component::FocusEventListener>(targetEntity); focusEventListener and focusEventListener->isEnabled and !focusEventListener->isFocused) {
-                    focusEventListener->isFocused = true;
-                    IEventHandler::invokeEventListeners(focusEventListener->onFocusListeners, registry, targetEntity, event);
-                }
                 break;
 
             case SDL_EventType::SDL_MOUSEBUTTONUP:
                 IEventHandler::invokeEventListeners(pMouseEventListener->onButtonUpListeners, registry, targetEntity, event);
                 IEventHandler::invokeEventListeners(pMouseEventListener->onClickListeners, registry, targetEntity, event);
-                break;
-
-            case SDL_EventType::SDL_MOUSEMOTION:
-                break;
-
-            case SDL_EventType::SDL_MOUSEWHEEL:
-                IEventHandler::invokeEventListeners(pMouseEventListener->onScrollListeners, registry, targetEntity, event);
                 break;
         }
     }

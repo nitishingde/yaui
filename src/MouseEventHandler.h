@@ -10,8 +10,7 @@ namespace yaui {
         ArrayList<uint32> mValidEventTypes {
             EventType::SDL_MOUSEBUTTONDOWN,
             EventType::SDL_MOUSEBUTTONUP,
-            EventType::SDL_MOUSEMOTION,
-            EventType::SDL_MOUSEWHEEL
+            EventType::SDL_MOUSEMOTION
         };
 
     private:

@@ -85,8 +85,15 @@ namespace yaui::component {
     };
 
     // Context variables
-    struct MouseEventState {
+    struct FocusEventState {
+        Event eventTriggerForTargetEntity = Event{};
         entity::Entity targetEntity = entity::null;
+    };
+
+    struct MouseEventState {
+        entity::Entity previousTargetEntity = entity::null;
+        entity::Entity targetEntity = entity::null;
+        Event eventTriggerForTargetEntity = Event{};
     };
 }
 
