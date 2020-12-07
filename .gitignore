@@ -43,3 +43,12 @@ cmake-build-*/
 
 # Intellij
 .idea/
+
+# Experiment ground
+experiment/
+
+# Cache for tools
+.cache/
+
+# Used by language server
+compile_commands.json
