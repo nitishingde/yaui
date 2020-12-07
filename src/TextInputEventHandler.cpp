@@ -12,21 +12,17 @@ void yaui::TextInputEventHandler::handleEvents() {
     auto &registry = scene.getRegistry();
     auto &textInputEventState = registry.ctx_or_set<component::TextInputEventState>();
     auto view = registry.view<component::TextInputEventListener>();
-    if(auto &listeners = textInputEventState.listeners; !listeners.empty()) {
-        for(auto &event: mEventQueue) {
+
+    if(const auto &listeners = textInputEventState.listeners; !listeners.empty()) {
+        for(const auto &event: mEventQueue) {
             textInputEventState.textEntered = event.text.text;
             for(const auto entity: listeners) {
-                if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(entity);
-                    pTextInputEventListener != nullptr) {
-                    IEventHandler::invokeEventListeners(
-                        pTextInputEventListener->onCharacterEnteredListeners,
-                        registry,
-                        entity,
-                        event
-                    );
+                if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(entity); pTextInputEventListener != nullptr) {
+                    IEventHandler::invokeEventListeners(pTextInputEventListener->onCharacterEnteredListeners, registry, entity, event);
                 }
             }
         }
     }
+
     mEventQueue.clear();
 }

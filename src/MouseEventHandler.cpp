@@ -58,5 +58,6 @@ void yaui::MouseEventHandler::handleEvents() {
                 break;
         }
     }
+
     mEventQueue.clear();
 }

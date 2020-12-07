@@ -19,20 +19,10 @@ void yaui::FocusEventHandler::handleEvents() {
             if(entity == mouseEventState.targetEntity) {
                 if(focusEventHandler.isInFocus()) continue;
                 focusEventHandler.isFocused = true;
-                IEventHandler::invokeEventListeners(
-                    focusEventHandler.onFocusListeners,
-                    registry,
-                    entity,
-                    mouseEventState.eventTriggerForTargetEntity
-                );
+                IEventHandler::invokeEventListeners(focusEventHandler.onFocusListeners, registry, entity, mouseEventState.eventTriggerForTargetEntity);
             } else {
                 focusEventHandler.isFocused = false;
-                IEventHandler::invokeEventListeners(
-                    focusEventHandler.onUnFocusListeners,
-                    registry,
-                    entity,
-                    mouseEventState.eventTriggerForTargetEntity
-                );
+                IEventHandler::invokeEventListeners(focusEventHandler.onUnFocusListeners, registry, entity, mouseEventState.eventTriggerForTargetEntity);
             }
         }
     }

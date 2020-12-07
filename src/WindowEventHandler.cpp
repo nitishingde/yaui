@@ -6,11 +6,12 @@ bool yaui::WindowEventHandler::isEventTypeSupported(const yaui::EventType &event
 }
 
 void yaui::WindowEventHandler::handleEvents() {
-    for(auto event: mEventQueue) {
+    for(const auto &event: mEventQueue) {
         if(event.window.event == SDL_WindowEventID::SDL_WINDOWEVENT_CLOSE) {
             Director::getInstance()->quit();
             break;
         }
     }
+
     mEventQueue.clear();
 }

@@ -16,12 +16,7 @@ void yaui::KeyboardEventHandler::handleEvents() {
             case EventType::SDL_KEYDOWN:
                 keyboardEventState.keyDown[event.key.keysym.sym] = event;
                 for(auto entity: keyboardEventState.listeners) {
-                    IEventHandler::invokeEventListeners(
-                        registry.get<component::KeyboardEventListener>(entity).onKeyDown,
-                        registry,
-                        entity,
-                        event
-                    );
+                    IEventHandler::invokeEventListeners(registry.get<component::KeyboardEventListener>(entity).onKeyDown, registry, entity, event);
                 }
                 break;
 
@@ -29,15 +24,11 @@ void yaui::KeyboardEventHandler::handleEvents() {
                 keyboardEventState.keyUp[event.key.keysym.sym] = event;
                 keyboardEventState.keyDown.erase(event.key.keysym.sym);
                 for(auto entity: keyboardEventState.listeners) {
-                    IEventHandler::invokeEventListeners(
-                        registry.get<component::KeyboardEventListener>(entity).onKeyUp,
-                        registry,
-                        entity,
-                        event
-                    );
+                    IEventHandler::invokeEventListeners(registry.get<component::KeyboardEventListener>(entity).onKeyUp, registry, entity, event);
                 }
                 break;
         }
     }
+
     mEventQueue.clear();
 }
