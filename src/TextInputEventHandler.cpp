@@ -10,20 +10,20 @@ bool yaui::TextInputEventHandler::isEventTypeSupported(const yaui::EventType &ev
 void yaui::TextInputEventHandler::handleEvents() {
     auto &scene = Director::getInstance()->getScene();
     auto &registry = scene.getRegistry();
+    auto &textInputEventState = registry.ctx_or_set<component::TextInputEventState>();
     auto view = registry.view<component::TextInputEventListener>();
-    if(auto *pListeners = EventDispatcher::getInstance()->getEventListeners(YAUI_TO_STRING(TextInputEventListener)); pListeners) {
+    if(auto &listeners = textInputEventState.listeners; !listeners.empty()) {
         for(auto &event: mEventQueue) {
             switch(event.type) {
                 case EventType::SDL_TEXTINPUT:
-                    for(auto &listener: *pListeners) {
-                        if(listener.pRegistry != &registry) continue;
-                        if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(
-                                listener.entity);
+                    textInputEventState.textEntered = event.text.text;
+                    for(const auto entity: listeners) {
+                        if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(entity);
                             pTextInputEventListener != nullptr) {
                             IEventHandler::invokeEventListeners(
                                 pTextInputEventListener->onCharacterEnteredListeners,
                                 registry,
-                                listener.entity,
+                                entity,
                                 event
                             );
                         }
@@ -32,15 +32,13 @@ void yaui::TextInputEventHandler::handleEvents() {
 
                 case EventType::SDL_KEYDOWN:
                     if(event.key.keysym.sym != SDL_KeyCode::SDLK_BACKSPACE) break;
-                    for(auto &listener: *pListeners) {
-                        if(listener.pRegistry != &registry) continue;
-                        if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(
-                                listener.entity);
+                    for(const auto entity: listeners) {
+                        if(auto pTextInputEventListener = registry.try_get<component::TextInputEventListener>(entity);
                             pTextInputEventListener != nullptr) {
                             IEventHandler::invokeEventListeners(
                                 pTextInputEventListener->onSpecialKeyPressedListeners,
                                 registry,
-                                listener.entity,
+                                entity,
                                 event
                             );
                         }

@@ -157,6 +157,11 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
         for(auto &digit: row) {
             auto onClick = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
                 auto &model = registry.ctx<CalculatorModel>();
+                auto buttonText = registry.get<component::Text>(entity).value;
+                if(event.type == EventType::SDL_TEXTINPUT and buttonText != event.text.text) {
+                    spdlog::debug("Key Pressed: {}", event.text.text);
+                    return true;
+                }
                 auto resultDisplayLabel = model.resultDisplayLabel;
                 auto calculate = [](double operand1, const String &_operator, double operand2) {
                     if(_operator == "+") return operand1+operand2;
@@ -165,7 +170,7 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     if(_operator == "/") return operand1/operand2;
                     return operand2;
                 };
-                if(auto buttonText = registry.get<component::Text>(entity).value; buttonText == "+") {
+                if(buttonText == "+") {
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -231,6 +236,8 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                 .emplaceBackListenersToMouseEventListenerComponent(onClick)
                 .buildTransformComponent({x, y, 128, 128})
                 .buildTexture2DComponent({32, 32, 32, 255}, 0)
+                .buildTextInputEventListener(true)
+                .emplaceBackListenersToTextInputEventListener(onClick, nullptr)
                 .buildView();
             x += 136;
         }

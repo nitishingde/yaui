@@ -95,6 +95,11 @@ namespace yaui::component {
         entity::Entity targetEntity = entity::null;
         Event eventTriggerForTargetEntity = Event{};
     };
+
+    struct TextInputEventState {
+        String textEntered;
+        Set<entity::Entity> listeners;
+    };
 }
 
 #endif //YAUI_COMPONENT_COMPONENTS_H

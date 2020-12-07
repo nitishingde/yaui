@@ -3,6 +3,7 @@
 
 
 #include <cstdint>
+#include <set>
 #include "entt/entity/entity.hpp"
 #include "entt/entity/registry.hpp"
 #include "SDL.h"
@@ -33,6 +34,8 @@ namespace yaui {
     template<typename key, typename value>
     using HashMap = std::unordered_map<key, value>;
     using Renderer = SDL_Renderer;
+    template<typename Type, typename Compare = std::less<Type>, typename Alloc = std::allocator<Type>>
+    using Set = std::set<Type, Compare, Alloc>;
     using String = std::string;
     using Surface = SDL_Surface;
     using Texture = SDL_Texture;

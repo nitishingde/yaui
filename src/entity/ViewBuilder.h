@@ -29,6 +29,7 @@ namespace yaui::entity {
             EventHandlerFunctionPointer pOnScroll = nullptr
         );
         ViewBuilder& buildTextComponent(String textString, const String& font = "OpenSans-Regular.ttf", const int32 &fontSize = 24, const Colour &fontColour = {0, 0, 0, 255});
+        ViewBuilder& buildTextInputEventListener(bool registerListener = true);
         ViewBuilder& emplaceBackListenersToTextInputEventListener(EventHandlerFunctionPointer pOnCharacterEntered = nullptr, EventHandlerFunctionPointer pOnSpecialKeyPressed = nullptr);
         ViewBuilder& buildTexture2DComponent(const Colour &backgroundColour = {255, 255, 255, 255}, uint32 zIndex = 0);
         ViewBuilder& buildTransformComponent(const ViewPort &viewPort = {0, 0, 0, 0}, const FVec2 &scale = {1, 1});

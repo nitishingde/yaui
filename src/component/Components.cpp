@@ -47,12 +47,14 @@ yaui::String yaui::component::TextInputEventListener::getClassName() const {
 
 void
 yaui::component::TextInputEventListener::registerListener(entity::Registry &registry, const entity::Entity &entity) {
-    EventDispatcher::getInstance()->registerListener(*this, registry, entity);
+    auto &textInputEventState = registry.ctx_or_set<component::TextInputEventState>();
+    textInputEventState.listeners.insert(entity);
 }
 
 void
 yaui::component::TextInputEventListener::unregisterListener(entity::Registry &registry, const entity::Entity &entity) {
-    EventDispatcher::getInstance()->unregisterListener(*this, registry, entity);
+    auto &textInputEventState = registry.ctx_or_set<component::TextInputEventState>();
+    textInputEventState.listeners.erase(entity);
 }
 
 yaui::component::Texture2D::Texture2D() noexcept {
