@@ -67,6 +67,24 @@ target_link_libraries(yaui
 
 add_library(yaui::yaui ALIAS yaui)
 
+add_executable(yaui_editor
+        src/YauiEditor.cpp
+)
+
+# Add target for Yaui Editor
+target_link_libraries(yaui_editor
+    PUBLIC
+        yaui::yaui
+)
+
+# Post build script for Yaui Editor
+add_custom_command(
+        TARGET yaui_editor POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/
+        $<TARGET_FILE_DIR:yaui_editor>/resources/
+)
+
 # Unit tests
 add_subdirectory(${PROJECT_SOURCE_DIR}/unit_test)
 
