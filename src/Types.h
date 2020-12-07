@@ -33,6 +33,7 @@ namespace yaui {
     using FViewPort = SDL_FRect;
     template<typename key, typename value>
     using HashMap = std::unordered_map<key, value>;
+    using KeyCode = SDL_KeyCode;
     using Renderer = SDL_Renderer;
     template<typename Type, typename Compare = std::less<Type>, typename Alloc = std::allocator<Type>>
     using Set = std::set<Type, Compare, Alloc>;

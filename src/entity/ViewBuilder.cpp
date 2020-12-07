@@ -73,6 +73,24 @@ yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::emplaceBackListenersToFocu
     return *this;
 }
 
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::buildKeyboardEventListenerComponent(bool registerListener) {
+    auto &keyboardEventListener = mpRegistry->get_or_emplace<component::KeyboardEventListener>(mEntity);
+    if(registerListener) keyboardEventListener.registerListener(*mpRegistry, mEntity);
+
+    return *this;
+}
+
+yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::emplaceBackListenersToKeyboardEventListenerComponent(
+    yaui::EventHandlerFunctionPointer pOnKeyDown,
+    yaui::EventHandlerFunctionPointer pOnKeyUp
+) {
+    auto &keyboardEventListener = mpRegistry->get_or_emplace<component::KeyboardEventListener>(mEntity);
+    if(pOnKeyDown) keyboardEventListener.onKeyDown.emplace_back(pOnKeyDown);
+    if(pOnKeyUp) keyboardEventListener.onKeyUp.emplace_back(pOnKeyUp);
+
+    return *this;
+}
+
 yaui::entity::ViewBuilder& yaui::entity::ViewBuilder::emplaceBackListenersToMouseEventListenerComponent(
     EventHandlerFunctionPointer pOnButtonDown,
     EventHandlerFunctionPointer pOnButtonUp,

@@ -1,14 +1,16 @@
 #include "EventSystem.h"
+#include "FocusEventHandler.h"
+#include "KeyboardEventHandler.h"
 #include "LoggerConstants.h"
 #include "MouseEventHandler.h"
 #include "TextInputEventHandler.h"
 #include "WindowEventHandler.h"
-#include "FocusEventHandler.h"
 
 yaui::system::EventSystem::EventSystem(yaui::uint32 priorityRank) {
     ISystem::priorityRank = priorityRank;
     mEventHandlers.emplace_back(new TextInputEventHandler());
     mEventHandlers.emplace_back(new MouseEventHandler());
+    mEventHandlers.emplace_back(new KeyboardEventHandler());
     mEventHandlers.emplace_back(new WindowEventHandler());
     mEventHandlers.emplace_back(new FocusEventHandler());
     spdlog::info("{} {}", Logger::kConstructed, EventSystem::getClassName());

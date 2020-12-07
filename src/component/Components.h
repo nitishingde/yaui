@@ -35,6 +35,13 @@ namespace yaui::component {
         [[nodiscard]] bool isInFocus() const;
     };
 
+    struct KeyboardEventListener {
+        ArrayList<EventHandlerFunctionPointer> onKeyDown;
+        ArrayList<EventHandlerFunctionPointer> onKeyUp;
+        void registerListener(entity::Registry &registry, const entity::Entity &entity);
+        void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
+    };
+
     struct MouseEventListener {
         ArrayList<EventHandlerFunctionPointer> onButtonDownListeners;
         ArrayList<EventHandlerFunctionPointer> onButtonUpListeners;
@@ -88,6 +95,12 @@ namespace yaui::component {
     struct FocusEventState {
         Event eventTriggerForTargetEntity = Event{};
         entity::Entity targetEntity = entity::null;
+    };
+
+    struct KeyboardEventState {
+        HashMap<int32, Event> keyUp;
+        HashMap<int32, Event> keyDown;
+        Set<entity::Entity> listeners;
     };
 
     struct MouseEventState {

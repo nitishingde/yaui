@@ -20,6 +20,8 @@ namespace yaui::entity {
         ViewBuilder& buildCaretComponent(const Colour &colour = {128, 128, 128, 128}, const ViewPort &rect = {0, 0, 5, 32});
         ViewBuilder& buildFocusEventListenerComponent(bool isEnabled = false, bool isInFocus = false);
         ViewBuilder& emplaceBackListenersToFocusEventListenerComponent(EventHandlerFunctionPointer pOnFocus = nullptr, EventHandlerFunctionPointer pOnUnFocus = nullptr);
+        ViewBuilder& buildKeyboardEventListenerComponent(bool registerListener = true);
+        ViewBuilder& emplaceBackListenersToKeyboardEventListenerComponent(EventHandlerFunctionPointer pOnKeyDown = nullptr, EventHandlerFunctionPointer pOnKeyUp = nullptr);
         ViewBuilder& emplaceBackListenersToMouseEventListenerComponent(
             EventHandlerFunctionPointer pOnButtonDown = nullptr,
             EventHandlerFunctionPointer pOnButtonUp = nullptr,

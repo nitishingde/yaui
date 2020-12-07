@@ -34,6 +34,7 @@ add_library(yaui
         src/EventDispatcher.cpp src/EventDispatcher.h
         src/FocusEventHandler.cpp src/FocusEventHandler.h
         src/IEventHandler.cpp src/IEventHandler.h
+        src/KeyboardEventHandler.cpp src/KeyboardEventHandler.h
         src/LoggerConstants.h
         src/MouseEventHandler.cpp src/MouseEventHandler.cpp
         src/RendererWrapper.cpp src/RendererWrapper.h

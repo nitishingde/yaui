@@ -6,6 +6,18 @@ bool yaui::component::FocusEventListener::isInFocus() const {
     return isEnabled and isFocused;
 }
 
+void
+yaui::component::KeyboardEventListener::registerListener(yaui::entity::Registry &registry, const yaui::entity::Entity &entity) {
+    auto &keyboardEventState = registry.ctx_or_set<KeyboardEventState>();
+    keyboardEventState.listeners.insert(entity);
+}
+
+void
+yaui::component::KeyboardEventListener::unregisterListener(yaui::entity::Registry &registry, const yaui::entity::Entity &entity) {
+    auto &keyboardEventState = registry.ctx_or_set<KeyboardEventState>();
+    keyboardEventState.listeners.erase(entity);
+}
+
 yaui::component::Text::Text() noexcept {
     spdlog::info("{} {}", Logger::kConstructed, YAUI_TO_STRING(yaui::component::Text));
 }

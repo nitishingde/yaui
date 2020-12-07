@@ -158,10 +158,13 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
             auto onClick = [](yaui::entity::Registry &registry, const yaui::entity::Entity &entity, const yaui::Event &event) {
                 auto &model = registry.ctx<CalculatorModel>();
                 auto buttonText = registry.get<component::Text>(entity).value;
-                if(event.type == EventType::SDL_TEXTINPUT and buttonText != event.text.text) {
-                    spdlog::debug("Key Pressed: {}", event.text.text);
-                    return true;
-                }
+
+                if(event.type == EventType::SDL_MOUSEBUTTONDOWN);
+                else if(event.type == EventType::SDL_TEXTINPUT and buttonText != event.text.text) return true;
+                else if(event.type == EventType::SDL_KEYDOWN) return true;
+                else if(event.type == EventType::SDL_KEYUP and event.key.keysym.sym != KeyCode::SDLK_KP_ENTER) return true;
+                else if(event.type == EventType::SDL_KEYUP and event.key.keysym.sym == KeyCode::SDLK_KP_ENTER and buttonText != "=") return true;
+
                 auto resultDisplayLabel = model.resultDisplayLabel;
                 auto calculate = [](double operand1, const String &_operator, double operand2) {
                     if(_operator == "+") return operand1+operand2;
@@ -206,7 +209,7 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                     if(auto &displayText = registry.get<component::Text>(resultDisplayLabel); displayText.value.find_first_of(".", 0) == String::npos) {
                         displayText.value += ".";
                     }
-                } else if (buttonText == "=") {
+                } else if (buttonText == "=" or event.type == EventType::SDL_KEYUP and event.key.keysym.sym == KeyCode::SDLK_KP_ENTER) {
                     model.result = calculate(
                         model.result,
                         model._operator,
@@ -238,6 +241,8 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                 .buildTexture2DComponent({32, 32, 32, 255}, 0)
                 .buildTextInputEventListener(true)
                 .emplaceBackListenersToTextInputEventListener(onClick, nullptr)
+                .buildKeyboardEventListenerComponent(true)
+                .emplaceBackListenersToKeyboardEventListenerComponent(nullptr, onClick)
                 .buildView();
             x += 136;
         }
