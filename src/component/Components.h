@@ -115,7 +115,7 @@ namespace yaui::component {
             MIDDLE_DOWN = 2,
             MIDDLE_UP = 3,
             RIGHT_DOWN = 4,
-            RIGHT_UP = 5
+            RIGHT_UP = 5,
         };
         entity::Entity currentTargetEntity = entity::null;
         entity::Entity previousTargetEntity = entity::null;

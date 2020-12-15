@@ -11,7 +11,7 @@ namespace yaui {
             EventType::SDL_MOUSEBUTTONDOWN,
             EventType::SDL_MOUSEBUTTONUP,
             EventType::SDL_MOUSEMOTION,
-            EventType::SDL_MOUSEWHEEL
+            EventType::SDL_MOUSEWHEEL,
         };
 
     private:
