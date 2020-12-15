@@ -103,3 +103,93 @@ yaui::component::Texture2D::~Texture2D() {
 void yaui::component::TextureTransformationJobs::trigger() {
     isTriggered = true;
 }
+
+void yaui::component::MouseEventState::resizeMouseMotionTracking() {
+    if(mMotionTrackingQueue.size() > kMotionTrackingLimit) {
+        mMotionTrackingQueue.erase(mMotionTrackingQueue.begin(), mMotionTrackingQueue.end()-kMotionTrackingLimit);
+    }
+}
+
+void yaui::component::MouseEventState::reset() {
+    for(auto &targetButtonEvents: mButtonEvents) {
+        targetButtonEvents.release();
+    }
+    mMotionTrackingQueue.clear();
+    previousTargetEntity = currentTargetEntity;
+    currentTargetEntity = entity::null;
+}
+
+yaui::Vec2 yaui::component::MouseEventState::getCurrentMousePosition() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    return Vec2 {x, y};
+}
+
+yaui::Vec2 yaui::component::MouseEventState::getCurrentGlobalMousePosition() {
+    int x, y;
+    SDL_GetGlobalMouseState(&x, &y);
+    return Vec2 {x, y};
+}
+
+const std::unique_ptr<yaui::TargetedEvent>& yaui::component::MouseEventState::getButtonTargetedEvent(yaui::component::MouseEventState::ButtonEventType type) const {
+    mButtonEvents[type];
+}
+
+const yaui::ArrayList<yaui::TargetedEvent>& yaui::component::MouseEventState::getMotionTrackingQueue() {
+    resizeMouseMotionTracking();
+    return mMotionTrackingQueue;
+}
+
+void yaui::component::MouseEventState::setButtonEventDetails(const yaui::Event &event, yaui::entity::Entity targetEntity) {
+    switch(event.type) {
+        case EventType::SDL_MOUSEBUTTONDOWN:
+            switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    mButtonEvents[ButtonEventType::LEFT_DOWN] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+
+                case SDL_BUTTON_MIDDLE:
+                    mButtonEvents[ButtonEventType::MIDDLE_DOWN] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+
+                case SDL_BUTTON_RIGHT:
+                    mButtonEvents[ButtonEventType::RIGHT_DOWN] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+            }
+            break;
+
+        case EventType::SDL_MOUSEBUTTONUP:
+            switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    mButtonEvents[ButtonEventType::LEFT_UP] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+
+                case SDL_BUTTON_MIDDLE:
+                    mButtonEvents[ButtonEventType::MIDDLE_UP] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+
+                case SDL_BUTTON_RIGHT:
+                    mButtonEvents[ButtonEventType::RIGHT_UP] = std::make_unique<TargetedEvent>(event, targetEntity);
+                    break;
+            }
+            break;
+
+        case EventType::SDL_MOUSEMOTION:
+            if(mMotionTrackingQueue.size() > kMotionTrackingLimit*4) {
+                resizeMouseMotionTracking();
+            }
+            mMotionTrackingQueue.emplace_back(TargetedEvent {event, targetEntity});
+            break;
+
+        case EventType::SDL_MOUSEWHEEL:
+            if(pScrollTargetedEvent == nullptr) {
+                pScrollTargetedEvent = std::make_unique<TargetedEvent>(event, targetEntity);
+            } else {
+                int32 x = pScrollTargetedEvent->event.wheel.x, y = pScrollTargetedEvent->event.wheel.y;
+                pScrollTargetedEvent->event = event;
+                pScrollTargetedEvent->event.wheel.x += x;
+                pScrollTargetedEvent->event.wheel.y += y;
+            }
+            break;
+    }
+}

@@ -67,6 +67,12 @@ namespace yaui {
         inline constexpr entt::null_t null{};
     }
 
+    struct TargetedEvent {
+        Event event {};
+        entity::Entity targetEntity = entity::null;
+        TargetedEvent(const Event &event, entity::Entity targetedEntity): event(event), targetEntity(targetedEntity) {}
+    };
+
     struct Object {
         [[nodiscard]] virtual String getClassName() const = 0;
     };

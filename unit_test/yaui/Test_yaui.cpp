@@ -240,7 +240,7 @@ TEST_CASE("Test calculator application", "[yaui][app]") {
                 .buildTransformComponent({x, y, 128, 128})
                 .buildTexture2DComponent({32, 32, 32, 255}, 0)
                 .buildTextInputEventListener(true)
-                .emplaceBackListenersToTextInputEventListener(onClick, nullptr)
+                .emplaceBackListenersToTextInputEventListener(onClick)
                 .buildKeyboardEventListenerComponent(true)
                 .emplaceBackListenersToKeyboardEventListenerComponent(nullptr, onClick)
                 .buildView();
