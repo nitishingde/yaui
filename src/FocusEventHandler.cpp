@@ -13,26 +13,16 @@ void yaui::FocusEventHandler::handleEvents() {
     auto &focusEventState = registry.ctx_or_set<component::FocusEventState>();
     auto &mouseEventState = registry.ctx_or_set<component::MouseEventState>();
 
-    if(mouseEventState.eventTriggerForTargetEntity.type == EventType::SDL_MOUSEBUTTONDOWN) {
+    if(auto &leftButtonDown = mouseEventState.getButtonTargetedEvent(component::MouseEventState::ButtonEventType::LEFT_DOWN); leftButtonDown != nullptr) {
         for(auto entity: view) {
             auto &focusEventHandler = view.get(entity);
-            if(entity == mouseEventState.targetEntity) {
+            if(entity == leftButtonDown->targetEntity) {
                 if(focusEventHandler.isInFocus()) continue;
                 focusEventHandler.isFocused = true;
-                IEventHandler::invokeEventListeners(
-                    focusEventHandler.onFocusListeners,
-                    registry,
-                    entity,
-                    mouseEventState.eventTriggerForTargetEntity
-                );
+                IEventHandler::invokeEventListeners(focusEventHandler.onFocusListeners, registry, entity, leftButtonDown->event);
             } else {
                 focusEventHandler.isFocused = false;
-                IEventHandler::invokeEventListeners(
-                    focusEventHandler.onUnFocusListeners,
-                    registry,
-                    entity,
-                    mouseEventState.eventTriggerForTargetEntity
-                );
+                IEventHandler::invokeEventListeners(focusEventHandler.onUnFocusListeners, registry, entity, leftButtonDown->event);
             }
         }
     }

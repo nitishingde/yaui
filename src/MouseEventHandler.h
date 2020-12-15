@@ -10,11 +10,14 @@ namespace yaui {
         ArrayList<uint32> mValidEventTypes {
             EventType::SDL_MOUSEBUTTONDOWN,
             EventType::SDL_MOUSEBUTTONUP,
-            EventType::SDL_MOUSEMOTION
+            EventType::SDL_MOUSEMOTION,
+            EventType::SDL_MOUSEWHEEL,
         };
 
     private:
-        [[nodiscard]] bool isWithinBoundaries(const ViewPort &viewPort, const Vec2 &mousePosition) const;
+        entity::Entity getTargetEntity(const Vec2 &position, entity::Registry &registry, entity::Entity previousTargetedEntity = entity::null);
+        void pollEvents(entity::Registry &registry);
+        void invokeHandlers(entity::Registry &registry);
     public:
         bool isEventTypeSupported(const EventType &eventType) override;
         void handleEvents() override;

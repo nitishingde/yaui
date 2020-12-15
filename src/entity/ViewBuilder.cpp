@@ -131,13 +131,10 @@ yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::buildTextInputEventListene
     return *this;
 }
 
-yaui::entity::ViewBuilder &yaui::entity::ViewBuilder::emplaceBackListenersToTextInputEventListener(
-    EventHandlerFunctionPointer pOnCharacterEntered,
-    EventHandlerFunctionPointer pOnSpecialKeyPressed
-) {
+yaui::entity::ViewBuilder
+&yaui::entity::ViewBuilder::emplaceBackListenersToTextInputEventListener(EventHandlerFunctionPointer pOnCharacterEntered) {
     auto &textInputEventListener = mpRegistry->get_or_emplace<component::TextInputEventListener>(mEntity);
     if(pOnCharacterEntered) textInputEventListener.onCharacterEnteredListeners.emplace_back(pOnCharacterEntered);
-    if(pOnSpecialKeyPressed) textInputEventListener.onSpecialKeyPressedListeners.emplace_back(pOnSpecialKeyPressed);
 
     return *this;
 }

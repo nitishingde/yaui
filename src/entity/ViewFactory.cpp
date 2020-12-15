@@ -102,6 +102,20 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                 return true;
             }
         )
+        .buildKeyboardEventListenerComponent(true)
+        .emplaceBackListenersToKeyboardEventListenerComponent(
+            [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
+                if(event.key.keysym.sym == SDL_KeyCode::SDLK_BACKSPACE) {
+                    auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
+                    if(text.value.size()) {
+                        text.value.resize(text.value.size()-1);
+                        textureTransformationJobs.trigger();
+                    }
+                }
+                return true;
+            },
+            nullptr
+        )
         .emplaceBackListenersToMouseEventListenerComponent()
         .buildTextComponent(textString, fontName, fontSize, foregroundColour)
         .buildTextureTransformationComponent({
@@ -114,16 +128,6 @@ yaui::entity::Entity yaui::entity::ViewFactory::produceTextField(
                 auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
                 text.value += event.text.text;
                 textureTransformationJobs.trigger();
-                return true;
-            },
-            [](entity::Registry &registry, const entity::Entity &entity, const Event &event) {
-                if(event.key.keysym.sym == SDL_KeyCode::SDLK_BACKSPACE) {
-                    auto [text, textureTransformationJobs] = registry.get<component::Text, component::TextureTransformationJobs>(entity);
-                    if(text.value.size()) {
-                        text.value.resize(text.value.size()-1);
-                        textureTransformationJobs.trigger();
-                    }
-                }
                 return true;
             }
         )
