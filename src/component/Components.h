@@ -103,9 +103,32 @@ namespace yaui::component {
     };
 
     struct MouseEventState {
+    private:
+        ArrayList<TargetedEvent> mMotionTrackingQueue;
+        const int kMotionTrackingLimit = 4;
+        ArrayList<std::unique_ptr<TargetedEvent>> mButtonEvents {6};
+    public:
+        std::unique_ptr<TargetedEvent> pScrollTargetedEvent;
+        enum ButtonEventType {
+            LEFT_DOWN = 0,
+            LEFT_UP = 1,
+            MIDDLE_DOWN = 2,
+            MIDDLE_UP = 3,
+            RIGHT_DOWN = 4,
+            RIGHT_UP = 5
+        };
+        entity::Entity currentTargetEntity = entity::null;
         entity::Entity previousTargetEntity = entity::null;
-        entity::Entity targetEntity = entity::null;
-        Event eventTriggerForTargetEntity = Event{};
+
+    private:
+        void resizeMouseMotionTracking();
+    public:
+        void reset();
+        Vec2 getCurrentMousePosition();
+        Vec2 getCurrentGlobalMousePosition();
+        [[nodiscard]] const std::unique_ptr<TargetedEvent>& getButtonTargetedEvent(ButtonEventType type) const;
+        const ArrayList<TargetedEvent>& getMotionTrackingQueue();
+        void setButtonEventDetails(const Event &event, entity::Entity targetEntity);
     };
 
     struct TextInputEventState {
