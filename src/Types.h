@@ -47,19 +47,19 @@ namespace yaui {
     struct Size {
         uint32 width = 0;
         uint32 height = 0;
-    };
+    } __attribute__((aligned(8)));
 
     struct FSize {
         float width = 0;
         float height = 0;
-    };
+    } __attribute__((aligned(8)));
 
     struct Rect {
         uint32 bottom = 0;
         uint32 left = 0;
         uint32 right = 0;
         uint32 top = 0;
-    };
+    } __attribute__((aligned(16)));
 
     namespace entity {
         using Entity = entt::entity;
@@ -71,7 +71,7 @@ namespace yaui {
         Event event {};
         entity::Entity targetEntity = entity::null;
         TargetedEvent(const Event &event, entity::Entity targetedEntity): event(event), targetEntity(targetedEntity) {}
-    };
+    } __attribute__((aligned(64)));
 
     struct Object {
         [[nodiscard]] virtual String getClassName() const = 0;
