@@ -59,6 +59,7 @@ target_link_libraries(yaui
         SDL2::IMAGE
         SDL2::TTF
         EnTT::EnTT
+        yaml-cpp
     PRIVATE
         spdlog::spdlog
     INTERFACE

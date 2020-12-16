@@ -43,3 +43,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/EnTT)
 # spdlog
 set(SPDLOG_BUILD_SHARED ON CACHE BOOL "" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/spdlog)
+
+# yaml-cpp
+set(YAML_BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp)

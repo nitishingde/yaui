@@ -12,9 +12,13 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/yaui)
 # Unit test for spdlog
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/spdlog)
 
+# Unit test for yaml-cpp
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/yaml)
+
 add_test(all_test
     unit_test_sdl2
     unit_test_entt
     unit_test_yaui
     unit_test_spdlog
+    unit_test_yaml
 )
