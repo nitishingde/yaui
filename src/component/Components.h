@@ -9,23 +9,23 @@
 namespace yaui::component {
     struct ActionItems {
         ArrayList<Action> actions;
-    };
+    } __attribute__((aligned(32)));
 
     struct BehaviourTraits {
         ArrayList<Behaviour> behaviours;
-    };
+    } __attribute__((aligned(32)));
 
     struct Caret {
         Colour colour {128, 128, 128, 128};
         bool isVisible = false;
         ViewPort rect {0, 0, 5, 32};
-    };
+    } __attribute__((aligned(32)));
 
     struct BoxModel {
         Rect border {0, 0, 0, 0};
         Colour borderColour {0, 0, 0, 0};
         Rect padding {0, 0, 0, 0};
-    };
+    } __attribute__((aligned(64)));
 
     struct FocusEventListener {
         bool isEnabled = false;
@@ -33,14 +33,14 @@ namespace yaui::component {
         ArrayList<EventHandlerFunctionPointer> onFocusListeners;
         ArrayList<EventHandlerFunctionPointer> onUnFocusListeners;
         [[nodiscard]] bool isInFocus() const;
-    };
+    } __attribute__((aligned(64)));
 
     struct KeyboardEventListener {
         ArrayList<EventHandlerFunctionPointer> onKeyDown;
         ArrayList<EventHandlerFunctionPointer> onKeyUp;
         void registerListener(entity::Registry &registry, const entity::Entity &entity);
         void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
-    };
+    } __attribute__((aligned(64)));
 
     struct MouseEventListener {
         ArrayList<EventHandlerFunctionPointer> onButtonDownListeners;
@@ -49,7 +49,7 @@ namespace yaui::component {
         ArrayList<EventHandlerFunctionPointer> onHoverEnterListeners;
         ArrayList<EventHandlerFunctionPointer> onHoverLeaveListeners;
         ArrayList<EventHandlerFunctionPointer> onScrollListeners;
-    };
+    } __attribute__((aligned(128)));
 
     struct Text {
         Colour colour {0, 0, 0, 255};
@@ -59,7 +59,7 @@ namespace yaui::component {
         Text(Text &&other) noexcept;
         Text& operator=(Text &&other) noexcept;
         ~Text();
-    };
+    } __attribute__((aligned(64)));
 
     struct TextInputEventListener: public IEventListener {
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
@@ -67,7 +67,7 @@ namespace yaui::component {
         [[nodiscard]] String getClassName() const override;
         void registerListener(entity::Registry &registry, const entity::Entity &entity);
         void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
-    };
+    } __attribute__((aligned(32)));
 
     struct Texture2D {
         Colour backgroundColour{0, 0, 0, 0};
@@ -77,30 +77,30 @@ namespace yaui::component {
         Texture2D(Texture2D &&other) noexcept;
         Texture2D& operator=(Texture2D &&other) noexcept;
         ~Texture2D();
-    };
+    } __attribute__((aligned(16)));
 
     struct TextureTransformationJobs {
         bool isTriggered = true;
         ArrayList<TextureTransformation> textureTransformations;
         void trigger();
-    };
+    } __attribute__((aligned(32)));
 
     struct Transform {
         ViewPort viewPort {0, 0, 0, 0};
         FVec2 scale {1.f, 1.f};
-    };
+    } __attribute__((aligned(32)));
 
     // Context variables
     struct FocusEventState {
         Event eventTriggerForTargetEntity = Event{};
         entity::Entity targetEntity = entity::null;
-    };
+    } __attribute__((aligned(64)));
 
     struct KeyboardEventState {
         HashMap<int32, Event> keyUp;
         HashMap<int32, Event> keyDown;
         Set<entity::Entity> listeners;
-    };
+    } __attribute__((aligned(128)));
 
     struct MouseEventState {
     private:
@@ -129,12 +129,12 @@ namespace yaui::component {
         [[nodiscard]] const std::unique_ptr<TargetedEvent>& getButtonTargetedEvent(ButtonEventType type) const;
         const ArrayList<TargetedEvent>& getMotionTrackingQueue();
         void setButtonEventDetails(const Event &event, entity::Entity targetEntity);
-    };
+    } __attribute__((aligned(128)));
 
     struct TextInputEventState {
         String textEntered;
         Set<entity::Entity> listeners;
-    };
+    } __attribute__((aligned(128)));
 }
 
 #endif //YAUI_COMPONENT_COMPONENTS_H
