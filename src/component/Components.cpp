@@ -1,5 +1,4 @@
 #include "Components.h"
-#include "EventDispatcher.h"
 #include "LoggerConstants.h"
 
 bool yaui::component::FocusEventListener::isInFocus() const {
@@ -47,10 +46,6 @@ yaui::component::Text::~Text() {
         pFont = nullptr;
     }
     spdlog::info("{} {}", Logger::kDestructed, YAUI_TO_STRING(yaui::component::Text));
-}
-
-yaui::component::TextInputEventListener::~TextInputEventListener() noexcept {
-    EventDispatcher::getInstance()->unregisterListener(*this);
 }
 
 yaui::String yaui::component::TextInputEventListener::getClassName() const {

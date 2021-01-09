@@ -63,7 +63,6 @@ namespace yaui::component {
 
     struct TextInputEventListener: public IEventListener {
         ArrayList<EventHandlerFunctionPointer> onCharacterEnteredListeners;
-        ~TextInputEventListener() noexcept;
         [[nodiscard]] String getClassName() const override;
         void registerListener(entity::Registry &registry, const entity::Entity &entity);
         void unregisterListener(entity::Registry &registry, const entity::Entity &entity);
