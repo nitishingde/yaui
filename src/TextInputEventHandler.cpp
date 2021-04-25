@@ -1,7 +1,6 @@
 #include "TextInputEventHandler.h"
 #include "component/Components.h"
 #include "Director.h"
-#include "EventDispatcher.h"
 
 bool yaui::TextInputEventHandler::isEventTypeSupported(const yaui::EventType &eventType) {
     return eventType == EventType::SDL_TEXTINPUT;
