@@ -95,14 +95,17 @@ int main(int argc, char** argv)
         vec4 colour;
     };
 
-    Pixel pixelData[] = {
+    std::vector<Pixel> pixelData {
         {{-0.5f, -0.5f}, {1.0f, 0.f, 0.f, 1.f}},
-        {{ 0.0f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
+        {{ -0.5f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
+        {{ 0.5f, -0.5f}, {0.0f, 0.f, 1.f, 1.f}},
+        {{ -0.5f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
+        {{ 0.5f,  0.5f}, {1.0f, 1.f, 1.f, 1.f}},
         {{ 0.5f, -0.5f}, {0.0f, 0.f, 1.f, 1.f}},
     };
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(pixelData), pixelData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(pixelData.size() * sizeof(decltype(pixelData)::value_type)), pixelData.data(), GL_STATIC_DRAW);
 
     // Create and compile the vertex shader
     std::ifstream ifs("vertex.glsl");
@@ -144,7 +147,7 @@ int main(int argc, char** argv)
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Draw a triangle from the 3 vertices
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, GLsizei(pixelData.size()));
         SDL_GL_SwapWindow(window);
     }
 
