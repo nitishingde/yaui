@@ -78,3 +78,27 @@ execute_process(
     COMMAND compdb -p ${PROJECT_SOURCE_DIR}/build/ list
     OUTPUT_FILE ${PROJECT_SOURCE_DIR}/compile_commands.json
 )
+
+add_executable(opengles2_port
+        src/opengles2/main.cpp
+)
+
+find_package(OpenGL REQUIRED)
+
+add_custom_target(CopyScripts ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources
+        ${CMAKE_CURRENT_BINARY_DIR}/
+)
+
+target_link_libraries(opengles2_port
+    PUBLIC
+        OpenGL
+        SDL2::SDL2
+    PRIVATE
+        spdlog::spdlog
+    INTERFACE
+        Catch2::Catch2
+)
+
+add_dependencies(opengles2_port CopyScripts)
