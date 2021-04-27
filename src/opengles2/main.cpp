@@ -74,10 +74,6 @@ int main(int argc, char** argv)
     printf("GLSL version supported : %s\n", glsl_v);
     printf("-----------------------------------------------------------------------------\n");
 
-    // Create a Vertex Buffer Object and copy the vertex data to it
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-
     struct vec2 {
         float x;
         float y;
@@ -99,13 +95,25 @@ int main(int argc, char** argv)
         {{-0.5f, -0.5f}, {1.0f, 0.f, 0.f, 1.f}},
         {{ -0.5f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
         {{ 0.5f, -0.5f}, {0.0f, 0.f, 1.f, 1.f}},
-        {{ -0.5f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
         {{ 0.5f,  0.5f}, {1.0f, 1.f, 1.f, 1.f}},
-        {{ 0.5f, -0.5f}, {0.0f, 0.f, 1.f, 1.f}},
     };
 
+    // Create a Vertex Buffer Object and copy the vertex data to it
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(pixelData.size() * sizeof(decltype(pixelData)::value_type)), pixelData.data(), GL_STATIC_DRAW);
+
+    std::vector<uint8_t> indices {
+        0, 1, 2,
+        1, 3, 2,
+    };
+
+    // Create a Vertex Array Buffer Object and copy the indices to it
+    GLuint vao;
+    glGenBuffers(1, &vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vao);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLsizeiptr(indices.size() * sizeof(decltype(indices)::value_type)), indices.data(), GL_STATIC_DRAW);
 
     // Create and compile the vertex shader
     std::ifstream ifs("vertex.glsl");
@@ -146,12 +154,13 @@ int main(int argc, char** argv)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw a triangle from the 3 vertices
-        glDrawArrays(GL_TRIANGLES, 0, GLsizei(pixelData.size()));
+        // Draw call
+        glDrawElements(GL_TRIANGLES, GLsizei(indices.size()), GL_UNSIGNED_BYTE, nullptr);
         SDL_GL_SwapWindow(window);
     }
 
     glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &vao);
 
     SDL_GL_DeleteContext(sdlGlCreateContext);
     SDL_DestroyWindow(window);
