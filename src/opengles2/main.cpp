@@ -2,37 +2,38 @@
 #include <SDL2/SDL_opengles2.h>
 #include <spdlog/spdlog.h>
 #include <fstream>
+#include "Utility.h"
 
 GLuint LoadShader(GLenum type, const std::string &shaderSource) {
     GLuint shader;
     GLint compiled;
 
     // Create the shader object
-    shader = glCreateShader(type);
+    debugGlCall(shader = glCreateShader(type));
     if (shader == 0) {
         return 0;
     }
 
     // Load the shader source
     const char *c_str = shaderSource.c_str();
-    glShaderSource(shader, 1, &c_str, nullptr);
+    debugGlCall(glShaderSource(shader, 1, &c_str, nullptr));
 
     // Compile the shader
-    glCompileShader(shader);
+    debugGlCall(glCompileShader(shader));
 
     // Check the compile status
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
+    debugGlCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
 
     if(!compiled) {
         GLint infoLen = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+        debugGlCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen));
         if(infoLen > 1) {
             std::vector<char> infoLog(infoLen);
-            glGetShaderInfoLog(shader, infoLen, nullptr, infoLog.data());
-            spdlog::error("Error compiling shader:\n{}\n", infoLog.data());
+            debugGlCall(glGetShaderInfoLog(shader, infoLen, nullptr, infoLog.data()));
+            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
         }
 
-        glDeleteShader(shader);
+        debugGlCall(glDeleteShader(shader));
         return 0;
     }
 
@@ -68,8 +69,8 @@ int main(int argc, char** argv)
     SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_ACCELERATED_VISUAL, 1);
 
     auto sdlGlCreateContext = SDL_GL_CreateContext(window);
-    auto glsl_v = glGetString(GL_SHADING_LANGUAGE_VERSION);
-    auto gl_v = glGetString(GL_VERSION);
+    debugGlCall(auto glsl_v = glGetString(GL_SHADING_LANGUAGE_VERSION));
+    debugGlCall(auto gl_v = glGetString(GL_VERSION));
     printf("GL version             : %s\n", gl_v);
     printf("GLSL version supported : %s\n", glsl_v);
     printf("-----------------------------------------------------------------------------\n");
@@ -100,9 +101,9 @@ int main(int argc, char** argv)
 
     // Create a Vertex Buffer Object and copy the vertex data to it
     GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(pixelData.size() * sizeof(decltype(pixelData)::value_type)), pixelData.data(), GL_STATIC_DRAW);
+    debugGlCall(glGenBuffers(1, &vbo));
+    debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+    debugGlCall(glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(pixelData.size() * sizeof(decltype(pixelData)::value_type)), pixelData.data(), GL_STATIC_DRAW));
 
     std::vector<uint8_t> indices {
         0, 1, 2,
@@ -111,9 +112,9 @@ int main(int argc, char** argv)
 
     // Create a Vertex Array Buffer Object and copy the indices to it
     GLuint vao;
-    glGenBuffers(1, &vao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vao);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLsizeiptr(indices.size() * sizeof(decltype(indices)::value_type)), indices.data(), GL_STATIC_DRAW);
+    debugGlCall(glGenBuffers(1, &vao));
+    debugGlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vao));
+    debugGlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLsizeiptr(indices.size() * sizeof(decltype(indices)::value_type)), indices.data(), GL_STATIC_DRAW));
 
     // Create and compile the vertex shader
     std::ifstream ifs("vertex.glsl");
@@ -130,20 +131,20 @@ int main(int argc, char** argv)
     GLuint fragmentShader = LoadShader(GL_FRAGMENT_SHADER, fragmentSource);
 
     // Link the vertex and fragment shader into a shader program
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glUseProgram(shaderProgram);
+    debugGlCall(GLuint shaderProgram = glCreateProgram());
+    debugGlCall(glAttachShader(shaderProgram, vertexShader));
+    debugGlCall(glAttachShader(shaderProgram, fragmentShader));
+    debugGlCall(glLinkProgram(shaderProgram));
+    debugGlCall(glUseProgram(shaderProgram));
 
     // Specify the layout of the vertex data
-    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, position));
+    debugGlCall(GLint posAttrib = glGetAttribLocation(shaderProgram, "position"));
+    debugGlCall(glEnableVertexAttribArray(posAttrib));
+    debugGlCall(glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, position)));
 
-    posAttrib = glGetAttribLocation(shaderProgram, "colour");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, colour));
+    debugGlCall(posAttrib = glGetAttribLocation(shaderProgram, "colour"));
+    debugGlCall(glEnableVertexAttribArray(posAttrib));
+    debugGlCall(glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, colour)));
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
@@ -151,16 +152,16 @@ int main(int argc, char** argv)
         }
 
         // Clear the screen to black
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        debugGlCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+        debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // Draw call
-        glDrawElements(GL_TRIANGLES, GLsizei(indices.size()), GL_UNSIGNED_BYTE, nullptr);
+        debugGlCall(glDrawElements(GL_TRIANGLES, GLsizei(indices.size()), GL_UNSIGNED_BYTE, nullptr));
         SDL_GL_SwapWindow(window);
     }
 
-    glDeleteBuffers(1, &vbo);
-    glDeleteBuffers(1, &vao);
+    debugGlCall(glDeleteBuffers(1, &vbo));
+    debugGlCall(glDeleteBuffers(1, &vao));
 
     SDL_GL_DeleteContext(sdlGlCreateContext);
     SDL_DestroyWindow(window);

@@ -81,6 +81,7 @@ execute_process(
 
 add_executable(opengles2_port
         src/opengles2/main.cpp
+        src/opengles2/Utility.cpp src/opengles2/Utility.h
 )
 
 find_package(OpenGL REQUIRED)
