@@ -1,12 +1,10 @@
 #include <SDL2/SDL.h>
-#include <spdlog/spdlog.h>
-#include "Director.h"
-#include "Utility.h"
 #include "Buffer.h"
+#include "Director.h"
 #include "Shader.h"
-#include "Types.h"
+#include "Utility.h"
 
-int main(int argc, char** argv) {
+void helloRect() {
     auto pWindow = yaui::Director::getInstance()->getWindow();
 
     struct Pixel {
@@ -62,4 +60,8 @@ int main(int argc, char** argv) {
     }
 
     yaui::Director::getInstance()->quit();
+}
+
+int main(int argc, char** argv) {
+    helloRect();
 }
