@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
 
     // Create a Vertex Buffer Object and copy the vertex data to it
     yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    vb.bind();
 
     std::vector<uint32_t> indices {
         0, 1, 2,
@@ -36,6 +37,7 @@ int main(int argc, char** argv) {
 
     // Create a Vertex Array Buffer Object and copy the indices to it
     yaui::VertexArrayBuffer va(indices.data(), indices.size());
+    va.bind();
 
     yaui::Shader shader(
         "HelloWorld",
@@ -43,6 +45,7 @@ int main(int argc, char** argv) {
         yaui::readFile("fragment.glsl").c_str(),
         layout
     );
+    shader.bind();
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
@@ -54,13 +57,7 @@ int main(int argc, char** argv) {
         debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // Draw call
-        vb.bind();
-        va.bind();
-        shader.bind();
         debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
-        vb.bind();
-        va.unbind();
-        shader.unbind();
         SDL_GL_SwapWindow(pWindow);
     }
 
