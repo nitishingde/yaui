@@ -1,5 +1,5 @@
-#ifndef YAUI_VERTEXBUFFER_H
-#define YAUI_VERTEXBUFFER_H
+#ifndef YAUI_BUFFER_H
+#define YAUI_BUFFER_H
 
 
 #include "Types.h"
@@ -18,7 +18,21 @@ namespace yaui {
         void bind() const;
         void unbind() const;
     };
+
+    class VertexArrayBuffer {
+    private:
+        GLuint mId;
+        int32 mSize;
+
+    public:
+        explicit VertexArrayBuffer(const uint32 *pData, int32 size);
+        ~VertexArrayBuffer();
+        void bind() const;
+        void unbind() const;
+        int32 getSize() const;
+        GLenum getType() const;
+    };
 }
 
 
-#endif //YAUI_VERTEXBUFFER_H
+#endif //YAUI_BUFFER_H

@@ -81,12 +81,11 @@ execute_process(
 
 add_executable(opengles2_port
         src/opengles2/main.cpp
+        src/opengles2/Buffer.cpp src/opengles2/Buffer.h
         src/opengles2/Director.cpp src/opengles2/Director.h
         src/opengles2/Shader.cpp src/opengles2/Shader.h
         src/opengles2/Types.h
         src/opengles2/Utility.cpp src/opengles2/Utility.h
-        src/opengles2/VertexBuffer.cpp src/opengles2/VertexBuffer.h
-        src/opengles2/VertexArrayBuffer.cpp src/opengles2/VertexArrayBuffer.h
 )
 
 find_package(OpenGL REQUIRED)

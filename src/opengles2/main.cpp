@@ -2,8 +2,7 @@
 #include <spdlog/spdlog.h>
 #include "Director.h"
 #include "Utility.h"
-#include "VertexBuffer.h"
-#include "VertexArrayBuffer.h"
+#include "Buffer.h"
 #include "Shader.h"
 #include "Types.h"
 
