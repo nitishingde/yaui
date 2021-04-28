@@ -5,32 +5,21 @@
 #include "VertexBuffer.h"
 #include "VertexArrayBuffer.h"
 #include "Shader.h"
+#include "Types.h"
 
 int main(int argc, char** argv) {
     auto pWindow = yaui::Director::getInstance()->getWindow();
 
-    struct vec2 {
-        float x;
-        float y;
-    } __attribute__((aligned(8)));
-
-    struct vec4 {
-        float x;
-        float y;
-        float z;
-        float w;
-    } __attribute__((aligned(16)));
-
     struct Pixel {
-        vec2 position;
-        vec4 colour;
+        yaui::Vec2 position;
+        yaui::Colour colour;
     };
 
     std::vector<Pixel> pixelData {
-        {{-0.5f, -0.5f}, {1.0f, 0.f, 0.f, 1.f}},
-        {{ -0.5f,  0.5f}, {0.0f, 1.f, 0.f, 1.f}},
-        {{ 0.5f, -0.5f}, {0.0f, 0.f, 1.f, 1.f}},
-        {{ 0.5f,  0.5f}, {1.0f, 1.f, 1.f, 1.f}},
+        {{-0.5f,-0.5f}, {1.f, 0.f, 0.f, 1.f}},
+        {{-0.5f,0.5f},  {0.f, 1.f, 0.f, 1.f}},
+        {{ 0.5f,-0.5f}, {0.f, 0.f, 1.f, 1.f}},
+        {{0.5f, 0.5f},  {1.f, 1.f, 1.f, 1.f}},
     };
 
     // Create a Vertex Buffer Object and copy the vertex data to it

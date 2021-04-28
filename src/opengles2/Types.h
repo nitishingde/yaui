@@ -18,6 +18,19 @@ namespace yaui {
 
     using String = std::string;
     using Window = SDL_Window;
+
+    struct Vec2 {
+        float x;
+        float y;
+    } __attribute__((aligned(8)));
+
+    struct Colour {
+        float r;
+        float g;
+        float b;
+        float a;
+    } __attribute__((aligned(16)));
+
 }
 
 
