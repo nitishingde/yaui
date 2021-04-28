@@ -1,10 +1,10 @@
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
-#include <fstream>
 #include "Director.h"
 #include "Utility.h"
 #include "VertexBuffer.h"
 #include "VertexArrayBuffer.h"
+#include "Shader.h"
 
 int main(int argc, char** argv) {
     auto pWindow = yaui::Director::getInstance()->getWindow();
@@ -44,26 +44,13 @@ int main(int argc, char** argv) {
     // Create a Vertex Array Buffer Object and copy the indices to it
     yaui::VertexArrayBuffer va(indices.data(), indices.size());
 
-    // Create and compile the vertex shader
-    std::ifstream ifs("vertex.glsl");
-    std::string vertexSource((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
-    printf("%s", vertexSource.c_str());
-    GLuint vertexShader = yaui::loadShader(GL_VERTEX_SHADER, vertexSource.c_str());
-
-    // Create and compile the fragment shader
-    ifs.close();
-    ifs.open("fragment.glsl");
-    std::string fragmentSource((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
-    printf("%s", fragmentSource.c_str());
-
-    GLuint fragmentShader = yaui::loadShader(GL_FRAGMENT_SHADER, fragmentSource.c_str());
-
-    // Link the vertex and fragment shader into a shader program
-    debugGlCall(GLuint shaderProgram = glCreateProgram());
-    debugGlCall(glAttachShader(shaderProgram, vertexShader));
-    debugGlCall(glAttachShader(shaderProgram, fragmentShader));
-    debugGlCall(glLinkProgram(shaderProgram));
-    debugGlCall(glUseProgram(shaderProgram));
+    yaui::Shader shader("HelloWorld");
+    shader.loadShader(
+        yaui::readFile("vertex.glsl").c_str(),
+        yaui::readFile("fragment.glsl").c_str()
+    );
+    shader.bind();
+    auto shaderProgram = shader.getProgramId();
 
     // Specify the layout of the vertex data
     debugGlCall(GLint posAttrib = glGetAttribLocation(shaderProgram, "position"));

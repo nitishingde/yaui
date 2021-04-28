@@ -1,4 +1,5 @@
 #include "Utility.h"
+#include <fstream>
 #include <spdlog/spdlog.h>
 
 void yaui::glFlushErrors() {
@@ -20,37 +21,7 @@ void yaui::glLogError(const char *file, int line) {
     }
 }
 
-GLuint yaui::loadShader(GLenum type, const char *shaderSource)  {
-    GLuint shader;
-    GLint compiled;
-
-    // Create the shader object
-    debugGlCall(shader = glCreateShader(type));
-    if (shader == 0) {
-        return 0;
-    }
-
-    // Load the shader source
-    debugGlCall(glShaderSource(shader, 1, &shaderSource, nullptr));
-
-    // Compile the shader
-    debugGlCall(glCompileShader(shader));
-
-    // Check the compile status
-    debugGlCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
-
-    if(!compiled) {
-        GLint infoLen = 0;
-        debugGlCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen));
-        if(infoLen > 1) {
-            std::vector<char> infoLog(infoLen);
-            debugGlCall(glGetShaderInfoLog(shader, infoLen, nullptr, infoLog.data()));
-            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
-        }
-
-        debugGlCall(glDeleteShader(shader));
-        return 0;
-    }
-
-    return shader;
+yaui::String yaui::readFile(const String &filePath) {
+    std::ifstream ifs(filePath);
+    return std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 }
