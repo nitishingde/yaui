@@ -3,6 +3,8 @@
 #include <spdlog/spdlog.h>
 #include <fstream>
 #include "Utility.h"
+#include "VertexBuffer.h"
+#include "VertexArrayBuffer.h"
 
 int main(int argc, char** argv)
 {
@@ -63,21 +65,15 @@ int main(int argc, char** argv)
     };
 
     // Create a Vertex Buffer Object and copy the vertex data to it
-    GLuint vbo;
-    debugGlCall(glGenBuffers(1, &vbo));
-    debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
-    debugGlCall(glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(pixelData.size() * sizeof(decltype(pixelData)::value_type)), pixelData.data(), GL_STATIC_DRAW));
+    yaui::VertexBuffer vb(pixelData.data(), pixelData.size() * sizeof(decltype(pixelData)::value_type));
 
-    std::vector<uint8_t> indices {
+    std::vector<uint32_t> indices {
         0, 1, 2,
         1, 3, 2,
     };
 
     // Create a Vertex Array Buffer Object and copy the indices to it
-    GLuint vao;
-    debugGlCall(glGenBuffers(1, &vao));
-    debugGlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vao));
-    debugGlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLsizeiptr(indices.size() * sizeof(decltype(indices)::value_type)), indices.data(), GL_STATIC_DRAW));
+    yaui::VertexArrayBuffer va(indices.data(), indices.size());
 
     // Create and compile the vertex shader
     std::ifstream ifs("vertex.glsl");
@@ -119,12 +115,10 @@ int main(int argc, char** argv)
         debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // Draw call
-        debugGlCall(glDrawElements(GL_TRIANGLES, GLsizei(indices.size()), GL_UNSIGNED_BYTE, nullptr));
+        va.bind();
+        debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
         SDL_GL_SwapWindow(window);
     }
-
-    debugGlCall(glDeleteBuffers(1, &vbo));
-    debugGlCall(glDeleteBuffers(1, &vao));
 
     SDL_GL_DeleteContext(sdlGlCreateContext);
     SDL_DestroyWindow(window);
