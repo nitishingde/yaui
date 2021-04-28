@@ -1,5 +1,4 @@
 #include "Director.h"
-#include <GLES2/gl2.h>
 #include "Utility.h"
 
 static yaui::Director* instance = nullptr;

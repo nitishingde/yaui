@@ -2,7 +2,6 @@
 #define YAUI_UTILITY_H
 
 
-#include <GLES2/gl2.h>
 #include "Types.h"
 
 #if NDEBUG
