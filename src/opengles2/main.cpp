@@ -33,22 +33,18 @@ int main(int argc, char** argv) {
     // Create a Vertex Array Buffer Object and copy the indices to it
     yaui::VertexArrayBuffer va(indices.data(), indices.size());
 
-    yaui::Shader shader("HelloWorld");
-    shader.loadShader(
+    yaui::Shader shader(
+        "HelloWorld",
         yaui::readFile("vertex.glsl").c_str(),
-        yaui::readFile("fragment.glsl").c_str()
+        yaui::readFile("fragment.glsl").c_str(),
+        {{"position", 0}, {"colour", 1}}
     );
-    shader.bind();
-    auto shaderProgram = shader.getProgramId();
 
     // Specify the layout of the vertex data
-    debugGlCall(GLint posAttrib = glGetAttribLocation(shaderProgram, "position"));
-    debugGlCall(glEnableVertexAttribArray(posAttrib));
-    debugGlCall(glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, position)));
-
-    debugGlCall(posAttrib = glGetAttribLocation(shaderProgram, "colour"));
-    debugGlCall(glEnableVertexAttribArray(posAttrib));
-    debugGlCall(glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, colour)));
+    debugGlCall(glEnableVertexAttribArray(0));
+    debugGlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, position)));
+    debugGlCall(glEnableVertexAttribArray(1));
+    debugGlCall(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, colour)));
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
@@ -60,8 +56,13 @@ int main(int argc, char** argv) {
         debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
 
         // Draw call
+        vb.bind();
         va.bind();
+        shader.bind();
         debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
+        vb.bind();
+        va.unbind();
+        shader.unbind();
         SDL_GL_SwapWindow(pWindow);
     }
 

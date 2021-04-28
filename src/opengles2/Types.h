@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 namespace yaui {
     using int8 = int8_t;
@@ -17,6 +18,8 @@ namespace yaui {
     using uint64 = uint64_t;
 
     using String = std::string;
+    template<typename key, typename value>
+    using HashMap = std::unordered_map<key, value>;
     using Window = SDL_Window;
 
     struct Vec2 {

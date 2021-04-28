@@ -39,56 +39,54 @@ GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
     return shader;
 }
 
-yaui::Shader::Shader(yaui::String name)
+yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, const HashMap<String, GLuint> &attributeLocations)
     : mName(std::move(name))
-    , mId(0) {
+    , mProgramId(glCreateProgram())
+    , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
+    , mFragmentShaderId(compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource))
+    , mAttributeLocations(attributeLocations) {
 }
 
 yaui::Shader::~Shader() {
-    debugGlCall(glDeleteProgram(mId));
-}
-
-void yaui::Shader::loadShader(const char *vertexShaderSource, const char *fragmentShaderSource) {
-    mId = glCreateProgram();
-
-    auto vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
-    debugGlCall(glAttachShader(mId, vertexShader));
-
-    auto fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-    debugGlCall(glAttachShader(mId, fragmentShader));
-
-    debugGlCall(glLinkProgram(mId));
-
-    GLint isLinked = 0;
-    debugGlCall(glGetProgramiv(mId, GL_LINK_STATUS, &isLinked));
-    if (isLinked == GL_FALSE)
-    {
-        GLint maxLength = 0;
-        debugGlCall(glGetProgramiv(mId, GL_INFO_LOG_LENGTH, &maxLength));
-
-        std::vector<GLchar> infoLog(maxLength);
-        debugGlCall(glGetProgramInfoLog(mId, maxLength, &maxLength, infoLog.data()));
-        debugGlCall(glDeleteProgram(mId));
-        debugGlCall(glDeleteShader(vertexShader));
-        debugGlCall(glDeleteShader(fragmentShader));
-        spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
-    }
-
-    debugGlCall(glDetachShader(mId, vertexShader));
-    debugGlCall(glDeleteShader(vertexShader));
-
-    debugGlCall(glDetachShader(mId, fragmentShader));
-    debugGlCall(glDeleteShader(fragmentShader));
+    debugGlCall(glDeleteProgram(mProgramId));
+    debugGlCall(glDeleteShader(mVertexShaderId));
+    debugGlCall(glDeleteShader(mFragmentShaderId));
 }
 
 void yaui::Shader::bind() const {
-    debugGlCall(glUseProgram(mId));
+    // check if program is already linked
+    GLint isLinked = 0;
+    debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
+    if(isLinked == GL_FALSE) {
+        // Set attribute locations
+        for(const auto &[attribute, location]: mAttributeLocations) {
+            debugGlCall(glBindAttribLocation(mProgramId, location, attribute.c_str()));
+        }
+
+        // Link vertex and fragment shaders
+        debugGlCall(glAttachShader(mProgramId, mVertexShaderId));
+        debugGlCall(glAttachShader(mProgramId, mFragmentShaderId));
+        debugGlCall(glLinkProgram(mProgramId));
+        // Decrement the reference count for the shaders after linking
+        debugGlCall(glDetachShader(mProgramId, mVertexShaderId));
+        debugGlCall(glDetachShader(mProgramId, mFragmentShaderId));
+        debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
+        if(isLinked == GL_FALSE) {
+            GLint maxLength = 0;
+            debugGlCall(glGetProgramiv(mProgramId, GL_INFO_LOG_LENGTH, &maxLength));
+            std::vector<GLchar> infoLog(maxLength);
+            debugGlCall(glGetProgramInfoLog(mProgramId, maxLength, &maxLength, infoLog.data()));
+            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
+
+            debugGlCall(glDeleteShader(mVertexShaderId));
+            debugGlCall(glDeleteShader(mFragmentShaderId));
+            debugGlCall(glDeleteProgram(mProgramId));
+        }
+    }
+
+    debugGlCall(glUseProgram(mProgramId));
 }
 
 void yaui::Shader::unbind() const {
     debugGlCall(glUseProgram(0));
-}
-
-GLuint yaui::Shader::getProgramId() const {
-    return mId;
 }

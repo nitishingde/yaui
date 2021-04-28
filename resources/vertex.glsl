@@ -1,7 +1,7 @@
 #version 100
 
-attribute vec4 position;
 attribute vec4 colour;
+attribute vec4 position;
 varying vec4 vertexColour;
 
 void main() {

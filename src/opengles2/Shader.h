@@ -9,16 +9,18 @@ namespace yaui {
     class Shader {
     private:
         String mName;
-        GLuint mId;
+        GLuint mProgramId;
+        GLuint mVertexShaderId;
+        GLuint mFragmentShaderId;
+        HashMap<String, GLuint> mAttributeLocations;
+    private:
         GLuint compileShader(GLenum type, const char *shaderSource);
 
     public:
-        explicit Shader(String name);
+        explicit Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, const HashMap<String, GLuint> &attributeLocations);
         ~Shader();
-        void loadShader(const char *vertexShaderSource, const char *fragmentShaderSource);
         void bind() const;
         void unbind() const;
-        GLuint getProgramId() const;
     };
 }
 
