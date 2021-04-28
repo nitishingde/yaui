@@ -4,43 +4,6 @@
 #include <fstream>
 #include "Utility.h"
 
-GLuint LoadShader(GLenum type, const std::string &shaderSource) {
-    GLuint shader;
-    GLint compiled;
-
-    // Create the shader object
-    debugGlCall(shader = glCreateShader(type));
-    if (shader == 0) {
-        return 0;
-    }
-
-    // Load the shader source
-    const char *c_str = shaderSource.c_str();
-    debugGlCall(glShaderSource(shader, 1, &c_str, nullptr));
-
-    // Compile the shader
-    debugGlCall(glCompileShader(shader));
-
-    // Check the compile status
-    debugGlCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled));
-
-    if(!compiled) {
-        GLint infoLen = 0;
-        debugGlCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen));
-        if(infoLen > 1) {
-            std::vector<char> infoLog(infoLen);
-            debugGlCall(glGetShaderInfoLog(shader, infoLen, nullptr, infoLog.data()));
-            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
-        }
-
-        debugGlCall(glDeleteShader(shader));
-        return 0;
-    }
-
-    return shader;
-}
-
-
 int main(int argc, char** argv)
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -120,7 +83,7 @@ int main(int argc, char** argv)
     std::ifstream ifs("vertex.glsl");
     std::string vertexSource((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
     printf("%s", vertexSource.c_str());
-    GLuint vertexShader = LoadShader(GL_VERTEX_SHADER, vertexSource);
+    GLuint vertexShader = yaui::loadShader(GL_VERTEX_SHADER, vertexSource.c_str());
 
     // Create and compile the fragment shader
     ifs.close();
@@ -128,7 +91,7 @@ int main(int argc, char** argv)
     std::string fragmentSource((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
     printf("%s", fragmentSource.c_str());
 
-    GLuint fragmentShader = LoadShader(GL_FRAGMENT_SHADER, fragmentSource);
+    GLuint fragmentShader = yaui::loadShader(GL_FRAGMENT_SHADER, fragmentSource.c_str());
 
     // Link the vertex and fragment shader into a shader program
     debugGlCall(GLuint shaderProgram = glCreateProgram());
