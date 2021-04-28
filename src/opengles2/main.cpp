@@ -22,8 +22,13 @@ int main(int argc, char** argv) {
         {{0.5f, 0.5f},  {1.f, 1.f, 1.f, 1.f}},
     };
 
+    yaui::BufferLayout layout {
+        {"colour", 1, 4, GL_FLOAT, GL_FALSE, offsetof(Pixel, colour)},
+        {"position", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
+    };
+
     // Create a Vertex Buffer Object and copy the vertex data to it
-    yaui::VertexBuffer vb(pixelData.data(), pixelData.size() * sizeof(decltype(pixelData)::value_type));
+    yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
 
     std::vector<uint32_t> indices {
         0, 1, 2,
@@ -37,14 +42,8 @@ int main(int argc, char** argv) {
         "HelloWorld",
         yaui::readFile("vertex.glsl").c_str(),
         yaui::readFile("fragment.glsl").c_str(),
-        {{"position", 0}, {"colour", 1}}
+        layout
     );
-
-    // Specify the layout of the vertex data
-    debugGlCall(glEnableVertexAttribArray(0));
-    debugGlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, position)));
-    debugGlCall(glEnableVertexAttribArray(1));
-    debugGlCall(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), (void*)offsetof(Pixel, colour)));
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {

@@ -39,12 +39,12 @@ GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
     return shader;
 }
 
-yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, const HashMap<String, GLuint> &attributeLocations)
+yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, const BufferLayout &bufferLayout)
     : mName(std::move(name))
     , mProgramId(glCreateProgram())
     , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
     , mFragmentShaderId(compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource))
-    , mAttributeLocations(attributeLocations) {
+    , mBufferLayout(bufferLayout) {
 }
 
 yaui::Shader::~Shader() {
@@ -59,8 +59,8 @@ void yaui::Shader::bind() const {
     debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
     if(isLinked == GL_FALSE) {
         // Set attribute locations
-        for(const auto &[attribute, location]: mAttributeLocations) {
-            debugGlCall(glBindAttribLocation(mProgramId, location, attribute.c_str()));
+        for(const auto &layout: mBufferLayout) {
+            debugGlCall(glBindAttribLocation(mProgramId, layout.location, layout.attribute.c_str()));
         }
 
         // Link vertex and fragment shaders

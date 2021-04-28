@@ -2,17 +2,19 @@
 #define YAUI_VERTEXBUFFER_H
 
 
-#include <GLES2/gl2.h>
 #include "Types.h"
 
 namespace yaui {
     class VertexBuffer {
     private:
         GLuint mId;
+        BufferLayout mBufferLayout;
+        GLsizei mStride;
 
     public:
-        explicit VertexBuffer(const void *pData, uint32 byteSize);
+        explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
         ~VertexBuffer();
+        const BufferLayout& getLayout() const;
         void bind() const;
         void unbind() const;
     };

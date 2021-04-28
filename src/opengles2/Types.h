@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <GLES2/gl2.h>
 
 namespace yaui {
     using int8 = int8_t;
@@ -34,6 +35,15 @@ namespace yaui {
         float a;
     } __attribute__((aligned(16)));
 
+    struct BufferLayoutElement {
+        String attribute;
+        GLuint location;
+        GLint size;
+        GLenum type;
+        GLint isNormalised;
+        uint32 offset;
+    } __attribute__((aligned(64)));
+    using BufferLayout = std::vector<BufferLayoutElement>;
 }
 
 
