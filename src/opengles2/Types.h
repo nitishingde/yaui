@@ -2,6 +2,7 @@
 #define YAUI_TYPES_H
 
 
+#include <SDL.h>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,7 @@ namespace yaui {
     using uint64 = uint64_t;
 
     using String = std::string;
+    using Window = SDL_Window;
 }
 
 

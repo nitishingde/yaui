@@ -81,6 +81,7 @@ execute_process(
 
 add_executable(opengles2_port
         src/opengles2/main.cpp
+        src/opengles2/Director.cpp src/opengles2/Director.h
         src/opengles2/Types.h
         src/opengles2/Utility.cpp src/opengles2/Utility.h
         src/opengles2/VertexBuffer.cpp src/opengles2/VertexBuffer.h

@@ -1,44 +1,13 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_opengles2.h>
 #include <spdlog/spdlog.h>
 #include <fstream>
+#include "Director.h"
 #include "Utility.h"
 #include "VertexBuffer.h"
 #include "VertexArrayBuffer.h"
 
-int main(int argc, char** argv)
-{
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        return 0;
-    }
-
-    auto window = SDL_CreateWindow(
-        "test",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        1080,
-        720,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
-    );
-
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_PROFILE_MASK, SDL_GLprofile::SDL_GL_CONTEXT_PROFILE_ES);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_MINOR_VERSION, 0);
-    SDL_GL_SetSwapInterval(0);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_ALPHA_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_DEPTH_SIZE, 16);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_ACCELERATED_VISUAL, 1);
-
-    auto sdlGlCreateContext = SDL_GL_CreateContext(window);
-    debugGlCall(auto glsl_v = glGetString(GL_SHADING_LANGUAGE_VERSION));
-    debugGlCall(auto gl_v = glGetString(GL_VERSION));
-    printf("GL version             : %s\n", gl_v);
-    printf("GLSL version supported : %s\n", glsl_v);
-    printf("-----------------------------------------------------------------------------\n");
+int main(int argc, char** argv) {
+    auto pWindow = yaui::Director::getInstance()->getWindow();
 
     struct vec2 {
         float x;
@@ -117,10 +86,8 @@ int main(int argc, char** argv)
         // Draw call
         va.bind();
         debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(pWindow);
     }
 
-    SDL_GL_DeleteContext(sdlGlCreateContext);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    yaui::Director::getInstance()->quit();
 }
