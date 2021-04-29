@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include "Renderer.h"
 #include "Types.h"
 
 namespace yaui {
@@ -10,6 +11,7 @@ namespace yaui {
     private:
         Window *mpWindow = nullptr;
         SDL_GLContext mGlContext = nullptr;
+        Renderer mRenderer;
         glm::mat4 mModel = glm::mat4(1.0f);
         glm::mat4 mView = glm::mat4(1.0f);
         glm::mat4 mProjection = glm::mat4(1.0f);
@@ -24,6 +26,7 @@ namespace yaui {
         void quit();
         Window* getWindow() const;
         [[nodiscard]] std::tuple<float, float> getWindowSize() const;
+        Renderer getRenderer();
         glm::mat4 getMVP_Matrix();
     };
 }

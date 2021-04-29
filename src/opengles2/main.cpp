@@ -51,18 +51,20 @@ void helloRect() {
     shader.bind();
     shader.setUniformMatrix4f("uMVP", mvp);
 
+    const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
             if(e.type == SDL_QUIT) loop = false;
         }
 
         // Clear the screen to black
-        debugGlCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-        debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
+        renderer.clearScreen({0.f, 0.f, 0.f, 0.f});
 
         // Draw call
-        debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
-        SDL_GL_SwapWindow(pWindow);
+        renderer.drawElements(va);
+
+        // Present the result to the screen
+        renderer.present(pWindow);
     }
 
     pDirector->quit();
@@ -113,20 +115,20 @@ void helloTexture() {
     shader.bind();
     shader.setUniformMatrix4f("uMVP", mvp);
 
+    const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
             if(e.type == SDL_QUIT) loop = false;
         }
 
         // Clear the screen to black
-        debugGlCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-        debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
-
-        // Draw the texture
-        debugGlCall(glDrawElements(GL_TRIANGLES, va.getSize(), va.getType(), nullptr));
+        renderer.clearScreen({0.f, 0.f, 0.f, 0.f});
 
         // Draw call
-        SDL_GL_SwapWindow(pWindow);
+        renderer.drawElements(va);
+
+        // Present the result to the screen
+        renderer.present(pWindow);
     }
 
     pDirector->quit();
