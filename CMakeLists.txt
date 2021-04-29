@@ -84,6 +84,7 @@ add_executable(opengles2_port
         src/opengles2/Buffer.cpp src/opengles2/Buffer.h
         src/opengles2/Director.cpp src/opengles2/Director.h
         src/opengles2/Shader.cpp src/opengles2/Shader.h
+        src/opengles2/stb_image.cpp src/opengles2/stb_image.h
         src/opengles2/Types.h
         src/opengles2/Utility.cpp src/opengles2/Utility.h
 )
