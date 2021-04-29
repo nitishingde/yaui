@@ -79,6 +79,8 @@ execute_process(
     OUTPUT_FILE ${PROJECT_SOURCE_DIR}/compile_commands.json
 )
 
+find_package(OpenGL REQUIRED)
+
 add_executable(opengles2_port
         src/opengles2/main.cpp
         src/opengles2/Buffer.cpp src/opengles2/Buffer.h
@@ -88,8 +90,6 @@ add_executable(opengles2_port
         src/opengles2/Types.h
         src/opengles2/Utility.cpp src/opengles2/Utility.h
 )
-
-find_package(OpenGL REQUIRED)
 
 add_custom_target(CopyScripts ALL
         COMMAND ${CMAKE_COMMAND} -E copy_directory
