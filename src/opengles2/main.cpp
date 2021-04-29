@@ -3,6 +3,7 @@
 #include "Director.h"
 #include "Shader.h"
 #include "stb_image.h"
+#include "Texture.h"
 #include "Utility.h"
 
 void helloRect() {
@@ -73,10 +74,10 @@ void helloTexture() {
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
     auto mvp = pDirector->getMVP_Matrix();
 
-    srand(time(nullptr));
-    stbi_set_flip_vertically_on_load(1);
-    int32_t width, height, channels;
-    auto image = stbi_load(rand()%2 ? "2048x1024.png": "Lenna.png", &width, &height, &channels, STBI_rgb_alpha);
+    yaui::Texture texture;
+    texture.loadImage("Lenna.png");
+    const auto [width, height] = texture.getDimension();
+    texture.bind();
 
     struct Pixel {
         yaui::Vec2 position;
@@ -111,18 +112,6 @@ void helloTexture() {
     );
     shader.bind();
     shader.setUniformMatrix4f("uMVP", mvp);
-
-    GLuint texture;
-    debugGlCall(glGenTextures(1, &texture));
-    debugGlCall(glBindTexture(GL_TEXTURE_2D, texture));
-    // set the texture wrapping/filtering options (on the currently bound texture object)
-    debugGlCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-    debugGlCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-    debugGlCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    debugGlCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    debugGlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image));
-    debugGlCall(glBindTexture(GL_TEXTURE_2D, texture));
-    stbi_image_free(image);
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
