@@ -10,7 +10,6 @@ void helloRect() {
     auto pDirector = yaui::Director::getInstance();
     auto pWindow = pDirector->getWindow();
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
-    auto mvp = pDirector->getMVP_Matrix();
 
     struct Pixel {
         yaui::Vec2 position;
@@ -49,7 +48,7 @@ void helloRect() {
         layout
     );
     shader.bind();
-    shader.setUniformMatrix4f("uMVP", mvp);
+    shader.setUniformMatrix4f("uMVP", pDirector->getMVP_Matrix());
 
     const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {
@@ -74,7 +73,6 @@ void helloTexture() {
     auto pDirector = yaui::Director::getInstance();
     auto pWindow = pDirector->getWindow();
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
-    auto mvp = pDirector->getMVP_Matrix();
 
     yaui::Texture texture;
     texture.loadImage("Lenna.png");
@@ -113,7 +111,7 @@ void helloTexture() {
         layout
     );
     shader.bind();
-    shader.setUniformMatrix4f("uMVP", mvp);
+    shader.setUniformMatrix4f("uMVP", pDirector->getMVP_Matrix());
 
     const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {

@@ -12,6 +12,7 @@ namespace yaui {
         int32 mHeight{};
         int32 mChannels{};
         std::vector<uint8> mPixelData;
+
     public:
         explicit Texture();
         ~Texture();
