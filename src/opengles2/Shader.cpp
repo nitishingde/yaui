@@ -90,3 +90,8 @@ void yaui::Shader::bind() const {
 void yaui::Shader::unbind() const {
     debugGlCall(glUseProgram(0));
 }
+
+void yaui::Shader::setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, uniformName));
+    debugGlCall(glUniformMatrix4fv(location, 1, GL_FALSE, &projectionMatrix[0][0]));
+}

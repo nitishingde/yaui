@@ -80,6 +80,7 @@ execute_process(
 )
 
 find_package(OpenGL REQUIRED)
+find_package(glm REQUIRED)
 
 add_executable(opengles2_port
         src/opengles2/main.cpp
@@ -101,6 +102,7 @@ target_link_libraries(opengles2_port
     PUBLIC
         OpenGL
         SDL2::SDL2
+        glm::glm
     PRIVATE
         spdlog::spdlog
     INTERFACE

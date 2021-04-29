@@ -2,7 +2,9 @@
 #define YAUI_SHADER_H
 
 
+#include <glm/glm.hpp>
 #include "Types.h"
+#include "Utility.h"
 
 namespace yaui {
     class Shader {
@@ -20,6 +22,7 @@ namespace yaui {
         ~Shader();
         void bind() const;
         void unbind() const;
+        void setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const;//FIXME: make it generic
     };
 }
 

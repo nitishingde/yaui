@@ -1,4 +1,5 @@
 #include "Director.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include "Utility.h"
 
 static yaui::Director* instance = nullptr;
@@ -30,6 +31,8 @@ bool yaui::Director::init() {
     );
     if(mpWindow == nullptr) return false;
 
+    mProjection = glm::ortho(0.f, 1080.f, 0.f, 720.f);
+
     SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_PROFILE_MASK, SDL_GLprofile::SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GLattr::SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -59,4 +62,17 @@ void yaui::Director::quit() {
 
 yaui::Window* yaui::Director::getWindow() const {
     return mpWindow;
+}
+
+std::tuple<float, float> yaui::Director::getWindowSize() const {
+    int32 width, height;
+    SDL_GetWindowSize(mpWindow, &width, &height);
+    return {float(width), float(height)};
+}
+
+// FIXME:
+//  1. only using project matrix for now
+//  2. update matrices when resizing windows
+glm::mat4 yaui::Director::getMVP_Matrix() {
+    return mProjection * mView * mModel;
 }

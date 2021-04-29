@@ -6,7 +6,10 @@
 #include "Utility.h"
 
 void helloRect() {
-    auto pWindow = yaui::Director::getInstance()->getWindow();
+    auto pDirector = yaui::Director::getInstance();
+    auto pWindow = pDirector->getWindow();
+    const auto [winWidth, winHeight] = pDirector->getWindowSize();
+    auto mvp = pDirector->getMVP_Matrix();
 
     struct Pixel {
         yaui::Vec2 position;
@@ -14,10 +17,10 @@ void helloRect() {
     };
 
     std::vector<Pixel> pixelData {
-        {{-0.5f,-0.5f}, {1.f, 0.f, 0.f, 1.f}},
-        {{-0.5f,0.5f},  {0.f, 1.f, 0.f, 1.f}},
-        {{ 0.5f,-0.5f}, {0.f, 0.f, 1.f, 1.f}},
-        {{0.5f, 0.5f},  {1.f, 1.f, 1.f, 1.f}},
+        {{winWidth/2.f - 100.f, winHeight/2.f - 100.f}, {1.f, 0.f, 0.f, 1.f}},  // bottom left
+        {{winWidth/2.f + 100.f, winHeight/2.f - 100.f}, {0.f, 1.f, 0.f, 1.f}},  // bottom right
+        {{winWidth/2.f + 100.f, winHeight/2.f + 100.f}, {0.f, 0.f, 1.f, 1.f}},  // top right
+        {{winWidth/2.f - 100.f, winHeight/2.f + 100.f}, {1.f, 1.f, 1.f, 1.f}},  // top left
     };
 
     yaui::BufferLayout layout {
@@ -31,7 +34,7 @@ void helloRect() {
 
     std::vector<uint32_t> indices {
         0, 1, 2,
-        1, 3, 2,
+        0, 3, 2,
     };
 
     // Create a Vertex Array Buffer Object and copy the indices to it
@@ -45,6 +48,7 @@ void helloRect() {
         layout
     );
     shader.bind();
+    shader.setUniformMatrix4f("uMVP", mvp);
 
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
@@ -60,11 +64,19 @@ void helloRect() {
         SDL_GL_SwapWindow(pWindow);
     }
 
-    yaui::Director::getInstance()->quit();
+    pDirector->quit();
 }
 
 void helloTexture() {
-    auto pWindow = yaui::Director::getInstance()->getWindow();
+    auto pDirector = yaui::Director::getInstance();
+    auto pWindow = pDirector->getWindow();
+    const auto [winWidth, winHeight] = pDirector->getWindowSize();
+    auto mvp = pDirector->getMVP_Matrix();
+
+    srand(time(nullptr));
+    stbi_set_flip_vertically_on_load(1);
+    int32_t width, height, channels;
+    auto image = stbi_load(rand()%2 ? "2048x1024.png": "Lenna.png", &width, &height, &channels, STBI_rgb_alpha);
 
     struct Pixel {
         yaui::Vec2 position;
@@ -72,10 +84,10 @@ void helloTexture() {
     };
 
     std::vector<Pixel> pixelData {
-        {{-0.5f, -0.5f}, {0.f, 0.f}},// bottom left
-        {{-0.5f, 0.5f}, {0.f, 1.f}},// top left
-        {{0.5f, 0.5f}, {1.f, 1.f}},// top right
-        {{0.5f, -0.5f}, {1.f, 0.f}},// bottom right
+        {{winWidth/2.f - width/2.f, winHeight/2.f - height/2.f}, {0.f, 0.f}},// bottom left
+        {{winWidth/2.f + width/2.f, winHeight/2.f - height/2.f}, {1.f, 0.f}},// bottom right
+        {{winWidth/2.f + width/2.f, winHeight/2.f + height/2.f}, {1.f, 1.f}},// top right
+        {{winWidth/2.f - width/2.f, winHeight/2.f + height/2.f}, {0.f, 1.f}},// top left
     };
     yaui::BufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
@@ -86,7 +98,7 @@ void helloTexture() {
 
     std::vector<uint32_t> indices {
         0, 1, 2,
-        2, 3, 0,
+        0, 3, 2,
     };
     yaui::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
@@ -98,11 +110,7 @@ void helloTexture() {
         layout
     );
     shader.bind();
-
-    srand(time(nullptr));
-    stbi_set_flip_vertically_on_load(1);
-    int32_t width, height, channels;
-    auto image = stbi_load(rand()%2 ? "2048x1024.png": "Lenna.png", &width, &height, &channels, STBI_rgb_alpha);
+    shader.setUniformMatrix4f("uMVP", mvp);
 
     GLuint texture;
     debugGlCall(glGenTextures(1, &texture));
@@ -132,7 +140,7 @@ void helloTexture() {
         SDL_GL_SwapWindow(pWindow);
     }
 
-    yaui::Director::getInstance()->quit();
+    pDirector->quit();
 }
 
 int main(int argc, char** argv) {

@@ -2,6 +2,7 @@
 #define YAUI_DIRECTOR_H
 
 
+#include <glm/glm.hpp>
 #include "Types.h"
 
 namespace yaui {
@@ -9,6 +10,10 @@ namespace yaui {
     private:
         Window *mpWindow = nullptr;
         SDL_GLContext mGlContext = nullptr;
+        glm::mat4 mModel = glm::mat4(1.0f);
+        glm::mat4 mView = glm::mat4(1.0f);
+        glm::mat4 mProjection = glm::mat4(1.0f);
+
     private:
         explicit Director() = default;
         bool init();
@@ -18,6 +23,8 @@ namespace yaui {
         static Director *getInstance();
         void quit();
         Window* getWindow() const;
+        [[nodiscard]] std::tuple<float, float> getWindowSize() const;
+        glm::mat4 getMVP_Matrix();
     };
 }
 
