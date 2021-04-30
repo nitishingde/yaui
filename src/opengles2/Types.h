@@ -23,18 +23,6 @@ namespace yaui {
     using HashMap = std::unordered_map<key, value>;
     using Window = SDL_Window;
 
-    struct Vec2 {
-        float x;
-        float y;
-    } __attribute__((aligned(8)));
-
-    struct Colour {
-        float r;
-        float g;
-        float b;
-        float a;
-    } __attribute__((aligned(16)));
-
     struct BufferLayoutElement {
         String attribute;
         GLuint location;

@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "Utility.h"
 
-void yaui::Renderer::clearScreen(const yaui::Colour &colour) const {
+void yaui::Renderer::clearScreen(const glm::vec4 &colour) const {
     debugGlCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     debugGlCall(glClear(GL_COLOR_BUFFER_BIT));
 }

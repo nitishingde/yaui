@@ -12,8 +12,8 @@ void helloRect() {
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
 
     struct Pixel {
-        yaui::Vec2 position;
-        yaui::Colour colour;
+        glm::vec2 position;
+        glm::vec4 colour;
     };
 
     std::vector<Pixel> pixelData {
@@ -80,8 +80,8 @@ void helloTexture() {
     texture.bind();
 
     struct Pixel {
-        yaui::Vec2 position;
-        yaui::Vec2 textureCoordinate;
+        glm::vec2 position;
+        glm::vec2 textureCoordinate;
     };
 
     std::vector<Pixel> pixelData {

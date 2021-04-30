@@ -2,12 +2,13 @@
 #define YAUI_RENDERER_H
 
 
+#include <glm/glm.hpp>
 #include "Buffer.h"
 
 namespace yaui {
     class Renderer {
     public:
-        void clearScreen(const Colour &colour) const;
+        void clearScreen(const glm::vec4 &colour) const;
         void drawElements(const VertexArrayBuffer &vertexArrayBuffer) const;
         void present(Window *window) const;
     };
