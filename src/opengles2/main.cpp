@@ -75,10 +75,13 @@ void helloTexture() {
     auto pWindow = pDirector->getWindow();
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
 
-    yaui::Texture texture;
-    texture.loadImage("Lenna.png");
-    const auto [width, height] = texture.getDimension();
+    int32_t width = 0, height = 0, channels = 0;
+    std::vector<uint8_t> imagePixelData;
+    yaui::loadImage("Lenna.png", imagePixelData, width, height, channels);
+
+    yaui::Texture texture(imagePixelData.data(), width, height, channels, GL_RGBA);
     texture.bind();
+    imagePixelData.clear();
 
     struct Pixel {
         glm::vec2 position;
@@ -146,6 +149,7 @@ void helloText() {
         return;
     }
     yaui::Texture texture(charPixelData.data(), width, height, 1, GL_ALPHA);
+    charPixelData.clear();
     texture.bind();
 
     struct Pixel {

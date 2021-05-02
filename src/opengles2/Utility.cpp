@@ -1,6 +1,7 @@
 #include "Utility.h"
 #include <fstream>
 #include <spdlog/spdlog.h>
+#include "stb_image.h"
 
 void yaui::glFlushErrors() {
     while(glGetError() != GL_NO_ERROR);
@@ -24,4 +25,12 @@ void yaui::glLogError(const char *file, int line) {
 yaui::String yaui::readFile(const String &filePath) {
     std::ifstream ifs(filePath);
     return std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+}
+
+void yaui::loadImage(const char *imagePath, std::vector<uint8> &outPixelData, yaui::int32 &outWidth, yaui::int32 &outHeight, yaui::int32 &outChannels) {
+    stbi_set_flip_vertically_on_load(1);
+    auto image = stbi_load(imagePath, &outWidth, &outHeight, &outChannels, STBI_rgb_alpha);
+    outChannels = 4;
+    outPixelData.assign(image, image + outWidth * outHeight * outChannels);
+    stbi_image_free(image);
 }

@@ -15,12 +15,10 @@ namespace yaui {
         std::vector<uint8> mPixelData;
 
     public:
-        explicit Texture(uint8 *pixelData = nullptr, int32 width = 0, int32 height = 0, int32 channels = 4, GLint format = GL_RGBA);
+        explicit Texture(uint8 *pixelData, int32 width, int32 height, int32 channels, GLint format);
         ~Texture();
-        void loadImage(const char *imagePath);
         void bind();
         void unbind();
-        std::tuple<float, float> getDimension() const;
     };
 }
 

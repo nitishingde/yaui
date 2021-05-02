@@ -1,5 +1,4 @@
 #include "Texture.h"
-#include "stb_image.h"
 #include "Utility.h"
 
 yaui::Texture::Texture(yaui::uint8 *pixelData, yaui::int32 width, yaui::int32 height, yaui::int32 channels, GLint format)
@@ -17,14 +16,6 @@ yaui::Texture::~Texture() {
     debugGlCall(glDeleteTextures(1, &mId));
 }
 
-void yaui::Texture::loadImage(const char *imagePath) {
-    stbi_set_flip_vertically_on_load(1);
-    auto image = stbi_load(imagePath, &mWidth, &mHeight, &mChannels, STBI_rgb_alpha);
-    mChannels = 4;
-    mPixelData.assign(image, image + mWidth*mHeight*mChannels);
-    stbi_image_free(image);
-}
-
 void yaui::Texture::bind() {
     debugGlCall(glBindTexture(GL_TEXTURE_2D, mId));
     // set the texture wrapping/filtering options (on the currently bound texture object)
@@ -37,8 +28,4 @@ void yaui::Texture::bind() {
 
 void yaui::Texture::unbind() {
     debugGlCall(glBindTexture(GL_TEXTURE_2D, 0));
-}
-
-std::tuple<float, float> yaui::Texture::getDimension() const {
-    return {float(mWidth), float(mHeight)};
 }
