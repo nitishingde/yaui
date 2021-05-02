@@ -39,12 +39,12 @@ GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
     return shader;
 }
 
-yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, const BufferLayout &bufferLayout)
+yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, BufferLayout bufferLayout)
     : mName(std::move(name))
     , mProgramId(glCreateProgram())
     , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
     , mFragmentShaderId(compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource))
-    , mBufferLayout(bufferLayout) {
+    , mBufferLayout(std::move(bufferLayout)) {
 }
 
 yaui::Shader::~Shader() {

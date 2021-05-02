@@ -57,7 +57,7 @@ void helloRect() {
         }
 
         // Clear the screen to black
-        renderer.clearScreen({0.f, 0.f, 0.f, 0.f});
+        renderer.clearScreen(0.f, 0.f, 0.f, 0.f);
 
         // Draw call
         renderer.drawElements(va);
@@ -120,7 +120,7 @@ void helloTexture() {
         }
 
         // Clear the screen to black
-        renderer.clearScreen({0.f, 0.f, 0.f, 0.f});
+        renderer.clearScreen(0.f, 0.f, 0.f, 0.f);
 
         // Draw call
         renderer.drawElements(va);

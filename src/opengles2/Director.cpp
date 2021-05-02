@@ -48,9 +48,6 @@ bool yaui::Director::init() {
     mGlContext = SDL_GL_CreateContext(mpWindow);
     debugGlCall(auto glsl_v = glGetString(GL_SHADING_LANGUAGE_VERSION));
     debugGlCall(auto gl_v = glGetString(GL_VERSION));
-    printf("GL version             : %s\n", gl_v);
-    printf("GLSL version supported : %s\n", glsl_v);
-    printf("-----------------------------------------------------------------------------\n");
 
     return true;
 }
