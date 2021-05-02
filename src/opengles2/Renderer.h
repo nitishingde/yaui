@@ -8,6 +8,7 @@
 namespace yaui {
     class Renderer {
     public:
+        void enableBlend() const;
         void clearScreen(float r, float g, float b, float a) const;
         void drawElements(const VertexArrayBuffer &vertexArrayBuffer) const;
         void present(Window *window) const;
