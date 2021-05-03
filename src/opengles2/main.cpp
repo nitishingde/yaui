@@ -157,12 +157,21 @@ void helloText() {
         glm::vec2 textureCoordinate;
     };
 
-    std::vector<Pixel> pixelData {
-        {{winWidth/2.f - width/2.f, winHeight/2.f - height/2.f}, {0.f, 1.f}},// bottom left
-        {{winWidth/2.f + width/2.f, winHeight/2.f - height/2.f}, {1.f, 1.f}},// bottom right
-        {{winWidth/2.f + width/2.f, winHeight/2.f + height/2.f}, {1.f, 0.f}},// top right
-        {{winWidth/2.f - width/2.f, winHeight/2.f + height/2.f}, {0.f, 0.f}},// top left
-    };
+    std::vector<Pixel> pixelData;
+    float x = winWidth*0.1f, y = winHeight*0.5f;
+    for(auto ch: "the quick brown fox jumps over a lazy dog. THE QUICK BROWN FOX JUMPS OVER A LAZY DOG. ~!@#$%^&*()_+{}|:\"<>? `1234567890-=[]\\;',./") {
+        stbtt_aligned_quad quad;
+        if(0.9*winWidth < x) {
+            x = winWidth*0.1f;
+            y -= 64;
+        }
+        stbtt_yaui_GetBakedQuadInverted(bakedChars.data(), width, height, ch-32, &x, &y, &quad, 1);
+        pixelData.emplace_back(Pixel {{quad.x0, quad.y0}, {quad.s0, quad.t0}});
+        pixelData.emplace_back(Pixel {{quad.x1, quad.y0}, {quad.s1, quad.t0}});
+        pixelData.emplace_back(Pixel {{quad.x1, quad.y1}, {quad.s1, quad.t1}});
+        pixelData.emplace_back(Pixel {{quad.x0, quad.y1}, {quad.s0, quad.t1}});
+    }
+
     yaui::BufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
         {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
@@ -170,10 +179,11 @@ void helloText() {
     yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
-    std::vector<uint32_t> indices {
-        0, 1, 2,
-        0, 3, 2,
-    };
+    std::vector<uint32_t> indices;
+    for(uint32_t i = 0; i < pixelData.size(); i+=4) {
+        indices.insert(indices.end(), {i+0, i+1, i+2});
+        indices.insert(indices.end(), {i+0, i+3, i+2});
+    }
     yaui::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
 
