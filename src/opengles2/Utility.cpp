@@ -34,3 +34,19 @@ void yaui::loadImage(const char *imagePath, std::vector<uint8> &outPixelData, ya
     outPixelData.assign(image, image + outWidth * outHeight * outChannels);
     stbi_image_free(image);
 }
+
+void yaui::loadBasicAsciiFont(const char *fontPath, yaui::int32 fontSize, std::vector<uint8> &outPixelData, yaui::int32 &outWidth, yaui::int32 &outHeight, std::vector<stbtt_bakedchar> &bakedChars) {
+    auto fontFile = yaui::readFile(fontPath);
+    outWidth = 512, outHeight = fontSize;
+    bakedChars.resize(95);
+    int32 status = 0;
+    do {
+        outHeight += outHeight;
+        outPixelData.resize(outWidth*outHeight);
+        status = stbtt_BakeFontBitmap((unsigned char *)fontFile.data(), 0, float(fontSize), outPixelData.data(), outWidth, outHeight, 32, 95, bakedChars.data());
+    } while (status <= 0);
+    outWidth = 512;
+    outHeight = status;
+    outPixelData.resize(outWidth*outHeight);
+    bakedChars.insert(bakedChars.begin(), 32, stbtt_bakedchar{0, 0, 0, 0, 0.f, 0.f, 0.f});
+}

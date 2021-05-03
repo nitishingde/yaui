@@ -5,7 +5,6 @@
 #include "stb_image.h"
 #include "Texture.h"
 #include "Utility.h"
-#include "stb_truetype.h"
 
 void helloRect() {
     auto pDirector = yaui::Director::getInstance();
@@ -141,13 +140,10 @@ void helloText() {
     auto pWindow = pDirector->getWindow();
     const auto [winWidth, winHeight] = pDirector->getWindowSize();
 
-    auto fontFile = yaui::readFile("open-sans/OpenSans-Regular.ttf");
-    int width = 512, height = 512;
-    std::vector<uint8_t> charPixelData(width*height);
-    std::vector<stbtt_bakedchar> bakedChars(95);
-    if(stbtt_BakeFontBitmap((unsigned char *)fontFile.data(), 0, 64, charPixelData.data(), width, height, 32, 95, bakedChars.data()) == 0) {
-        return;
-    }
+    int32_t width, height, fontSize = 64;
+    std::vector<uint8_t> charPixelData;
+    std::vector<stbtt_bakedchar> bakedChars;
+    yaui::loadBasicAsciiFont("open-sans/OpenSans-Regular.ttf", fontSize, charPixelData, width, height, bakedChars);
     yaui::Texture texture(charPixelData.data(), width, height, 1, GL_ALPHA);
     charPixelData.clear();
     texture.bind();
@@ -163,9 +159,9 @@ void helloText() {
         stbtt_aligned_quad quad;
         if(0.9*winWidth < x) {
             x = winWidth*0.1f;
-            y -= 64;
+            y -= fontSize;
         }
-        stbtt_yaui_GetBakedQuadInverted(bakedChars.data(), width, height, ch-32, &x, &y, &quad, 1);
+        stbtt_yaui_GetBakedQuadInverted(bakedChars.data(), width, height, ch, &x, &y, &quad, 1);
         pixelData.emplace_back(Pixel {{quad.x0, quad.y0}, {quad.s0, quad.t0}});
         pixelData.emplace_back(Pixel {{quad.x1, quad.y0}, {quad.s1, quad.t0}});
         pixelData.emplace_back(Pixel {{quad.x1, quad.y1}, {quad.s1, quad.t1}});
