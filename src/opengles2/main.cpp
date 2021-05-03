@@ -220,4 +220,6 @@ int main(int argc, char** argv) {
     helloRect();
     helloTexture();
     helloText();
+
+    return 0;
 }
