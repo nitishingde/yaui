@@ -16,8 +16,6 @@ add_library(yaui
         src/opengles2/Buffer.cpp src/opengles2/Buffer.h
         src/opengles2/Director.cpp src/opengles2/Director.h
         src/opengles2/Shader.cpp src/opengles2/Shader.h
-        src/opengles2/stb_image.cpp src/opengles2/stb_image.h
-        src/opengles2/stb_truetype.cpp src/opengles2/stb_truetype.h
         src/opengles2/Renderer.cpp src/opengles2/Renderer.h
         src/opengles2/Texture.cpp src/opengles2/Texture.h
         src/opengles2/Types.h
@@ -35,6 +33,7 @@ target_link_libraries(yaui
         OpenGL
         SDL2::SDL2
         glm::glm
+        yaui::stb
     PRIVATE
         spdlog::spdlog
     INTERFACE

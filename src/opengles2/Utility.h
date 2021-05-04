@@ -2,7 +2,7 @@
 #define YAUI_UTILITY_H
 
 
-#include "stb_truetype.h"
+#include "yaui_stb.h"
 #include "Types.h"
 
 #if NDEBUG

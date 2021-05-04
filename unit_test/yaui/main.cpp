@@ -2,7 +2,6 @@
 #include "Buffer.h"
 #include "Director.h"
 #include "Shader.h"
-#include "stb_image.h"
 #include "Texture.h"
 #include "Utility.h"
 

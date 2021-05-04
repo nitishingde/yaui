@@ -1,7 +1,6 @@
 #include "Utility.h"
 #include <fstream>
 #include <spdlog/spdlog.h>
-#include "stb_image.h"
 
 void yaui::glFlushErrors() {
     while(glGetError() != GL_NO_ERROR);
