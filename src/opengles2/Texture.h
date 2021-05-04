@@ -2,6 +2,7 @@
 #define YAUI_TEXTURE_H
 
 
+#include <GLES2/gl2.h>
 #include "Types.h"
 
 namespace yaui {

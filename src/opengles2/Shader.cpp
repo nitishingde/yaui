@@ -1,8 +1,7 @@
-#include "Shader.h"
+#include <spdlog/spdlog.h>
 #include <utility>
 #include <vector>
-#include <spdlog/spdlog.h>
-#include "Utility.h"
+#include "Shader.h"
 
 GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
     GLuint shader;

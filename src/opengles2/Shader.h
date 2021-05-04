@@ -2,7 +2,9 @@
 #define YAUI_SHADER_H
 
 
+#include <GLES2/gl2.h>
 #include <glm/glm.hpp>
+#include "Buffer.h"
 #include "Types.h"
 #include "Utility.h"
 

@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <GLES2/gl2.h>
 
 namespace yaui {
     using int8 = int8_t;
@@ -18,20 +17,12 @@ namespace yaui {
     using int64 = int64_t;
     using uint64 = uint64_t;
 
+    template<typename Type, typename Alloc = std::allocator<Type>>
+    using ArrayList = std::vector<Type, Alloc>;
     using String = std::string;
     template<typename key, typename value>
     using HashMap = std::unordered_map<key, value>;
     using Window = SDL_Window;
-
-    struct BufferLayoutElement {
-        String attribute;
-        GLuint location;
-        GLint size;
-        GLenum type;
-        GLint isNormalised;
-        uint32 offset;
-    } __attribute__((aligned(64)));
-    using BufferLayout = std::vector<BufferLayoutElement>;
 }
 
 

@@ -1,5 +1,5 @@
-#include "Renderer.h"
 #include <SDL.h>
+#include "Renderer.h"
 #include "Utility.h"
 
 void yaui::Renderer::enableBlend() const {

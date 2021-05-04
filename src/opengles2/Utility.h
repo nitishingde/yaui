@@ -2,6 +2,7 @@
 #define YAUI_UTILITY_H
 
 
+#include "GLES2/gl2.h"
 #include "yaui_stb.h"
 #include "Types.h"
 

@@ -2,9 +2,20 @@
 #define YAUI_BUFFER_H
 
 
+#include <GLES2/gl2.h>
 #include "Types.h"
 
 namespace yaui {
+    struct BufferLayoutElement {
+        String attribute;
+        GLuint location;
+        GLint size;
+        GLenum type;
+        GLint isNormalised;
+        uint32 offset;
+    } __attribute__((aligned(64)));
+    using BufferLayout = std::vector<BufferLayoutElement>;
+
     class VertexBuffer {
     private:
         GLuint mId;
