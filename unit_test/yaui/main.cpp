@@ -42,8 +42,8 @@ void helloRect() {
 
     yaui::gles2::Shader shader(
         "HelloWorld",
-        yaui::readFile("vertex.glsl").c_str(),
-        yaui::readFile("fragment.glsl").c_str(),
+        yaui::readFile("shaders/vertex.glsl").c_str(),
+        yaui::readFile("shaders/fragment.glsl").c_str(),
         layout
     );
     shader.bind();
@@ -108,8 +108,8 @@ void helloTexture() {
 
     yaui::gles2::Shader shader(
         "HelloTexture",
-        yaui::readFile("texture.vert.glsl").c_str(),
-        yaui::readFile("texture.frag.glsl").c_str(),
+        yaui::readFile("shaders/texture.vert.glsl").c_str(),
+        yaui::readFile("shaders/texture.frag.glsl").c_str(),
         layout
     );
     shader.bind();
@@ -184,8 +184,8 @@ void helloText() {
 
     yaui::gles2::Shader shader(
         "HelloTexture",
-        yaui::readFile("text.vert.glsl").c_str(),
-        yaui::readFile("text.frag.glsl").c_str(),
+        yaui::readFile("shaders/text.vert.glsl").c_str(),
+        yaui::readFile("shaders/text.frag.glsl").c_str(),
         layout
     );
     shader.bind();
