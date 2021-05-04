@@ -13,19 +13,22 @@ find_package(OpenGL REQUIRED)
 
 # yaui library
 add_library(yaui
+    SHARED
+        # OpenGL ES 2
         src/opengles2/Buffer.cpp src/opengles2/Buffer.h
-        src/opengles2/Director.cpp src/opengles2/Director.h
         src/opengles2/Shader.cpp src/opengles2/Shader.h
         src/opengles2/Renderer.cpp src/opengles2/Renderer.h
         src/opengles2/Texture.cpp src/opengles2/Texture.h
-        src/opengles2/Types.h
-        src/opengles2/Utility.cpp src/opengles2/Utility.h
+
+        src/Director.cpp src/Director.h
+        src/Types.h
+        src/Utility.cpp src/Utility.h
 )
 
 target_include_directories(yaui
     PUBLIC
         # FIXME: remove the "opengles2/"
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/opengles2
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries(yaui

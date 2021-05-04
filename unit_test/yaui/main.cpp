@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
-#include "Buffer.h"
+#include "opengles2/Buffer.h"
 #include "Director.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "opengles2/Shader.h"
+#include "opengles2/Texture.h"
 #include "Utility.h"
 
 void helloRect() {
