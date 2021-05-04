@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
-#include "opengles2/Buffer.h"
+#include "gles2/Buffer.h"
 #include "Director.h"
-#include "opengles2/Shader.h"
-#include "opengles2/Texture.h"
+#include "gles2/Shader.h"
+#include "gles2/Texture.h"
 #include "Utility.h"
 
 void helloRect() {
@@ -22,13 +22,13 @@ void helloRect() {
         {{winWidth/2.f - 100.f, winHeight/2.f + 100.f}, {1.f, 1.f, 1.f, 1.f}},  // top left
     };
 
-    yaui::BufferLayout layout {
+    yaui::gles2::BufferLayout layout {
         {"colour", 1, 4, GL_FLOAT, GL_FALSE, offsetof(Pixel, colour)},
         {"position", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
     };
 
     // Create a Vertex Buffer Object and copy the vertex data to it
-    yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
     std::vector<uint32_t> indices {
@@ -37,10 +37,10 @@ void helloRect() {
     };
 
     // Create a Vertex Array Buffer Object and copy the indices to it
-    yaui::VertexArrayBuffer va(indices.data(), indices.size());
+    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
 
-    yaui::Shader shader(
+    yaui::gles2::Shader shader(
         "HelloWorld",
         yaui::readFile("vertex.glsl").c_str(),
         yaui::readFile("fragment.glsl").c_str(),
@@ -77,7 +77,7 @@ void helloTexture() {
     std::vector<uint8_t> imagePixelData;
     yaui::loadImage("Lenna.png", imagePixelData, width, height, channels);
 
-    yaui::Texture texture(imagePixelData.data(), width, height, channels, GL_RGBA);
+    yaui::gles2::Texture texture(imagePixelData.data(), width, height, channels, GL_RGBA);
     texture.bind();
     imagePixelData.clear();
 
@@ -92,21 +92,21 @@ void helloTexture() {
         {{winWidth/2.f + width/2.f, winHeight/2.f + height/2.f}, {1.f, 1.f}},// top right
         {{winWidth/2.f - width/2.f, winHeight/2.f + height/2.f}, {0.f, 1.f}},// top left
     };
-    yaui::BufferLayout layout {
+    yaui::gles2::BufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
         {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
     };
-    yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
     std::vector<uint32_t> indices {
         0, 1, 2,
         0, 3, 2,
     };
-    yaui::VertexArrayBuffer va(indices.data(), indices.size());
+    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
 
-    yaui::Shader shader(
+    yaui::gles2::Shader shader(
         "HelloTexture",
         yaui::readFile("texture.vert.glsl").c_str(),
         yaui::readFile("texture.frag.glsl").c_str(),
@@ -143,7 +143,7 @@ void helloText() {
     std::vector<uint8_t> charPixelData;
     std::vector<stbtt_bakedchar> bakedChars;
     yaui::loadBasicAsciiFont("open-sans/OpenSans-Regular.ttf", fontSize, charPixelData, width, height, bakedChars);
-    yaui::Texture texture(charPixelData.data(), width, height, 1, GL_ALPHA);
+    yaui::gles2::Texture texture(charPixelData.data(), width, height, 1, GL_ALPHA);
     charPixelData.clear();
     texture.bind();
 
@@ -167,11 +167,11 @@ void helloText() {
         pixelData.emplace_back(Pixel {{quad.x0, quad.y1}, {quad.s0, quad.t1}});
     }
 
-    yaui::BufferLayout layout {
+    yaui::gles2::BufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
         {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
     };
-    yaui::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
     std::vector<uint32_t> indices;
@@ -179,10 +179,10 @@ void helloText() {
         indices.insert(indices.end(), {i+0, i+1, i+2});
         indices.insert(indices.end(), {i+0, i+3, i+2});
     }
-    yaui::VertexArrayBuffer va(indices.data(), indices.size());
+    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
 
-    yaui::Shader shader(
+    yaui::gles2::Shader shader(
         "HelloTexture",
         yaui::readFile("text.vert.glsl").c_str(),
         yaui::readFile("text.frag.glsl").c_str(),

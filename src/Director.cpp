@@ -67,7 +67,7 @@ std::tuple<float, float> yaui::Director::getWindowSize() const {
     return {float(width), float(height)};
 }
 
-yaui::Renderer yaui::Director::getRenderer() {
+yaui::gles2::Renderer yaui::Director::getRenderer() {
     return mRenderer;
 }
 

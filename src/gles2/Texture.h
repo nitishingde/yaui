@@ -5,7 +5,7 @@
 #include <GLES2/gl2.h>
 #include "Types.h"
 
-namespace yaui {
+namespace yaui::gles2 {
     class Texture {
     private:
         GLuint mId{};

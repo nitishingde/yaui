@@ -3,7 +3,7 @@
 #include <vector>
 #include "Shader.h"
 
-GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
+GLuint yaui::gles2::Shader::compileShader(GLenum type, const char *shaderSource) {
     GLuint shader;
     GLint compiled;
 
@@ -38,7 +38,7 @@ GLuint yaui::Shader::compileShader(GLenum type, const char *shaderSource) {
     return shader;
 }
 
-yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, BufferLayout bufferLayout)
+yaui::gles2::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, BufferLayout bufferLayout)
     : mName(std::move(name))
     , mProgramId(glCreateProgram())
     , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
@@ -46,13 +46,13 @@ yaui::Shader::Shader(yaui::String name, const char *vertexShaderSource, const ch
     , mBufferLayout(std::move(bufferLayout)) {
 }
 
-yaui::Shader::~Shader() {
+yaui::gles2::Shader::~Shader() {
     debugGlCall(glDeleteProgram(mProgramId));
     debugGlCall(glDeleteShader(mVertexShaderId));
     debugGlCall(glDeleteShader(mFragmentShaderId));
 }
 
-void yaui::Shader::bind() const {
+void yaui::gles2::Shader::bind() const {
     // check if program is already linked
     GLint isLinked = 0;
     debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
@@ -86,11 +86,11 @@ void yaui::Shader::bind() const {
     debugGlCall(glUseProgram(mProgramId));
 }
 
-void yaui::Shader::unbind() const {
+void yaui::gles2::Shader::unbind() const {
     debugGlCall(glUseProgram(0));
 }
 
-void yaui::Shader::setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const {
+void yaui::gles2::Shader::setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const {
     debugGlCall(auto location = glGetUniformLocation(mProgramId, uniformName));
     debugGlCall(glUniformMatrix4fv(location, 1, GL_FALSE, &projectionMatrix[0][0]));
 }

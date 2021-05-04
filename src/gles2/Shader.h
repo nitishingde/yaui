@@ -8,7 +8,7 @@
 #include "Types.h"
 #include "Utility.h"
 
-namespace yaui {
+namespace yaui::gles2 {
     class Shader {
     private:
         String mName;

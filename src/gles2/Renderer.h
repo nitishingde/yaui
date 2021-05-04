@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include "Buffer.h"
 
-namespace yaui {
+namespace yaui::gles2 {
     class Renderer {
     public:
         void enableBlend() const;
