@@ -19,8 +19,10 @@ add_library(yaui
         src/gles2/Shader.cpp src/gles2/Shader.h
         src/gles2/Renderer.cpp src/gles2/Renderer.h
         src/gles2/Texture.cpp src/gles2/Texture.h
+        src/gles2/Window.cpp src/gles2/Window.h
 
         src/Director.cpp src/Director.h
+        src/Scene.cpp src/Scene.h
         src/Types.h
         src/Utility.cpp src/Utility.h
 )
@@ -32,9 +34,10 @@ target_include_directories(yaui
 
 target_link_libraries(yaui
     PUBLIC
+        EnTT::EnTT
+        glm::glm
         OpenGL
         SDL2::SDL2
-        glm::glm
         yaui::stb
     PRIVATE
         spdlog::spdlog

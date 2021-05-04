@@ -3,18 +3,14 @@
 
 
 #include <glm/glm.hpp>
-#include "gles2/Renderer.h"
-#include "Types.h"
+#include <memory>
+#include "Scene.h"
 
 namespace yaui {
     class Director {
     private:
-        Window *mpWindow = nullptr;
-        SDL_GLContext mGlContext = nullptr;
-        gles2::Renderer mRenderer;
-        glm::mat4 mModel = glm::mat4(1.0f);
-        glm::mat4 mView = glm::mat4(1.0f);
-        glm::mat4 mProjection = glm::mat4(1.0f);
+        std::vector<std::shared_ptr<gles2::Window>> mWindows;
+        std::vector<Scene> mSceneStack;
 
     private:
         explicit Director() = default;
@@ -24,10 +20,8 @@ namespace yaui {
         ~Director();
         static Director *getInstance();
         void quit();
-        Window* getWindow() const;
-        [[nodiscard]] std::tuple<float, float> getWindowSize() const;
-        gles2::Renderer getRenderer();
-        glm::mat4 getMVP_Matrix();
+        void pushScene(Scene &scene);
+        Scene& popScene();
     };
 }
 

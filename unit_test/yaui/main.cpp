@@ -4,11 +4,14 @@
 #include "gles2/Shader.h"
 #include "gles2/Texture.h"
 #include "Utility.h"
+#include "Scene.h"
 
 void helloRect() {
+    auto scene = yaui::Scene("Rect");
     auto pDirector = yaui::Director::getInstance();
-    auto pWindow = pDirector->getWindow();
-    const auto [winWidth, winHeight] = pDirector->getWindowSize();
+    pDirector->pushScene(scene);
+    const auto &renderer = scene.getRenderer();
+    const auto [winWidth, winHeight] = renderer.getWindow()->getSize();
 
     struct Pixel {
         glm::vec2 position;
@@ -47,9 +50,8 @@ void helloRect() {
         layout
     );
     shader.bind();
-    shader.setUniformMatrix4f("uMVP", pDirector->getMVP_Matrix());
+    shader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
 
-    const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
             if(e.type == SDL_QUIT) loop = false;
@@ -62,16 +64,18 @@ void helloRect() {
         renderer.drawElements(va);
 
         // Present the result to the screen
-        renderer.present(pWindow);
+        renderer.render();
     }
 
-    pDirector->quit();
+    pDirector->popScene();
 }
 
 void helloTexture() {
+    auto scene = yaui::Scene("Lenna");
     auto pDirector = yaui::Director::getInstance();
-    auto pWindow = pDirector->getWindow();
-    const auto [winWidth, winHeight] = pDirector->getWindowSize();
+    pDirector->pushScene(scene);
+    const auto &renderer = scene.getRenderer();
+    const auto [winWidth, winHeight] = scene.getRenderer().getWindow()->getSize();
 
     int32_t width = 0, height = 0, channels = 0;
     std::vector<uint8_t> imagePixelData;
@@ -113,9 +117,8 @@ void helloTexture() {
         layout
     );
     shader.bind();
-    shader.setUniformMatrix4f("uMVP", pDirector->getMVP_Matrix());
+    shader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
 
-    const auto &renderer = pDirector->getRenderer();
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
             if(e.type == SDL_QUIT) loop = false;
@@ -128,16 +131,18 @@ void helloTexture() {
         renderer.drawElements(va);
 
         // Present the result to the screen
-        renderer.present(pWindow);
+        renderer.render();
     }
 
-    pDirector->quit();
+    pDirector->popScene();
 }
 
 void helloText() {
+    auto scene = yaui::Scene("Text");
     auto pDirector = yaui::Director::getInstance();
-    auto pWindow = pDirector->getWindow();
-    const auto [winWidth, winHeight] = pDirector->getWindowSize();
+    pDirector->pushScene(scene);
+    const auto &renderer = scene.getRenderer();
+    const auto [winWidth, winHeight] = scene.getRenderer().getWindow()->getSize();
 
     int32_t width, height, fontSize = 64;
     std::vector<uint8_t> charPixelData;
@@ -189,9 +194,8 @@ void helloText() {
         layout
     );
     shader.bind();
-    shader.setUniformMatrix4f("uMVP", pDirector->getMVP_Matrix());
+    shader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
 
-    const auto &renderer = pDirector->getRenderer();
     renderer.enableBlend();
     for(bool loop = true; loop;) {
         for(SDL_Event e; SDL_PollEvent(&e);) {
@@ -205,16 +209,18 @@ void helloText() {
         renderer.drawElements(va);
 
         // Present the result to the screen
-        renderer.present(pWindow);
+        renderer.render();
     }
 
-    pDirector->quit();
+    pDirector->popScene();
 }
 
 int main(int argc, char** argv) {
     helloRect();
     helloTexture();
     helloText();
+
+    yaui::Director::getInstance()->quit();
 
     return 0;
 }

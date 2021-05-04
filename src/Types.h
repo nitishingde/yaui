@@ -2,7 +2,6 @@
 #define YAUI_TYPES_H
 
 
-#include <SDL.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -22,7 +21,6 @@ namespace yaui {
     using String = std::string;
     template<typename key, typename value>
     using HashMap = std::unordered_map<key, value>;
-    using Window = SDL_Window;
 }
 
 

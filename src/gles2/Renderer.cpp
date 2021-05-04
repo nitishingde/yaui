@@ -1,6 +1,17 @@
-#include <SDL.h>
 #include "Renderer.h"
 #include "Utility.h"
+
+yaui::gles2::Renderer::Renderer(std::shared_ptr<yaui::gles2::Window> pWindow)
+    : mpWindow(std::move(pWindow)) {
+}
+
+std::shared_ptr<yaui::gles2::Window> yaui::gles2::Renderer::getWindow() const {
+    return mpWindow;
+}
+
+glm::mat4 yaui::gles2::Renderer::getMVP_Matrix() const {
+    return mpWindow->getProjectionMatrix() * mViewMatrix * mModelMatrix;
+}
 
 void yaui::gles2::Renderer::enableBlend() const {
     // FIXME: hardcoded
@@ -18,6 +29,6 @@ void yaui::gles2::Renderer::drawElements(const yaui::gles2::VertexArrayBuffer &v
     debugGlCall(glDrawElements(GL_TRIANGLES, vertexArrayBuffer.getSize(), vertexArrayBuffer.getType(), nullptr));
 }
 
-void yaui::gles2::Renderer::present(Window *window) const {
-    SDL_GL_SwapWindow(window);
+void yaui::gles2::Renderer::render() const {
+    mpWindow->render();
 }
