@@ -9,56 +9,32 @@ project(yaui
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib)
 include_directories(${PROJECT_SOURCE_DIR}/lib/SDL2_ttf)
 
+find_package(OpenGL REQUIRED)
+
 # yaui library
 add_library(yaui
-    SHARED
-        # entity
-        src/entity/ViewBuilder.cpp src/entity/ViewBuilder.h
-        src/entity/ViewFactory.cpp src/entity/ViewFactory.h
-
-        # components
-        src/component/Components.cpp src/component/Components.h
-
-        # systems
-        src/system/ISystem.cpp src/system/ISystem.h
-        src/system/SystemJobScheduler.cpp src/system/SystemJobScheduler.h
-        src/system/ActionSystem.cpp src/system/ActionSystem.h
-        src/system/BehaviourSystem.cpp src/system/BehaviourSystem.h
-        src/system/EventSystem.cpp src/system/EventSystem.h
-        src/system/RenderingSystem.cpp src/system/RenderingSystem.h
-        src/system/TextureTransformationSystem.cpp src/system/TextureTransformationSystem.h
-
-        src/Action.cpp src/Action.h
-        src/Behaviour.cpp src/Behaviour.h
-        src/Director.cpp src/Director.h
-        src/EventDispatcher.cpp src/EventDispatcher.h
-        src/FocusEventHandler.cpp src/FocusEventHandler.h
-        src/IEventHandler.cpp src/IEventHandler.h
-        src/KeyboardEventHandler.cpp src/KeyboardEventHandler.h
-        src/LoggerConstants.h
-        src/MouseEventHandler.cpp src/MouseEventHandler.cpp
-        src/RendererWrapper.cpp src/RendererWrapper.h
-        src/Scene.cpp src/Scene.h
-        src/TextInputEventHandler.cpp src/TextInputEventHandler.h
-        src/TextureTransformation.cpp src/TextureTransformation.h
-        src/TextureTransformationFactory.cpp src/TextureTransformationFactory.h
-        src/Types.h
-        src/Utility.cpp src/Utility.h
-        src/WindowEventHandler.cpp src/WindowEventHandler.h
-        src/yaui.h
+        src/opengles2/Buffer.cpp src/opengles2/Buffer.h
+        src/opengles2/Director.cpp src/opengles2/Director.h
+        src/opengles2/Shader.cpp src/opengles2/Shader.h
+        src/opengles2/stb_image.cpp src/opengles2/stb_image.h
+        src/opengles2/stb_truetype.cpp src/opengles2/stb_truetype.h
+        src/opengles2/Renderer.cpp src/opengles2/Renderer.h
+        src/opengles2/Texture.cpp src/opengles2/Texture.h
+        src/opengles2/Types.h
+        src/opengles2/Utility.cpp src/opengles2/Utility.h
 )
 
 target_include_directories(yaui
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        # FIXME: remove the "opengles2/"
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/opengles2
 )
 
 target_link_libraries(yaui
     PUBLIC
+        OpenGL
         SDL2::SDL2
-        SDL2::IMAGE
-        SDL2::TTF
-        EnTT::EnTT
+        glm::glm
     PRIVATE
         spdlog::spdlog
     INTERFACE
@@ -79,37 +55,3 @@ execute_process(
     OUTPUT_FILE ${PROJECT_SOURCE_DIR}/compile_commands.json
 )
 
-find_package(OpenGL REQUIRED)
-find_package(glm REQUIRED)
-
-add_executable(opengles2_port
-        src/opengles2/main.cpp
-        src/opengles2/Buffer.cpp src/opengles2/Buffer.h
-        src/opengles2/Director.cpp src/opengles2/Director.h
-        src/opengles2/Shader.cpp src/opengles2/Shader.h
-        src/opengles2/stb_image.cpp src/opengles2/stb_image.h
-        src/opengles2/stb_truetype.cpp src/opengles2/stb_truetype.h
-        src/opengles2/Renderer.cpp src/opengles2/Renderer.h
-        src/opengles2/Texture.cpp src/opengles2/Texture.h
-        src/opengles2/Types.h
-        src/opengles2/Utility.cpp src/opengles2/Utility.h
-)
-
-add_custom_target(CopyScripts ALL
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources
-        ${CMAKE_CURRENT_BINARY_DIR}/
-)
-
-target_link_libraries(opengles2_port
-    PUBLIC
-        OpenGL
-        SDL2::SDL2
-        glm::glm
-    PRIVATE
-        spdlog::spdlog
-    INTERFACE
-        Catch2::Catch2
-)
-
-add_dependencies(opengles2_port CopyScripts)
