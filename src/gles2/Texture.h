@@ -18,6 +18,10 @@ namespace yaui::gles2 {
     public:
         explicit Texture(uint8 *pixelData, int32 width, int32 height, int32 channels, GLint format);
         ~Texture();
+        Texture(const Texture &other) = delete;
+        Texture& operator=(const Texture &other) = delete;
+        Texture(Texture &&other) = delete;
+        Texture& operator=(Texture &&other) = delete;
         void bind();
         void unbind();
     };

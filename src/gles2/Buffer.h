@@ -25,7 +25,11 @@ namespace yaui::gles2 {
     public:
         explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
         ~VertexBuffer();
-        const BufferLayout& getLayout() const;
+        VertexBuffer(const VertexBuffer &other) = delete;
+        VertexBuffer& operator=(const VertexBuffer &other) = delete;
+        VertexBuffer(VertexBuffer &&other) = delete;
+        VertexBuffer& operator=(VertexBuffer &&other) = delete;
+        [[nodiscard]] const BufferLayout& getLayout() const;
         void bind() const;
         void unbind() const;
     };
@@ -38,10 +42,14 @@ namespace yaui::gles2 {
     public:
         explicit VertexArrayBuffer(const uint32 *pData, int32 size);
         ~VertexArrayBuffer();
+        VertexArrayBuffer(const VertexArrayBuffer &other) = delete;
+        VertexArrayBuffer& operator=(const VertexArrayBuffer &other) = delete;
+        VertexArrayBuffer(VertexArrayBuffer &&other) = delete;
+        VertexArrayBuffer& operator=(VertexArrayBuffer &&other) = delete;
         void bind() const;
         void unbind() const;
-        int32 getSize() const;
-        GLenum getType() const;
+        [[nodiscard]] int32 getSize() const;
+        [[nodiscard]] GLenum getType() const;
     };
 }
 

@@ -20,6 +20,10 @@ namespace yaui::gles2 {
     public:
         explicit Window(const char *pName, int32 x = 100, int32 y = 100, int32 width = 1080, int32 height = 720, bool borderless = false, bool resizable = true, bool hidden = false);
         ~Window();
+        Window(const Window &other) = delete;
+        Window& operator=(const Window &other) = delete;
+        Window(Window &&other) = delete;
+        Window& operator=(Window &&other) = delete;
         void setName(const char *pName) const;
         [[nodiscard]] std::tuple<int32, int32> getSize() const;
         void setSize(int32 width, int32 height);

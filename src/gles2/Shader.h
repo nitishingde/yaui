@@ -22,6 +22,10 @@ namespace yaui::gles2 {
     public:
         explicit Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, BufferLayout bufferLayout);
         ~Shader();
+        Shader(const Shader &other) = delete;
+        Shader& operator=(const Shader &other) = delete;
+        Shader(Shader &&other) = delete;
+        Shader& operator=(Shader &&other) = delete;
         void bind() const;
         void unbind() const;
         void setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const;//FIXME: make it generic

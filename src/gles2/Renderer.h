@@ -16,6 +16,11 @@ namespace yaui::gles2 {
 
     public:
         explicit Renderer(std::shared_ptr<Window> pWindow);
+        ~Renderer() = default;
+        Renderer(const Renderer &other) = delete;
+        Renderer& operator=(const Renderer &other) = delete;
+        Renderer(Renderer &&other) = default;
+        Renderer& operator=(Renderer &&other) = default;
         [[nodiscard]] std::shared_ptr<Window> getWindow() const;
         [[nodiscard]] glm::mat4 getMVP_Matrix() const;
         void enableBlend() const;
