@@ -25,12 +25,12 @@ void yaui::Director::quit() {
     instance = nullptr;
 }
 
-void yaui::Director::pushScene(yaui::Scene &scene) {
-    mWindows[0]->setName(scene.getName().c_str());
-    scene.setRenderer(gles2::Renderer(mWindows[0]));
-    mSceneStack.emplace_back(std::move(scene));
+void yaui::Director::pushScene(std::shared_ptr<Scene> pScene) {
+    mWindows[0]->setName(pScene->getName().c_str());
+    pScene->setRenderer(gles2::Renderer(mWindows[0]));
+    mSceneStack.emplace_back(std::move(pScene));
 }
 
-yaui::Scene& yaui::Director::popScene() {
-    return mSceneStack.back();
+void yaui::Director::popScene() {
+    mSceneStack.pop_back();
 }

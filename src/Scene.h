@@ -13,11 +13,12 @@ namespace yaui {
         std::vector<gles2::Renderer> mRenderers;
 
     public:
-        explicit Scene(const char *pName = "") noexcept;
-        Scene(Scene &other) = delete;
-        Scene& operator=(Scene &other) = delete;
-        Scene(Scene &&other) noexcept;
-        Scene& operator=(Scene &&other) noexcept;
+        explicit Scene(const char *pName) noexcept;
+        ~Scene() = default;
+        Scene(const Scene &other) = default;
+        Scene& operator=(const Scene &other) = default;
+        Scene(Scene &&other) = default;
+        Scene& operator=(Scene &&other) = default;
         [[nodiscard]] std::string getName() const;
         entt::registry& getRegistry(uint32 idx = 0);
         gles2::Renderer& getRenderer(uint32 idx = 0);

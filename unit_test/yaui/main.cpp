@@ -7,10 +7,11 @@
 #include "Scene.h"
 
 void helloRect() {
-    auto scene = yaui::Scene("Rect");
+    auto pScene = std::make_shared<yaui::Scene>("Rect");
     auto pDirector = yaui::Director::getInstance();
-    pDirector->pushScene(scene);
-    const auto &renderer = scene.getRenderer();
+    pDirector->pushScene(pScene);
+    const auto &renderer = pScene->getRenderer();
+    auto mvp = renderer.getMVP_Matrix();
     const auto [winWidth, winHeight] = renderer.getWindow()->getSize();
 
     struct Pixel {
@@ -71,11 +72,11 @@ void helloRect() {
 }
 
 void helloTexture() {
-    auto scene = yaui::Scene("Lenna");
+    auto pScene = std::make_shared<yaui::Scene>("Lenna");
     auto pDirector = yaui::Director::getInstance();
-    pDirector->pushScene(scene);
-    const auto &renderer = scene.getRenderer();
-    const auto [winWidth, winHeight] = scene.getRenderer().getWindow()->getSize();
+    pDirector->pushScene(pScene);
+    const auto &renderer = pScene->getRenderer();
+    const auto [winWidth, winHeight] = pScene->getRenderer().getWindow()->getSize();
 
     int32_t width = 0, height = 0, channels = 0;
     std::vector<uint8_t> imagePixelData;
@@ -138,11 +139,11 @@ void helloTexture() {
 }
 
 void helloText() {
-    auto scene = yaui::Scene("Text");
+    auto pScene = std::make_shared<yaui::Scene>("Text");
     auto pDirector = yaui::Director::getInstance();
-    pDirector->pushScene(scene);
-    const auto &renderer = scene.getRenderer();
-    const auto [winWidth, winHeight] = scene.getRenderer().getWindow()->getSize();
+    pDirector->pushScene(pScene);
+    const auto &renderer = pScene->getRenderer();
+    const auto [winWidth, winHeight] = pScene->getRenderer().getWindow()->getSize();
 
     int32_t width, height, fontSize = 64;
     std::vector<uint8_t> charPixelData;
