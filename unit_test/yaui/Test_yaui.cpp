@@ -1,3 +1,6 @@
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+
+#include <catch2/catch.hpp>
 #include <SDL2/SDL.h>
 #include "gles2/Buffer.h"
 #include "Director.h"
@@ -6,7 +9,7 @@
 #include "Utility.h"
 #include "Scene.h"
 
-void helloRect() {
+TEST_CASE("Draw rectangle", "[yaui]") {
     auto pScene = std::make_shared<yaui::Scene>("Rect");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
@@ -69,9 +72,10 @@ void helloRect() {
     }
 
     pDirector->popScene();
+    pDirector->quit();
 }
 
-void helloTexture() {
+TEST_CASE("Draw lenna using texture", "[yaui]") {
     auto pScene = std::make_shared<yaui::Scene>("Lenna");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
@@ -136,9 +140,10 @@ void helloTexture() {
     }
 
     pDirector->popScene();
+    pDirector->quit();
 }
 
-void helloText() {
+TEST_CASE("Draw text", "[yaui]") {
     auto pScene = std::make_shared<yaui::Scene>("Text");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
@@ -214,14 +219,5 @@ void helloText() {
     }
 
     pDirector->popScene();
-}
-
-int main(int argc, char** argv) {
-    helloRect();
-    helloTexture();
-    helloText();
-
-    yaui::Director::getInstance()->quit();
-
-    return 0;
+    pDirector->quit();
 }
