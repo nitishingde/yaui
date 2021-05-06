@@ -1,20 +1,20 @@
 #include "Buffer.h"
 #include "Utility.h"
 
-yaui::gles2::VertexBuffer::VertexBuffer(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout)
+yaui::gles2::VertexBuffer::VertexBuffer(const void *pData, GLsizei stride, uint32 size, const VertexBufferLayout &vertexBufferLayout)
     : mId(0)
-    , mBufferLayout(bufferLayout)
+    , mVertexBufferLayout(vertexBufferLayout)
     , mStride(stride) {
-    init(pData, stride, size, bufferLayout);
+    init(pData, stride, size, vertexBufferLayout);
 }
 
 yaui::gles2::VertexBuffer::~VertexBuffer() {
     debugGlCall(glDeleteBuffers(1, &mId));
 }
 
-void yaui::gles2::VertexBuffer::init(const void *pData, GLsizei stride, yaui::uint32 size, const yaui::gles2::BufferLayout &bufferLayout) {
+void yaui::gles2::VertexBuffer::init(const void *pData, GLsizei stride, yaui::uint32 size, const yaui::gles2::VertexBufferLayout &vertexBufferLayout) {
     mStride = stride;
-    mBufferLayout = bufferLayout;
+    mVertexBufferLayout = vertexBufferLayout;
     if(glIsBuffer(mId) == GL_FALSE) {
         debugGlCall(glGenBuffers(1, &mId));
     }
@@ -22,12 +22,12 @@ void yaui::gles2::VertexBuffer::init(const void *pData, GLsizei stride, yaui::ui
     debugGlCall(glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(size * stride), pData, GL_DYNAMIC_DRAW));
 }
 
-const yaui::gles2::BufferLayout& yaui::gles2::VertexBuffer::getLayout() const {
-    return mBufferLayout;
+const yaui::gles2::VertexBufferLayout& yaui::gles2::VertexBuffer::getLayout() const {
+    return mVertexBufferLayout;
 }
 
 void yaui::gles2::VertexBuffer::bind() const {
-    for(const auto &layout: mBufferLayout) {
+    for(const auto &layout: mVertexBufferLayout) {
         debugGlCall(glEnableVertexAttribArray(layout.location));
         debugGlCall(glVertexAttribPointer(layout.location, layout.size, layout.type, layout.isNormalised, mStride, (void*)layout.offset));
     }

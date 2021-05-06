@@ -7,7 +7,7 @@
 #include "Types.h"
 
 namespace yaui::gles2 {
-    struct BufferLayoutElement {
+    struct VertexBufferLayoutElement {
         String attribute;
         GLuint location;
         GLint size;
@@ -15,24 +15,24 @@ namespace yaui::gles2 {
         GLint isNormalised;
         uint32 offset;
     } __attribute__((aligned(64)));
-    using BufferLayout = std::vector<BufferLayoutElement>;
+    using VertexBufferLayout = std::vector<VertexBufferLayoutElement>;
 
     class VertexBuffer {
     private:
         GLuint mId = 0;
-        BufferLayout mBufferLayout{};
+        VertexBufferLayout mVertexBufferLayout{};
         GLsizei mStride = 0;
 
     public:
         explicit VertexBuffer() = default;
-        explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
+        explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const VertexBufferLayout &vertexBufferLayout);
         ~VertexBuffer();
         VertexBuffer(const VertexBuffer &other) = delete;
         VertexBuffer& operator=(const VertexBuffer &other) = delete;
         VertexBuffer(VertexBuffer &&other) = default;
         VertexBuffer& operator=(VertexBuffer &&other) = default;
-        void init(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
-        [[nodiscard]] const BufferLayout& getLayout() const;
+        void init(const void *pData, GLsizei stride, uint32 size, const VertexBufferLayout &vertexBufferLayout);
+        [[nodiscard]] const VertexBufferLayout& getLayout() const;
         void bind() const;
         void unbind() const;
     };
@@ -63,10 +63,14 @@ namespace yaui::gles2 {
         glm::vec4 colour;
     } __attribute__((aligned(32)));
 
-    struct PixelVertices {
-        yaui::gles2::BufferLayout bufferLayout;
+    struct PixelVertexInfo {
         yaui::gles2::VertexBuffer vertexBuffer;
-        std::vector<PixelVertex> vertexData;
+        std::vector<PixelVertex> pixelVertices;
+        // TODO: modify this, whenever gles2::PixelVertex gets modified
+        yaui::gles2::VertexBufferLayout vertexBufferLayout {
+            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, position)},
+            {"aColour",   1, 4, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, colour)},
+        };
     } __attribute__((aligned(128)));
 }
 

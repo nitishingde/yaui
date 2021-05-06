@@ -4,11 +4,7 @@
 yaui::Scene::Scene(const char *pName) noexcept
     : mName(pName) {
     entt::registry registry;
-    registry.set<gles2::PixelVertices>(gles2::PixelVertices{
-        gles2::BufferLayout{
-            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, position)},
-            {"aColour", 1, 4, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, colour)}
-        },
+    registry.set<gles2::PixelVertexInfo>(gles2::PixelVertexInfo{
         gles2::VertexBuffer(),
         std::vector<gles2::PixelVertex>(4096)
     });

@@ -43,12 +43,12 @@ yaui::gles2::Shader::Shader(const char *pName)
     , mProgramId(glCreateProgram()) {
 }
 
-yaui::gles2::Shader::Shader(const char *pName, const char *vertexShaderSource, const char *fragmentShaderSource, const BufferLayout &bufferLayout)
+yaui::gles2::Shader::Shader(const char *pName, const char *vertexShaderSource, const char *fragmentShaderSource, const VertexBufferLayout &vertexBufferLayout)
     : mName(pName)
     , mProgramId(glCreateProgram())
     , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
     , mFragmentShaderId(compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource))
-    , mBufferLayout(bufferLayout) {
+    , mVertexBufferLayout(vertexBufferLayout) {
 }
 
 yaui::gles2::Shader::~Shader() {
@@ -72,7 +72,7 @@ void yaui::gles2::Shader::bind() const {
     debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
     if(isLinked == GL_FALSE) {
         // Set attribute locations
-        for(const auto &layout: mBufferLayout) {
+        for(const auto &layout: mVertexBufferLayout) {
             debugGlCall(glBindAttribLocation(mProgramId, layout.location, layout.attribute.c_str()));
         }
 
@@ -104,8 +104,8 @@ void yaui::gles2::Shader::unbind() const {
     debugGlCall(glUseProgram(0));
 }
 
-void yaui::gles2::Shader::setBufferLayout(const yaui::gles2::BufferLayout &bufferLayout) {
-    mBufferLayout = bufferLayout;
+void yaui::gles2::Shader::setVertexBufferLayout(const yaui::gles2::VertexBufferLayout &vertexBufferLayout) {
+    mVertexBufferLayout = vertexBufferLayout;
 }
 
 void yaui::gles2::Shader::setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const {

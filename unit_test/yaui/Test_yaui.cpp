@@ -30,7 +30,7 @@ TEST_CASE("Draw rectangle", "[yaui]") {
         {{winWidth/2.f - 100.f, winHeight/2.f + 100.f}, {1.f, 1.f, 1.f, 1.f}},  // top left
     };
 
-    yaui::gles2::BufferLayout layout {
+    yaui::gles2::VertexBufferLayout layout {
         {"colour", 1, 4, GL_FLOAT, GL_FALSE, offsetof(Pixel, colour)},
         {"position", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
     };
@@ -97,7 +97,7 @@ TEST_CASE("Draw lenna using texture", "[yaui]") {
         {{winWidth/2.f + width/2.f, winHeight/2.f + height/2.f}, {1.f, 1.f}},// top right
         {{winWidth/2.f - width/2.f, winHeight/2.f + height/2.f}, {0.f, 1.f}},// top left
     };
-    yaui::gles2::BufferLayout layout {
+    yaui::gles2::VertexBufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
         {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
     };
@@ -170,7 +170,7 @@ TEST_CASE("Draw text", "[yaui]") {
         pixelData.emplace_back(Pixel {{quad.x0, quad.y1}, {quad.s0, quad.t1}});
     }
 
-    yaui::gles2::BufferLayout layout {
+    yaui::gles2::VertexBufferLayout layout {
         {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
         {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
     };

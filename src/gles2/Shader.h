@@ -15,13 +15,13 @@ namespace yaui::gles2 {
         GLuint mProgramId = 0;
         GLuint mVertexShaderId = 0;
         GLuint mFragmentShaderId = 0;
-        BufferLayout mBufferLayout{};
+        VertexBufferLayout mVertexBufferLayout{};
     private:
         GLuint compileShader(GLenum type, const char *shaderSource);
 
     public:
         explicit Shader(const char *pName = "");
-        explicit Shader(const char *pName, const char *vertexShaderSource, const char *fragmentShaderSource, const BufferLayout &bufferLayout = {});
+        explicit Shader(const char *pName, const char *vertexShaderSource, const char *fragmentShaderSource, const VertexBufferLayout &vertexBufferLayout = {});
         ~Shader();
         Shader(const Shader &other) = delete;
         Shader& operator=(const Shader &other) = delete;
@@ -30,7 +30,7 @@ namespace yaui::gles2 {
         void compile(const char *vertexShaderSource, const char *fragmentShaderSource);
         void bind() const;
         void unbind() const;
-        void setBufferLayout(const BufferLayout &bufferLayout);
+        void setVertexBufferLayout(const VertexBufferLayout &vertexBufferLayout);
         void setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const;//FIXME: make it generic
     };
 }
