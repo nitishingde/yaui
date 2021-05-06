@@ -38,28 +38,38 @@ void yaui::gles2::VertexBuffer::unbind() const {
     debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-yaui::gles2::VertexArrayBuffer::VertexArrayBuffer(const uint32 *pData, int32 size)
-    : mId(0)
-    , mSize(size) {
+yaui::gles2::VertexArrayBuffer::VertexArrayBuffer() {
     debugGlCall(glGenBuffers(1, &mId));
-    debugGlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId));
-    debugGlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, mSize*sizeof(uint32), pData, GL_DYNAMIC_DRAW));
+}
+
+yaui::gles2::VertexArrayBuffer::VertexArrayBuffer(std::vector<uint32> &&vertexArray)
+    : mVertexArray(std::move(vertexArray)) {
+    debugGlCall(glGenBuffers(1, &mId));
 }
 
 yaui::gles2::VertexArrayBuffer::~VertexArrayBuffer() {
     debugGlCall(glDeleteBuffers(1, &mId));
 }
 
+std::vector<yaui::uint32>& yaui::gles2::VertexArrayBuffer::getVertexArray() {
+    return mVertexArray;
+}
+
+void yaui::gles2::VertexArrayBuffer::setVertexArray(std::vector<uint32> &&vertexArray) {
+    mVertexArray = std::move(vertexArray);
+}
+
 void yaui::gles2::VertexArrayBuffer::bind() const {
     debugGlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId));
+    debugGlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, mVertexArray.size()*sizeof(uint32), mVertexArray.data(), GL_DYNAMIC_DRAW));
 }
 
 void yaui::gles2::VertexArrayBuffer::unbind() const {
     debugGlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
-yaui::int32 yaui::gles2::VertexArrayBuffer::getSize() const {
-    return mSize;
+yaui::uint32 yaui::gles2::VertexArrayBuffer::getSize() const {
+    return mVertexArray.size();
 }
 
 GLenum yaui::gles2::VertexArrayBuffer::getType() const {

@@ -39,13 +39,8 @@ TEST_CASE("Draw rectangle", "[yaui]") {
     yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
-    std::vector<uint32_t> indices {
-        0, 1, 2,
-        0, 3, 2,
-    };
-
     // Create a Vertex Array Buffer Object and copy the indices to it
-    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
+    yaui::gles2::VertexArrayBuffer va({0, 1, 2, 0, 3, 2,});
     va.bind();
 
     yaui::gles2::Shader shader(
@@ -109,11 +104,7 @@ TEST_CASE("Draw lenna using texture", "[yaui]") {
     yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
-    std::vector<uint32_t> indices {
-        0, 1, 2,
-        0, 3, 2,
-    };
-    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
+    yaui::gles2::VertexArrayBuffer va({0, 1, 2, 0, 3, 2});
     va.bind();
 
     yaui::gles2::Shader shader(
@@ -186,12 +177,12 @@ TEST_CASE("Draw text", "[yaui]") {
     yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
     vb.bind();
 
-    std::vector<uint32_t> indices;
+    yaui::gles2::VertexArrayBuffer va;
+    auto &indices = va.getVertexArray();
     for(uint32_t i = 0; i < pixelData.size(); i+=4) {
         indices.insert(indices.end(), {i+0, i+1, i+2});
         indices.insert(indices.end(), {i+0, i+3, i+2});
     }
-    yaui::gles2::VertexArrayBuffer va(indices.data(), indices.size());
     va.bind();
 
     yaui::gles2::Shader shader(

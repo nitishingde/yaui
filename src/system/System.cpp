@@ -16,7 +16,8 @@ yaui::system::RenderingBackgroundSystem::RenderingBackgroundSystem(uint32 priori
 void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registry, gles2::Renderer &renderer) {
     auto &pixelVertices = registry.ctx<gles2::PixelVertices>();
     auto &vertices = pixelVertices.vertexData;
-    std::vector<uint32> vertexArray;
+    gles2::VertexArrayBuffer va;
+    auto &vertexArray = va.getVertexArray();
 
     auto view = registry.view<component::Transform>();
     uint32 i = 0;
@@ -35,11 +36,10 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
         vertexArray.insert(vertexArray.end(), {entityIdx+0, entityIdx+1, entityIdx+2, entityIdx+0, entityIdx+2, entityIdx+3});
     }
 
+    va.bind();
+
     gles2::VertexBuffer vb(vertices.data(), sizeof(gles2::PixelVertex), vertices.size(), pixelVertices.bufferLayout);
     vb.bind();
-
-    gles2::VertexArrayBuffer va(vertexArray.data(), vertexArray.size());
-    va.bind();
 
     mBackgroundShader.setBufferLayout(pixelVertices.bufferLayout);
     mBackgroundShader.bind();

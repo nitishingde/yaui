@@ -39,19 +39,22 @@ namespace yaui::gles2 {
 
     class VertexArrayBuffer {
     private:
-        GLuint mId;
-        int32 mSize;
+        GLuint mId = 0;
+        std::vector<uint32> mVertexArray{};
 
     public:
-        explicit VertexArrayBuffer(const uint32 *pData, int32 size);
+        explicit VertexArrayBuffer();
+        explicit VertexArrayBuffer(std::vector<uint32> &&vertexArray);
         ~VertexArrayBuffer();
         VertexArrayBuffer(const VertexArrayBuffer &other) = delete;
         VertexArrayBuffer& operator=(const VertexArrayBuffer &other) = delete;
         VertexArrayBuffer(VertexArrayBuffer &&other) = delete;
         VertexArrayBuffer& operator=(VertexArrayBuffer &&other) = delete;
+        std::vector<uint32>& getVertexArray();
+        void setVertexArray(std::vector<uint32> &&vertexArray);
         void bind() const;
         void unbind() const;
-        [[nodiscard]] int32 getSize() const;
+        [[nodiscard]] uint32 getSize() const;
         [[nodiscard]] GLenum getType() const;
     };
 
