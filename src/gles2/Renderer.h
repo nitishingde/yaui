@@ -24,7 +24,7 @@ namespace yaui::gles2 {
         [[nodiscard]] std::shared_ptr<Window> getWindow() const;
         [[nodiscard]] glm::mat4 getMVP_Matrix() const;
         void enableBlend() const;
-        void clearScreen(float r, float g, float b, float a) const;
+        void clearScreen(float r = 0.f, float g = 0.f, float b = 0.f, float a = 0.f) const;
         void drawElements(const VertexArrayBuffer &vertexArrayBuffer) const;
         void render() const;
     };

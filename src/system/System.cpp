@@ -45,6 +45,8 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
     mBackgroundShader.bind();
     mBackgroundShader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
 
+    // FIXME: call this only if there is a change in the window screen
+    renderer.clearScreen();
     renderer.drawElements(vertexArrayBuffer);
     renderer.render();
 }
