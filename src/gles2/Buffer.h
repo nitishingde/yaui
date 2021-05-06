@@ -3,6 +3,7 @@
 
 
 #include <GLES2/gl2.h>
+#include <glm/glm.hpp>
 #include "Types.h"
 
 namespace yaui::gles2 {
@@ -18,17 +19,19 @@ namespace yaui::gles2 {
 
     class VertexBuffer {
     private:
-        GLuint mId;
-        BufferLayout mBufferLayout;
-        GLsizei mStride;
+        GLuint mId = 0;
+        BufferLayout mBufferLayout{};
+        GLsizei mStride = 0;
 
     public:
+        explicit VertexBuffer() = default;
         explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
         ~VertexBuffer();
         VertexBuffer(const VertexBuffer &other) = delete;
         VertexBuffer& operator=(const VertexBuffer &other) = delete;
-        VertexBuffer(VertexBuffer &&other) = delete;
-        VertexBuffer& operator=(VertexBuffer &&other) = delete;
+        VertexBuffer(VertexBuffer &&other) = default;
+        VertexBuffer& operator=(VertexBuffer &&other) = default;
+        void init(const void *pData, GLsizei stride, uint32 size, const BufferLayout &bufferLayout);
         [[nodiscard]] const BufferLayout& getLayout() const;
         void bind() const;
         void unbind() const;
@@ -51,6 +54,17 @@ namespace yaui::gles2 {
         [[nodiscard]] int32 getSize() const;
         [[nodiscard]] GLenum getType() const;
     };
+
+    struct PixelVertex {
+        glm::vec2 position;
+        glm::vec4 colour;
+    } __attribute__((aligned(32)));
+
+    struct PixelVertices {
+        yaui::gles2::BufferLayout bufferLayout;
+        yaui::gles2::VertexBuffer vertexBuffer;
+        std::vector<PixelVertex> vertexData;
+    } __attribute__((aligned(128)));
 }
 
 

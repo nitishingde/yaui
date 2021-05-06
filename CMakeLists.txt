@@ -21,6 +21,13 @@ add_library(yaui
         src/gles2/Texture.cpp src/gles2/Texture.h
         src/gles2/Window.cpp src/gles2/Window.h
 
+        # Component
+        src/component/Component.cpp src/component/Component.h
+
+        # System
+        src/system/System.cpp src/system/System.h
+        src/system/SystemJobScheduler.cpp src/system/SystemJobScheduler.h
+
         src/Director.cpp src/Director.h
         src/Scene.cpp src/Scene.h
         src/Types.h

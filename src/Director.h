@@ -11,6 +11,9 @@ namespace yaui {
     private:
         std::vector<std::shared_ptr<gles2::Window>> mWindows;
         std::vector<std::shared_ptr<Scene>> mSceneStack;
+        uint32 mFps = 60;
+        uint32 mDelta = 0;
+        bool mEngineIgnitionOn = true;
 
     private:
         explicit Director() = default;
@@ -19,9 +22,12 @@ namespace yaui {
     public:
         ~Director();
         static Director *getInstance();
+        void run();
+        void stop();
         void quit();
-        void pushScene(std::shared_ptr<Scene> pScene);
+        void pushScene(const std::shared_ptr<Scene> &pScene);
         void popScene();
+        void setFPS(uint32 fps);
     };
 }
 

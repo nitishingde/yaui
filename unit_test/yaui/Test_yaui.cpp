@@ -2,6 +2,7 @@
 
 #include <catch2/catch.hpp>
 #include <SDL2/SDL.h>
+#include "component/Component.h"
 #include "gles2/Buffer.h"
 #include "Director.h"
 #include "gles2/Shader.h"
@@ -220,4 +221,34 @@ TEST_CASE("Draw text", "[yaui]") {
 
     pDirector->popScene();
     pDirector->quit();
+}
+
+TEST_CASE("Draw rectangle using yaui", "[yaui]") {
+    auto pDirector = yaui::Director::getInstance();
+    CHECK(pDirector != nullptr);
+
+    auto pScene = std::make_shared<yaui::Scene>("2 Triangles");
+    auto &registry = pScene->getRegistry();
+
+    auto entity = registry.create();
+    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+        glm::vec4 {100.f, 100.f, 200.f, 200.f},
+        glm::vec2 {1.f, 1.f},
+        glm::quat {},
+        glm::vec4 {1.0f, 0.0f, 0.0f, 1.0f}
+    });
+
+    entity = registry.create();
+    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+        glm::vec4 {300.f, 300.f, 100.f, 100.f},
+        glm::vec2 {1.f, 1.f},
+        glm::quat {},
+        glm::vec4 {0.0f, 1.0f, 0.0f, 1.0f}
+    });
+
+    pDirector->pushScene(pScene);
+    // blocking
+    pDirector->run();
+    // cleanup
+    pDirector->popScene();
 }

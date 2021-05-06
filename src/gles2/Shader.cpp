@@ -38,18 +38,32 @@ GLuint yaui::gles2::Shader::compileShader(GLenum type, const char *shaderSource)
     return shader;
 }
 
-yaui::gles2::Shader::Shader(yaui::String name, const char *vertexShaderSource, const char *fragmentShaderSource, BufferLayout bufferLayout)
-    : mName(std::move(name))
+yaui::gles2::Shader::Shader(const char *pName)
+    : mName(pName)
+    , mProgramId(glCreateProgram()) {
+}
+
+yaui::gles2::Shader::Shader(const char *pName, const char *vertexShaderSource, const char *fragmentShaderSource, const BufferLayout &bufferLayout)
+    : mName(pName)
     , mProgramId(glCreateProgram())
     , mVertexShaderId(compileShader(GL_VERTEX_SHADER, vertexShaderSource))
     , mFragmentShaderId(compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource))
-    , mBufferLayout(std::move(bufferLayout)) {
+    , mBufferLayout(bufferLayout) {
 }
 
 yaui::gles2::Shader::~Shader() {
     debugGlCall(glDeleteProgram(mProgramId));
-    debugGlCall(glDeleteShader(mVertexShaderId));
-    debugGlCall(glDeleteShader(mFragmentShaderId));
+    if(glIsShader(mVertexShaderId)) {
+        debugGlCall(glDeleteShader(mVertexShaderId));
+    }
+    if(glIsShader(mFragmentShaderId)) {
+        debugGlCall(glDeleteShader(mFragmentShaderId));
+    }
+}
+
+void yaui::gles2::Shader::compile(const char *vertexShaderSource, const char *fragmentShaderSource) {
+    mVertexShaderId = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
+    mFragmentShaderId = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 }
 
 void yaui::gles2::Shader::bind() const {
@@ -88,6 +102,10 @@ void yaui::gles2::Shader::bind() const {
 
 void yaui::gles2::Shader::unbind() const {
     debugGlCall(glUseProgram(0));
+}
+
+void yaui::gles2::Shader::setBufferLayout(const yaui::gles2::BufferLayout &bufferLayout) {
+    mBufferLayout = bufferLayout;
 }
 
 void yaui::gles2::Shader::setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const {

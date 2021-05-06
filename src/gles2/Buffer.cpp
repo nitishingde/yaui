@@ -5,13 +5,21 @@ yaui::gles2::VertexBuffer::VertexBuffer(const void *pData, GLsizei stride, uint3
     : mId(0)
     , mBufferLayout(bufferLayout)
     , mStride(stride) {
-    debugGlCall(glGenBuffers(1, &mId));
-    debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, mId));
-    debugGlCall(glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(size * stride), pData, GL_DYNAMIC_DRAW));
+    init(pData, stride, size, bufferLayout);
 }
 
 yaui::gles2::VertexBuffer::~VertexBuffer() {
     debugGlCall(glDeleteBuffers(1, &mId));
+}
+
+void yaui::gles2::VertexBuffer::init(const void *pData, GLsizei stride, yaui::uint32 size, const yaui::gles2::BufferLayout &bufferLayout) {
+    mStride = stride;
+    mBufferLayout = bufferLayout;
+    if(glIsBuffer(mId) == GL_FALSE) {
+        debugGlCall(glGenBuffers(1, &mId));
+    }
+    debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, mId));
+    debugGlCall(glBufferData(GL_ARRAY_BUFFER, GLsizeiptr(size * stride), pData, GL_DYNAMIC_DRAW));
 }
 
 const yaui::gles2::BufferLayout& yaui::gles2::VertexBuffer::getLayout() const {
