@@ -1,18 +1,18 @@
 #include "Director.h"
 #include "system/SystemJobScheduler.h"
 
-static yaui::Director* instance = nullptr;
+static yaui::Director* spInstance = nullptr;
 
 yaui::Director::~Director() {
     SDL_Quit();
 }
 
 yaui::Director *yaui::Director::getInstance() {
-    if(instance == nullptr) {
-        instance = new Director();
-        if(!instance->init()) return nullptr;
+    if(spInstance == nullptr) {
+        spInstance = new Director();
+        if(!spInstance->init()) return nullptr;
     }
-    return instance;
+    return spInstance;
 }
 
 bool yaui::Director::init() {
@@ -50,8 +50,8 @@ void yaui::Director::stop() {
 
 void yaui::Director::quit() {
     mEngineIgnitionOn = false;
-    delete instance;
-    instance = nullptr;
+    delete spInstance;
+    spInstance = nullptr;
 }
 
 void yaui::Director::pushScene(const std::shared_ptr<Scene> &pScene) {
