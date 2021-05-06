@@ -21,7 +21,7 @@ void yaui::glLogError(const char *file, int line) {
     }
 }
 
-yaui::String yaui::readFile(const String &filePath) {
+std::string yaui::readFile(const char *filePath) {
     std::ifstream ifs(filePath);
     return std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
 }

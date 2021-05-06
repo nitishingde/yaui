@@ -18,7 +18,7 @@ yaui::glLogError(__FILE__, __LINE__)
 namespace yaui {
     void glFlushErrors();
     void glLogError(const char *file, int line);
-    String readFile(const String &filePath);
+    std::string readFile(const char *filePath);
     void loadImage(const char *imagePath, std::vector<uint8> &outPixelData, yaui::int32 &outWidth, yaui::int32 &outHeight, yaui::int32 &outChannels);
     void loadBasicAsciiFont(const char *fontPath, yaui::int32 fontSize, std::vector<uint8> &outPixelData, yaui::int32 &outWidth, yaui::int32 &outHeight, std::vector<stbtt_bakedchar> &bakedChars);
 }
