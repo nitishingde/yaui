@@ -1,5 +1,4 @@
 #include <spdlog/spdlog.h>
-#include <utility>
 #include <vector>
 #include "Shader.h"
 
