@@ -7,16 +7,15 @@
 #include "Types.h"
 
 namespace yaui::system {
+    /**
+     * Should be used by Director only.
+     */
     class SystemJobScheduler {
     private:
         std::vector<std::shared_ptr<ISystem>> mSystems;
 
-    private:
-        explicit SystemJobScheduler() = default;
-        void init();
     public:
-        ~SystemJobScheduler();
-        static SystemJobScheduler* getInstance();
+        explicit SystemJobScheduler();
         void executeJobs(entt::registry &registry, gles2::Renderer &renderer);
     };
 }

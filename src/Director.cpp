@@ -1,5 +1,4 @@
 #include "Director.h"
-#include "system/SystemJobScheduler.h"
 
 static yaui::Director* spInstance = nullptr;
 
@@ -18,6 +17,7 @@ yaui::Director *yaui::Director::getInstance() {
 bool yaui::Director::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
     mWindows.emplace_back(std::make_shared<gles2::Window>("YAUI OpenGL ES 2.0"));
+    mpSystemJobScheduler = std::make_shared<system::SystemJobScheduler>();// needs to be initialised after SDL_Init and SDL_GL_CreateContext
     return true;
 }
 
@@ -31,7 +31,7 @@ void yaui::Director::run() {
         for(SDL_Event event; SDL_PollEvent(&event);) {
             if(event.type == SDL_QUIT) stop();
         }
-        system::SystemJobScheduler::getInstance()->executeJobs(pScene->getRegistry(), pScene->getRenderer());
+        mpSystemJobScheduler->executeJobs(pScene->getRegistry(), pScene->getRenderer());
         auto jobExecutionTime = SDL_GetTicks()-start;
         if(jobExecutionTime < ticksPerFrame) {
             // add time delay to maintain the fps
@@ -41,7 +41,6 @@ void yaui::Director::run() {
             mDelta = jobExecutionTime;
         }
     }
-    delete this;
 }
 
 void yaui::Director::stop() {
