@@ -221,16 +221,14 @@ TEST_CASE("Draw rectangle using yaui", "[yaui]") {
     auto pScene = std::make_shared<yaui::Scene>("2 Triangles");
     auto &registry = pScene->getRegistry();
 
-    auto entity = registry.create();
-    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+    registry.emplace<yaui::component::Transform>(registry.create(), yaui::component::Transform{
         glm::vec4 {100.f, 100.f, 200.f, 200.f},
         glm::vec2 {1.f, 1.f},
         glm::quat {},
         glm::vec4 {1.0f, 0.0f, 0.0f, 1.0f}
     });
 
-    entity = registry.create();
-    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+    registry.emplace<yaui::component::Transform>(registry.create(), yaui::component::Transform{
         glm::vec4 {300.f, 300.f, 100.f, 100.f},
         glm::vec2 {1.f, 1.f},
         glm::quat {},
