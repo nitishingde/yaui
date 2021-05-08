@@ -135,6 +135,92 @@ TEST_CASE("Draw lenna using texture", "[yaui]") {
     pDirector->quit();
 }
 
+TEST_CASE("Draw 2 textures in 1 draw call", "[yaui]") {
+    auto pScene = std::make_shared<yaui::Scene>("2 Textures, 1 draw call");
+    auto pDirector = yaui::Director::getInstance();
+    pDirector->pushScene(pScene);
+    const auto &renderer = pScene->getRenderer();
+    const auto [winWidth, winHeight] = pScene->getRenderer().getWindow()->getSize();
+
+    struct Pixel {
+        glm::vec2 position;
+        glm::vec2 textureCoordinate;
+        float textureIdx;
+    };
+
+    float offset = std::min(winWidth/8.f, winHeight/8.f);
+    std::vector<Pixel> pixelData {
+        {glm::vec2{winWidth/4.f - offset, winHeight/2.f - offset}, glm::vec2{0.f, 0.f}, 1},// bottom left
+        {glm::vec2{winWidth/4.f + offset, winHeight/2.f - offset}, glm::vec2{1.f, 0.f}, 1},// bottom right
+        {glm::vec2{winWidth/4.f + offset, winHeight/2.f + offset}, glm::vec2{1.f, 1.f}, 1},// top right
+        {glm::vec2{winWidth/4.f - offset, winHeight/2.f + offset}, glm::vec2{0.f, 1.f}, 1},// top left
+        {glm::vec2{3*winWidth/4.f - offset, winHeight/2.f - offset}, glm::vec2{0.f, 0.f}, 2},// bottom left
+        {glm::vec2{3*winWidth/4.f + offset, winHeight/2.f - offset}, glm::vec2{1.f, 0.f}, 2},// bottom right
+        {glm::vec2{3*winWidth/4.f + offset, winHeight/2.f + offset}, glm::vec2{1.f, 1.f}, 2},// top right
+        {glm::vec2{3*winWidth/4.f - offset, winHeight/2.f + offset}, glm::vec2{0.f, 1.f}, 2},// top left
+    };
+    yaui::gles2::VertexBufferLayout layout {
+        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
+        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
+        {"aTextureIndex", 2, 1, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureIdx)},
+    };
+    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    vb.bind();
+
+    yaui::gles2::VertexArrayBuffer va({0, 1, 2, 0, 3, 2, 4, 5, 6, 4, 7, 6});
+    va.bind();
+
+    yaui::gles2::Shader shader(
+        "HelloTexture",
+        yaui::readFile("shaders/multipleTextures.vert.glsl").c_str(),
+        yaui::readFile("shaders/multipleTextures.frag.glsl").c_str(),
+        layout
+    );
+    shader.bind();
+    shader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
+
+    int32_t width = 0, height = 0, channels = 0;
+    std::vector<uint8_t> imagePixelData;
+    yaui::loadImage("Lenna.png", imagePixelData, width, height, channels);
+    yaui::gles2::Texture texture1(imagePixelData.data(), width, height, channels, GL_RGBA);
+    texture1.setTextureIndex(0);
+    texture1.bind();
+
+    yaui::loadImage("2048x1024.png", imagePixelData, width, height, channels);
+    yaui::gles2::Texture texture2(imagePixelData.data(), width, height, channels, GL_RGBA);
+    texture2.setTextureIndex(1);
+    texture2.bind();
+
+    imagePixelData.clear();
+
+    shader.setUniformVector("uSampler[1]", glm::i32vec1{texture1.getTextureIndex()});
+    shader.setUniformVector("uSampler[2]", glm::i32vec1{texture2.getTextureIndex()});
+//    or, just call this
+//    shader.setUniformVectorValues("uSampler[1]", glm::i32vec2{
+//        texture1.getTextureIndex(),
+//        texture2.getTextureIndex()
+//    });
+
+
+    for(bool loop = true; loop;) {
+        for(SDL_Event e; SDL_PollEvent(&e);) {
+            if(e.type == SDL_QUIT) loop = false;
+        }
+
+        // Clear the screen to black
+        renderer.clearScreen(0.f, 0.f, 0.f, 0.f);
+
+        // Draw call
+        renderer.drawElements(va);
+
+        // Present the result to the screen
+        renderer.render();
+    }
+
+    pDirector->popScene();
+    pDirector->quit();
+}
+
 TEST_CASE("Draw text", "[yaui]") {
     auto pScene = std::make_shared<yaui::Scene>("Text");
     auto pDirector = yaui::Director::getInstance();

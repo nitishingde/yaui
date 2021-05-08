@@ -9,6 +9,7 @@ namespace yaui::gles2 {
     class Texture {
     private:
         GLuint mId{};
+        GLenum mTextureIndex = GL_TEXTURE0;
         int32 mWidth{};
         int32 mHeight{};
         int32 mChannels{};
@@ -22,6 +23,8 @@ namespace yaui::gles2 {
         Texture& operator=(const Texture &other) = delete;
         Texture(Texture &&other) = delete;
         Texture& operator=(Texture &&other) = delete;
+        [[nodiscard]] int32 getTextureIndex() const;
+        void setTextureIndex(int32 textureIndex);
         void bind();
         void unbind();
     };

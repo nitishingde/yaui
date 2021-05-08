@@ -2,7 +2,8 @@
 #include "Utility.h"
 
 yaui::gles2::Texture::Texture(yaui::uint8 *pixelData, yaui::int32 width, yaui::int32 height, yaui::int32 channels, GLint format)
-    : mWidth(width)
+    : mTextureIndex(GL_TEXTURE0)
+    , mWidth(width)
     , mHeight(height)
     , mChannels(channels)
     , mFormat(format) {
@@ -14,6 +15,15 @@ yaui::gles2::Texture::Texture(yaui::uint8 *pixelData, yaui::int32 width, yaui::i
 
 yaui::gles2::Texture::~Texture() {
     debugGlCall(glDeleteTextures(1, &mId));
+}
+
+yaui::int32 yaui::gles2::Texture::getTextureIndex() const {
+    return int32(mTextureIndex-GL_TEXTURE0);
+}
+
+void yaui::gles2::Texture::setTextureIndex(int32 textureIndex) {
+    mTextureIndex = GL_TEXTURE0 + textureIndex;
+    debugGlCall(glActiveTexture(mTextureIndex));
 }
 
 void yaui::gles2::Texture::bind() {

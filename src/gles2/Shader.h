@@ -32,6 +32,22 @@ namespace yaui::gles2 {
         void unbind() const;
         void setVertexBufferLayout(const VertexBufferLayout &vertexBufferLayout);
         void setUniformMatrix4f(const char *uniformName, const glm::mat4 &projectionMatrix) const;//FIXME: make it generic
+        void setUniformVector(const char *pUniformName, const glm::i32vec1 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::i32vec2 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::i32vec3 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::i32vec4 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::i32vec1 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::i32vec2 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::i32vec3 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::i32vec4 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::vec1 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::vec2 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::vec3 &vector) const;
+        void setUniformVector(const char *pUniformName, const glm::vec4 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::vec1 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::vec2 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::vec3 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const glm::vec4 &vector) const;
     };
 }
 

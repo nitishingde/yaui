@@ -111,3 +111,83 @@ void yaui::gles2::Shader::setUniformMatrix4f(const char *uniformName, const glm:
     debugGlCall(auto location = glGetUniformLocation(mProgramId, uniformName));
     debugGlCall(glUniformMatrix4fv(location, 1, GL_FALSE, &projectionMatrix[0][0]));
 }
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::i32vec1 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1i(location, vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::i32vec2 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform2i(location, vector[0], vector[1]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::i32vec3 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform3i(location, vector[0], vector[1], vector[2]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::i32vec4 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform4i(location, vector[0], vector[1], vector[2], vector[3]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::i32vec1 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1iv(location, 1, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::i32vec2 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1iv(location, 2, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::i32vec3 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1iv(location, 3, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::i32vec4 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1iv(location, 4, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::vec1 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1f(location, vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::vec2 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform2f(location, vector[0], vector[1]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::vec3 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform3f(location, vector[0], vector[1], vector[2]));
+}
+
+void yaui::gles2::Shader::setUniformVector(const char *pUniformName, const glm::vec4 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform4f(location, vector[0], vector[1], vector[2], vector[3]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::vec1 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1fv(location, 1, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::vec2 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1fv(location, 2, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::vec3 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1fv(location, 3, &vector[0]));
+}
+
+void yaui::gles2::Shader::setUniformVectorValues(const char *pUniformName, const glm::vec4 &vector) const {
+    debugGlCall(auto location = glGetUniformLocation(mProgramId, pUniformName));
+    debugGlCall(glUniform1fv(location, 4, &vector[0]));
+}
