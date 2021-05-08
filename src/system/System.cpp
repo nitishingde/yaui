@@ -14,8 +14,8 @@ yaui::system::RenderingBackgroundSystem::RenderingBackgroundSystem(uint32 priori
 }
 
 void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registry, gles2::Renderer &renderer) {
-    auto &pixelVertexInfo = registry.ctx<gles2::PixelVertexInfo>();
-    auto &pixelVertices = pixelVertexInfo.pixelVertices;
+    auto &quadVertexInfo = registry.ctx<gles2::QuadVertexInfo>();
+    auto &quadVertices = quadVertexInfo.quadVertices;
     gles2::VertexArrayBuffer vertexArrayBuffer;
     auto &vertexArray = vertexArrayBuffer.getVertexArray();
 
@@ -25,23 +25,23 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
         auto entityIdx = static_cast<uint32>(entity)<<2;
         auto &viewPort = view.get(entity).viewPort;
         auto &colour = view.get(entity).colour;
-        pixelVertices[entityIdx+0].colour = colour;
-        pixelVertices[entityIdx+0].position = {viewPort.x, viewPort.y};
-        pixelVertices[entityIdx+1].colour = colour;
-        pixelVertices[entityIdx+1].position = {viewPort.x, viewPort.y + viewPort.w};
-        pixelVertices[entityIdx+2].colour = colour;
-        pixelVertices[entityIdx+2].position = {viewPort.x + viewPort.z, viewPort.y + viewPort.w};
-        pixelVertices[entityIdx+3].colour = colour;
-        pixelVertices[entityIdx+3].position = {viewPort.x + viewPort.z, viewPort.y};
+        quadVertices[entityIdx+0].colour = colour;
+        quadVertices[entityIdx+0].position = {viewPort.x, viewPort.y};
+        quadVertices[entityIdx+1].colour = colour;
+        quadVertices[entityIdx+1].position = {viewPort.x, viewPort.y + viewPort.w};
+        quadVertices[entityIdx+2].colour = colour;
+        quadVertices[entityIdx+2].position = {viewPort.x + viewPort.z, viewPort.y + viewPort.w};
+        quadVertices[entityIdx+3].colour = colour;
+        quadVertices[entityIdx+3].position = {viewPort.x + viewPort.z, viewPort.y};
         vertexArray.insert(vertexArray.end(), {entityIdx+0, entityIdx+1, entityIdx+2, entityIdx+0, entityIdx+2, entityIdx+3});
     }
 
     vertexArrayBuffer.bind();
 
-    gles2::VertexBuffer vertexBuffer(pixelVertices.data(), sizeof(gles2::PixelVertex), pixelVertices.size(), pixelVertexInfo.vertexBufferLayout);
+    gles2::VertexBuffer vertexBuffer(quadVertices.data(), sizeof(gles2::QuadVertex), quadVertices.size(), quadVertexInfo.vertexBufferLayout);
     vertexBuffer.bind();
 
-    mBackgroundShader.setVertexBufferLayout(pixelVertexInfo.vertexBufferLayout);
+    mBackgroundShader.setVertexBufferLayout(quadVertexInfo.vertexBufferLayout);
     mBackgroundShader.bind();
     mBackgroundShader.setUniformMatrix4f("uMVP", renderer.getMVP_Matrix());
 

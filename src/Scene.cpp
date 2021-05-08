@@ -4,9 +4,9 @@
 yaui::Scene::Scene(const char *pName) noexcept
     : mName(pName) {
     entt::registry registry;
-    registry.set<gles2::PixelVertexInfo>(gles2::PixelVertexInfo{
+    registry.set<gles2::QuadVertexInfo>(gles2::QuadVertexInfo{
         gles2::VertexBuffer(),
-        std::vector<gles2::PixelVertex>(4096)
+        std::vector<gles2::QuadVertex>(4096)
     });
     mRegistryStack.emplace_back(std::move(registry));
 }

@@ -58,18 +58,18 @@ namespace yaui::gles2 {
         [[nodiscard]] GLenum getType() const;
     };
 
-    struct PixelVertex {
+    struct QuadVertex {
         glm::vec2 position;
         glm::vec4 colour;
     } __attribute__((aligned(32)));
 
-    struct PixelVertexInfo {
+    struct QuadVertexInfo {
         yaui::gles2::VertexBuffer vertexBuffer;
-        std::vector<PixelVertex> pixelVertices;
-        // TODO: modify this, whenever gles2::PixelVertex gets modified
+        std::vector<QuadVertex> quadVertices;
+        // TODO: modify this, whenever gles2::QuadVertex gets modified
         yaui::gles2::VertexBufferLayout vertexBufferLayout {
-            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, position)},
-            {"aColour",   1, 4, GL_FLOAT, GL_FALSE, offsetof(gles2::PixelVertex, colour)},
+            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(gles2::QuadVertex, position)},
+            {"aColour",   1, 4, GL_FLOAT, GL_FALSE, offsetof(gles2::QuadVertex, colour)},
         };
     } __attribute__((aligned(128)));
 }
