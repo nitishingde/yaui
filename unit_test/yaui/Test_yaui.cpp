@@ -10,8 +10,8 @@
 #include "Utility.h"
 #include "Scene.h"
 
-TEST_CASE("Draw rectangle", "[yaui]") {
-    auto pScene = std::make_shared<yaui::Scene>("Rect");
+TEST_CASE("Render a rectangle using 2 triangles", "[yaui][experiment]") {
+    auto pScene = std::make_shared<yaui::Scene>("Render a rectangle using 2 triangles");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
     const auto &renderer = pScene->getRenderer();
@@ -71,8 +71,8 @@ TEST_CASE("Draw rectangle", "[yaui]") {
     pDirector->quit();
 }
 
-TEST_CASE("Draw lenna using texture", "[yaui]") {
-    auto pScene = std::make_shared<yaui::Scene>("Lenna");
+TEST_CASE("Render lenna using texture", "[yaui][experiment]") {
+    auto pScene = std::make_shared<yaui::Scene>("Render lenna using texture");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
     const auto &renderer = pScene->getRenderer();
@@ -135,8 +135,8 @@ TEST_CASE("Draw lenna using texture", "[yaui]") {
     pDirector->quit();
 }
 
-TEST_CASE("Draw 2 textures in 1 draw call", "[yaui]") {
-    auto pScene = std::make_shared<yaui::Scene>("2 Textures, 1 draw call");
+TEST_CASE("Texture batching", "[yaui][experiment]") {
+    auto pScene = std::make_shared<yaui::Scene>("Texture batching");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
     const auto &renderer = pScene->getRenderer();
@@ -221,8 +221,8 @@ TEST_CASE("Draw 2 textures in 1 draw call", "[yaui]") {
     pDirector->quit();
 }
 
-TEST_CASE("Draw text", "[yaui]") {
-    auto pScene = std::make_shared<yaui::Scene>("Text");
+TEST_CASE("Render text", "[yaui][experiment]") {
+    auto pScene = std::make_shared<yaui::Scene>("Render text");
     auto pDirector = yaui::Director::getInstance();
     pDirector->pushScene(pScene);
     const auto &renderer = pScene->getRenderer();
@@ -300,11 +300,11 @@ TEST_CASE("Draw text", "[yaui]") {
     pDirector->quit();
 }
 
-TEST_CASE("Draw rectangle using yaui", "[yaui]") {
+TEST_CASE("Render rectangle using yaui", "[yaui]") {
     auto pDirector = yaui::Director::getInstance();
     CHECK(pDirector != nullptr);
 
-    auto pScene = std::make_shared<yaui::Scene>("2 Triangles");
+    auto pScene = std::make_shared<yaui::Scene>("Render rectangle using yaui");
     auto &registry = pScene->getRegistry();
 
     registry.emplace<yaui::component::Transform>(registry.create(), yaui::component::Transform{
