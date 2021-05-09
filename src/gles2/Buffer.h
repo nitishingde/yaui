@@ -58,7 +58,9 @@ namespace yaui::gles2 {
     struct QuadVertex {
         glm::vec2 position;
         glm::vec4 colour;
-    } __attribute__((aligned(32)));
+        glm::vec2 textureCoordinate;
+        float textureIndex;
+    } __attribute__((aligned(64)));
 
     struct QuadVertexInfo {
         yaui::gles2::VertexBuffer vertexBuffer;
@@ -67,6 +69,8 @@ namespace yaui::gles2 {
         yaui::gles2::VertexBufferLayout vertexBufferLayout {
             {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, position)},
             {"aColour",   1, 4, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, colour)},
+            {"aTextureCoordinate", 2, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, textureCoordinate)},
+            {"aTextureIndex", 3, 1, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, textureIndex)},
         };
     } __attribute__((aligned(64)));
 }

@@ -12,6 +12,14 @@ namespace yaui::component {
         glm::quat rotation;
         glm::vec4 colour;
     } __attribute__((aligned(64)));
+
+    struct Texture {
+        int32 width;
+        int32 height;
+        int32 channels;
+        uint32 channelFormat;
+        std::vector<uint8> pixelData;
+    } __attribute__((aligned(64)));
 }
 
 #endif //YAUI_COMPONENT_COMPONENT_H

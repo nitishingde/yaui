@@ -27,6 +27,19 @@ namespace yaui::system {
         ~RenderingBackgroundSystem() override = default;
         void executeJob(entt::registry &registry, gles2::Renderer &renderer) override;
     };
+
+    class RenderingTextureSystem: public ISystem {
+    private:
+        const uint8 TEXTURE_SLOTS_MAX_LIMIT = 8;
+        gles2::Shader mTextureShader{"texture"};
+
+    private:
+        void initialiseForRendering(entt::registry &registry, yaui::gles2::Renderer &renderer);
+    public:
+        explicit RenderingTextureSystem(uint32 priorityRank);
+        ~RenderingTextureSystem() override = default;
+        void executeJob(entt::registry &registry, gles2::Renderer &renderer) override;
+    };
 };
 
 

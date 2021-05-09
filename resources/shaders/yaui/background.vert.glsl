@@ -2,6 +2,8 @@
 
 attribute vec2 aPosition;
 attribute vec4 aColour;
+attribute vec2 aTextureCoordinate;
+attribute float aTextureId;
 
 varying vec4 vColour;
 

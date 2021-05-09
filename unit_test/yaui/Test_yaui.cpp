@@ -330,6 +330,44 @@ TEST_CASE("Render rectangle using yaui", "[yaui]") {
     pDirector->popScene();
 }
 
+TEST_CASE("Render textures using yaui", "[yaui]") {
+    auto pDirector = yaui::Director::getInstance();
+    CHECK(pDirector != nullptr);
+
+    auto pScene = std::make_shared<yaui::Scene>("Render textures using yaui");
+    auto &registry = pScene->getRegistry();
+
+    auto entity = registry.create();
+    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+        glm::vec4 {100.f, 100.f, 200.f, 200.f},
+        glm::vec2 {1.f, 1.f},
+        glm::quat {},
+        glm::vec4 {1.0f, 0.0f, 0.0f, 0.0f}
+    });
+    yaui::component::Texture textureComp1;
+    yaui::loadImage("Lenna.png", textureComp1.pixelData, textureComp1.width, textureComp1.height, textureComp1.channels);
+    textureComp1.channelFormat = GL_RGBA;
+    registry.emplace<yaui::component::Texture>(entity, std::move(textureComp1));
+
+    entity = registry.create();
+    registry.emplace<yaui::component::Transform>(entity, yaui::component::Transform{
+        glm::vec4 {50.f, 250.f, 100.f, 100.f},
+        glm::vec2 {1.f, 1.f},
+        glm::quat {},
+        glm::vec4 {0.0f, 1.0f, 0.0f, 0.0f}
+    });
+    yaui::component::Texture textureComp2;
+    yaui::loadImage("2048x1024.png", textureComp2.pixelData, textureComp2.width, textureComp2.height, textureComp2.channels);
+    textureComp2.channelFormat = GL_RGBA;
+    registry.emplace<yaui::component::Texture>(entity, std::move(textureComp2));
+
+    pDirector->pushScene(pScene);
+    // blocking
+    pDirector->run();
+    // cleanup
+    pDirector->popScene();
+}
+
 TEST_CASE("Test logging and assertions", "[yaui]") {
     yaui::Director::getInstance();
     yaui::gles2::Texture texture;
