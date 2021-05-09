@@ -35,7 +35,7 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
     }
 
     auto &vertexBuffer = quadVertexInfo.vertexBuffer;
-    vertexBuffer.setData(quadVertices.data(), quadVertices.size()*sizeof(std::remove_reference<decltype(quadVertices)>::type::value_type));
+    vertexBuffer.setBufferData(quadVertices.data(), quadVertices.size() * sizeof(std::remove_reference<decltype(quadVertices)>::type::value_type));
     vertexBuffer.bind();
 
     gles2::VertexArrayBuffer vertexArrayBuffer(vertexArray);

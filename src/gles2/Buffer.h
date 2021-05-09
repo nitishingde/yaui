@@ -30,7 +30,7 @@ namespace yaui::gles2 {
         VertexBuffer& operator=(const VertexBuffer &other) = delete;
         VertexBuffer(VertexBuffer &&other) = default;
         VertexBuffer& operator=(VertexBuffer &&other) = default;
-        void setData(const void *pData, uint32 byteSize) const;
+        void setBufferData(const void *pData, uint32 byteSize) const;
         void bind() const;
         void unbind() const;
     };

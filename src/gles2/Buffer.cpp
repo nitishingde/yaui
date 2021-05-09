@@ -7,14 +7,14 @@ yaui::gles2::VertexBuffer::VertexBuffer() {
 
 yaui::gles2::VertexBuffer::VertexBuffer(const void *pData, uint32 byteSize) {
     debugGlCall(glGenBuffers(1, &mId));
-    setData(pData, byteSize);
+    setBufferData(pData, byteSize);
 }
 
 yaui::gles2::VertexBuffer::~VertexBuffer() {
     debugGlCall(glDeleteBuffers(1, &mId));
 }
 
-void yaui::gles2::VertexBuffer::setData(const void *pData, uint32 byteSize) const {
+void yaui::gles2::VertexBuffer::setBufferData(const void *pData, uint32 byteSize) const {
     debugGlCall(glBindBuffer(GL_ARRAY_BUFFER, mId));
     debugGlCall(glBufferData(GL_ARRAY_BUFFER, byteSize, pData, GL_DYNAMIC_DRAW));
 }
