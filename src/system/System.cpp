@@ -19,7 +19,6 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
     std::vector<uint32> vertexArray;
 
     auto view = registry.view<component::Transform>();
-    uint32 i = 0;
     for(auto entity: view) {
         auto entityIdx = static_cast<uint32>(entity)<<2;
         auto &viewPort = view.get(entity).viewPort;
