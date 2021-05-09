@@ -82,8 +82,9 @@ TEST_CASE("Render lenna using texture", "[yaui][experiment]") {
     std::vector<uint8_t> imagePixelData;
     yaui::loadImage("Lenna.png", imagePixelData, width, height, channels);
 
-    yaui::gles2::Texture texture(imagePixelData.data(), width, height, channels, GL_RGBA);
+    yaui::gles2::Texture texture;
     texture.bind();
+    texture.setTextureData(imagePixelData.data(), width, height, GL_RGBA);
     imagePixelData.clear();
 
     struct Pixel {
@@ -182,23 +183,23 @@ TEST_CASE("Texture batching", "[yaui][experiment]") {
     int32_t width = 0, height = 0, channels = 0;
     std::vector<uint8_t> imagePixelData;
     yaui::loadImage("Lenna.png", imagePixelData, width, height, channels);
-    yaui::gles2::Texture texture1(imagePixelData.data(), width, height, channels, GL_RGBA);
-    texture1.setTextureIndex(0);
-    texture1.bind();
+    yaui::gles2::Texture texture1;
+    texture1.bind(0);
+    texture1.setTextureData(imagePixelData.data(), width, height, GL_RGBA);
 
     yaui::loadImage("2048x1024.png", imagePixelData, width, height, channels);
-    yaui::gles2::Texture texture2(imagePixelData.data(), width, height, channels, GL_RGBA);
-    texture2.setTextureIndex(1);
-    texture2.bind();
+    yaui::gles2::Texture texture2;
+    texture2.bind(1);
+    texture2.setTextureData(imagePixelData.data(), width, height, GL_RGBA);
 
     imagePixelData.clear();
 
-    shader.setUniformVector("uSampler[1]", glm::i32vec1{texture1.getTextureIndex()});
-    shader.setUniformVector("uSampler[2]", glm::i32vec1{texture2.getTextureIndex()});
+    shader.setUniformVector("uSampler[1]", glm::i32vec1{texture1.getTextureSlot()});
+    shader.setUniformVector("uSampler[2]", glm::i32vec1{texture2.getTextureSlot()});
 //    or, just call this
 //    shader.setUniformVectorValues("uSampler[1]", glm::i32vec2{
-//        texture1.getTextureIndex(),
-//        texture2.getTextureIndex()
+//        texture1.getTextureSlot(),
+//        texture2.getTextureSlot()
 //    });
 
 
@@ -232,9 +233,10 @@ TEST_CASE("Render text", "[yaui][experiment]") {
     std::vector<uint8_t> charPixelData;
     std::vector<stbtt_bakedchar> bakedChars;
     yaui::loadBasicAsciiFont("open-sans/OpenSans-Regular.ttf", fontSize, charPixelData, width, height, bakedChars);
-    yaui::gles2::Texture texture(charPixelData.data(), width, height, 1, GL_ALPHA);
+    yaui::gles2::Texture texture;
     charPixelData.clear();
     texture.bind();
+    texture.setTextureData(charPixelData.data(), width, height, GL_ALPHA);
 
     struct Pixel {
         glm::vec2 position;

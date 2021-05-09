@@ -9,24 +9,19 @@ namespace yaui::gles2 {
     class Texture {
     private:
         GLuint mId{};
-        GLenum mTextureIndex = GL_TEXTURE0;
-        int32 mWidth{};
-        int32 mHeight{};
-        int32 mChannels{};
-        GLint mFormat;
-        std::vector<uint8> mPixelData;
+        GLenum mTextureSlot = GL_TEXTURE0;
 
     public:
-        explicit Texture(uint8 *pixelData, int32 width, int32 height, int32 channels, GLint format);
+        explicit Texture();
         ~Texture();
         Texture(const Texture &other) = delete;
         Texture& operator=(const Texture &other) = delete;
         Texture(Texture &&other) = delete;
         Texture& operator=(Texture &&other) = delete;
-        [[nodiscard]] int32 getTextureIndex() const;
-        void setTextureIndex(int32 textureIndex);
-        void bind();
+        void bind(uint8 textureSlot = 0);
         void unbind();
+        void setTextureData(const uint8 *pPixelData, int32 width, int32 height, GLenum channelFormat = GL_RGBA) const;
+        [[nodiscard]] int32 getTextureSlot() const;
     };
 }
 
