@@ -36,18 +36,12 @@ namespace yaui::gles2 {
         void setUniformVector(const char *pUniformName, const glm::i32vec2 &vector) const;
         void setUniformVector(const char *pUniformName, const glm::i32vec3 &vector) const;
         void setUniformVector(const char *pUniformName, const glm::i32vec4 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::i32vec1 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::i32vec2 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::i32vec3 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::i32vec4 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const std::vector<int32> &vector) const;
         void setUniformVector(const char *pUniformName, const glm::vec1 &vector) const;
         void setUniformVector(const char *pUniformName, const glm::vec2 &vector) const;
         void setUniformVector(const char *pUniformName, const glm::vec3 &vector) const;
         void setUniformVector(const char *pUniformName, const glm::vec4 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::vec1 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::vec2 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::vec3 &vector) const;
-        void setUniformVectorValues(const char *pUniformName, const glm::vec4 &vector) const;
+        void setUniformVectorValues(const char *pUniformName, const std::vector<float> &vector) const;
     };
 }
 

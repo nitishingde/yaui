@@ -197,7 +197,7 @@ TEST_CASE("Texture batching", "[yaui][experiment]") {
     shader.setUniformVector("uSampler[1]", glm::i32vec1{texture1.getTextureSlot()});
     shader.setUniformVector("uSampler[2]", glm::i32vec1{texture2.getTextureSlot()});
 //    or, just call this
-//    shader.setUniformVectorValues("uSampler[1]", glm::i32vec2{
+//    shader.setUniformVectorValues("uSampler[1]", std::vector<yaui::int32> {
 //        texture1.getTextureSlot(),
 //        texture2.getTextureSlot()
 //    });
