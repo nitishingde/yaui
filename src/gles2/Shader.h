@@ -1,5 +1,5 @@
-#ifndef YAUI_SHADER_H
-#define YAUI_SHADER_H
+#ifndef YAUI_GLES2_SHADER_H
+#define YAUI_GLES2_SHADER_H
 
 
 #include <GLES2/gl2.h>
@@ -46,4 +46,4 @@ namespace yaui::gles2 {
 }
 
 
-#endif //YAUI_SHADER_H
+#endif //YAUI_GLES2_SHADER_H

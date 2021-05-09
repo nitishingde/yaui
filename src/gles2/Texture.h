@@ -1,5 +1,5 @@
-#ifndef YAUI_TEXTURE_H
-#define YAUI_TEXTURE_H
+#ifndef YAUI_GLES2_TEXTURE_H
+#define YAUI_GLES2_TEXTURE_H
 
 
 #include <GLES2/gl2.h>
@@ -26,4 +26,4 @@ namespace yaui::gles2 {
 }
 
 
-#endif //YAUI_TEXTURE_H
+#endif //YAUI_GLES2_TEXTURE_H

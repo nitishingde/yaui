@@ -1,5 +1,5 @@
-#ifndef YAUI_RENDERER_H
-#define YAUI_RENDERER_H
+#ifndef YAUI_GLES2_RENDERER_H
+#define YAUI_GLES2_RENDERER_H
 
 
 #include <glm/glm.hpp>
@@ -31,4 +31,4 @@ namespace yaui::gles2 {
 }
 
 
-#endif //YAUI_RENDERER_H
+#endif //YAUI_GLES2_RENDERER_H

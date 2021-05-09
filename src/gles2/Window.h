@@ -1,5 +1,5 @@
-#ifndef YAUI_WINDOW_H
-#define YAUI_WINDOW_H
+#ifndef YAUI_GLES2_WINDOW_H
+#define YAUI_GLES2_WINDOW_H
 
 
 #include <glm/glm.hpp>
@@ -33,4 +33,4 @@ namespace yaui::gles2 {
 }
 
 
-#endif //YAUI_WINDOW_H
+#endif //YAUI_GLES2_WINDOW_H

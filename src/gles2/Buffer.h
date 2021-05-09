@@ -1,5 +1,5 @@
-#ifndef YAUI_BUFFER_H
-#define YAUI_BUFFER_H
+#ifndef YAUI_GLES2_BUFFER_H
+#define YAUI_GLES2_BUFFER_H
 
 
 #include <GLES2/gl2.h>
@@ -76,4 +76,4 @@ namespace yaui::gles2 {
 }
 
 
-#endif //YAUI_BUFFER_H
+#endif //YAUI_GLES2_BUFFER_H
