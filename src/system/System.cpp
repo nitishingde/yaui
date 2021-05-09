@@ -16,8 +16,7 @@ yaui::system::RenderingBackgroundSystem::RenderingBackgroundSystem(uint32 priori
 void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registry, gles2::Renderer &renderer) {
     auto &quadVertexInfo = registry.ctx<gles2::QuadVertexInfo>();
     auto &quadVertices = quadVertexInfo.quadVertices;
-    gles2::VertexArrayBuffer vertexArrayBuffer;
-    auto &vertexArray = vertexArrayBuffer.getVertexArray();
+    std::vector<uint32> vertexArray;
 
     auto view = registry.view<component::Transform>();
     uint32 i = 0;
@@ -36,11 +35,12 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
         vertexArray.insert(vertexArray.end(), {entityIdx+0, entityIdx+1, entityIdx+2, entityIdx+0, entityIdx+2, entityIdx+3});
     }
 
-    vertexArrayBuffer.bind();
-
     auto &vertexBuffer = quadVertexInfo.vertexBuffer;
     vertexBuffer.setData(quadVertices.data(), quadVertices.size()*sizeof(std::remove_reference<decltype(quadVertices)>::type::value_type));
     vertexBuffer.bind();
+
+    gles2::VertexArrayBuffer vertexArrayBuffer(vertexArray);
+    vertexArrayBuffer.bind();
 
     mBackgroundShader.setVertexBufferLayout(quadVertexInfo.vertexBufferLayout);
     mBackgroundShader.bind();

@@ -263,12 +263,12 @@ TEST_CASE("Render text", "[yaui][experiment]") {
     yaui::gles2::VertexBuffer vb(pixelData.data(), pixelData.size()*sizeof(decltype(pixelData)::value_type));
     vb.bind();
 
-    yaui::gles2::VertexArrayBuffer va;
-    auto &indices = va.getVertexArray();
+    std::vector<yaui::uint32> indices;
     for(uint32_t i = 0; i < pixelData.size(); i+=4) {
         indices.insert(indices.end(), {i+0, i+1, i+2});
         indices.insert(indices.end(), {i+0, i+3, i+2});
     }
+    yaui::gles2::VertexArrayBuffer va(indices);
     va.bind();
 
     yaui::gles2::Shader shader(

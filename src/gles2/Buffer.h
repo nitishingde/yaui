@@ -38,21 +38,20 @@ namespace yaui::gles2 {
     class VertexArrayBuffer {
     private:
         GLuint mId = 0;
-        std::vector<uint32> mVertexArray{};
+        uint32 mCount = 0;
 
     public:
         explicit VertexArrayBuffer();
-        explicit VertexArrayBuffer(std::vector<uint32> &&vertexArray);
+        explicit VertexArrayBuffer(const std::vector<uint32> &vertexArray);
         ~VertexArrayBuffer();
         VertexArrayBuffer(const VertexArrayBuffer &other) = delete;
         VertexArrayBuffer& operator=(const VertexArrayBuffer &other) = delete;
         VertexArrayBuffer(VertexArrayBuffer &&other) = delete;
         VertexArrayBuffer& operator=(VertexArrayBuffer &&other) = delete;
-        std::vector<uint32>& getVertexArray();
-        void setVertexArray(std::vector<uint32> &&vertexArray);
+        void setBufferData(const std::vector<uint32> &vertexArray);
         void bind() const;
         void unbind() const;
-        [[nodiscard]] uint32 getSize() const;
+        [[nodiscard]] uint32 getCount() const;
         [[nodiscard]] GLenum getType() const;
     };
 
@@ -69,7 +68,7 @@ namespace yaui::gles2 {
             {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, position)},
             {"aColour",   1, 4, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, colour)},
         };
-    } __attribute__((aligned(128)));
+    } __attribute__((aligned(64)));
 }
 
 

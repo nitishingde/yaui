@@ -26,7 +26,7 @@ void yaui::gles2::Renderer::clearScreen(float r, float g, float b, float a) cons
 }
 
 void yaui::gles2::Renderer::drawElements(const yaui::gles2::VertexArrayBuffer &vertexArrayBuffer) const {
-    debugGlCall(glDrawElements(GL_TRIANGLES, vertexArrayBuffer.getSize(), vertexArrayBuffer.getType(), nullptr));
+    debugGlCall(glDrawElements(GL_TRIANGLES, vertexArrayBuffer.getCount(), vertexArrayBuffer.getType(), nullptr));
 }
 
 void yaui::gles2::Renderer::render() const {
