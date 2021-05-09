@@ -1,4 +1,3 @@
-#include <spdlog/spdlog.h>
 #include <vector>
 #include "Shader.h"
 
@@ -27,7 +26,7 @@ GLuint yaui::gles2::Shader::compileShader(GLenum type, const char *shaderSource)
         if(infoLen > 1) {
             std::vector<GLchar> infoLog(infoLen);
             debugGlCall(glGetShaderInfoLog(shader, infoLen, nullptr, infoLog.data()));
-            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
+            YAUI_LOG_ERROR("[OpenGL Shader]:\n{}\n", infoLog.data());
         }
 
         debugGlCall(glDeleteShader(shader));
@@ -94,7 +93,7 @@ void yaui::gles2::Shader::bind() const {
             debugGlCall(glGetProgramiv(mProgramId, GL_INFO_LOG_LENGTH, &maxLength));
             std::vector<GLchar> infoLog(maxLength);
             debugGlCall(glGetProgramInfoLog(mProgramId, maxLength, &maxLength, infoLog.data()));
-            spdlog::error("[OpenGL Shader]:\n{}\n", infoLog.data());
+            YAUI_LOG_ERROR("[OpenGL Shader]:\n{}\n", infoLog.data());
 
             debugGlCall(glDeleteShader(mVertexShaderId));
             debugGlCall(glDeleteShader(mFragmentShaderId));

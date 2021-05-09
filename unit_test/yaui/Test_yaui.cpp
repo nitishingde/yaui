@@ -329,3 +329,19 @@ TEST_CASE("Render rectangle using yaui", "[yaui]") {
     // cleanup
     pDirector->popScene();
 }
+
+TEST_CASE("Test logging and assertions", "[yaui]") {
+    yaui::Director::getInstance();
+    yaui::gles2::Texture texture;
+
+#if NDEBUG
+    REQUIRE_NOTHROW(texture.bind(-1));
+#else
+    REQUIRE_THROWS(texture.bind(-1));
+#endif
+
+    // following wont give any output in release mode
+    debugGlCall(glUseProgram(1));
+    YAUI_LOG_INFO("Info logging is working{}", '!');
+    YAUI_LOG_ERROR("Error logging is working{}", '!');
+}

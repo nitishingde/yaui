@@ -1,5 +1,4 @@
 #include <fstream>
-#include <spdlog/spdlog.h>
 #include "Utility.h"
 
 void yaui::glFlushErrors() {
@@ -17,7 +16,7 @@ void yaui::glLogError(const char *file, int line) {
             case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION"; break;
             default:                                error = "UNKNOWN"; break;
         }
-        spdlog::error("[OpenGL][file = {}][line = {}]: Error code = {}", file, line, error);
+        YAUI_LOG_ERROR("[OpenGL][file = {}][line = {}]: Error code = {}", file, line, error);
     }
 }
 
