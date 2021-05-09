@@ -13,6 +13,7 @@ namespace yaui::gles2 {
         GLint size;
         GLenum type;
         GLint isNormalised;
+        GLsizei stride;
         uint32 offset;
     } __attribute__((aligned(64)));
     using VertexBufferLayout = std::vector<VertexBufferLayoutElement>;
@@ -20,19 +21,16 @@ namespace yaui::gles2 {
     class VertexBuffer {
     private:
         GLuint mId = 0;
-        VertexBufferLayout mVertexBufferLayout{};
-        GLsizei mStride = 0;
 
     public:
-        explicit VertexBuffer() = default;
-        explicit VertexBuffer(const void *pData, GLsizei stride, uint32 size, const VertexBufferLayout &vertexBufferLayout);
+        explicit VertexBuffer();
+        explicit VertexBuffer(const void *pData, uint32 byteSize);
         ~VertexBuffer();
         VertexBuffer(const VertexBuffer &other) = delete;
         VertexBuffer& operator=(const VertexBuffer &other) = delete;
         VertexBuffer(VertexBuffer &&other) = default;
         VertexBuffer& operator=(VertexBuffer &&other) = default;
-        void init(const void *pData, GLsizei stride, uint32 size, const VertexBufferLayout &vertexBufferLayout);
-        [[nodiscard]] const VertexBufferLayout& getLayout() const;
+        void setData(const void *pData, uint32 byteSize) const;
         void bind() const;
         void unbind() const;
     };
@@ -68,8 +66,8 @@ namespace yaui::gles2 {
         std::vector<QuadVertex> quadVertices;
         // TODO: modify this, whenever gles2::QuadVertex gets modified
         yaui::gles2::VertexBufferLayout vertexBufferLayout {
-            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(gles2::QuadVertex, position)},
-            {"aColour",   1, 4, GL_FLOAT, GL_FALSE, offsetof(gles2::QuadVertex, colour)},
+            {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, position)},
+            {"aColour",   1, 4, GL_FLOAT, GL_FALSE, sizeof(QuadVertex), offsetof(QuadVertex, colour)},
         };
     } __attribute__((aligned(128)));
 }

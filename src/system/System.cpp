@@ -38,7 +38,8 @@ void yaui::system::RenderingBackgroundSystem::executeJob(entt::registry &registr
 
     vertexArrayBuffer.bind();
 
-    gles2::VertexBuffer vertexBuffer(quadVertices.data(), sizeof(gles2::QuadVertex), quadVertices.size(), quadVertexInfo.vertexBufferLayout);
+    auto &vertexBuffer = quadVertexInfo.vertexBuffer;
+    vertexBuffer.setData(quadVertices.data(), quadVertices.size()*sizeof(std::remove_reference<decltype(quadVertices)>::type::value_type));
     vertexBuffer.bind();
 
     mBackgroundShader.setVertexBufferLayout(quadVertexInfo.vertexBufferLayout);

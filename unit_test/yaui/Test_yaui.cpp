@@ -31,12 +31,12 @@ TEST_CASE("Render a rectangle using 2 triangles", "[yaui][experiment]") {
     };
 
     yaui::gles2::VertexBufferLayout layout {
-        {"colour", 1, 4, GL_FLOAT, GL_FALSE, offsetof(Pixel, colour)},
-        {"position", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
+        {"colour", 1, 4, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, colour)},
+        {"position", 0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, position)},
     };
 
     // Create a Vertex Buffer Object and copy the vertex data to it
-    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), pixelData.size()*sizeof(decltype(pixelData)::value_type));
     vb.bind();
 
     // Create a Vertex Array Buffer Object and copy the indices to it
@@ -98,10 +98,10 @@ TEST_CASE("Render lenna using texture", "[yaui][experiment]") {
         {{winWidth/2.f - width/2.f, winHeight/2.f + height/2.f}, {0.f, 1.f}},// top left
     };
     yaui::gles2::VertexBufferLayout layout {
-        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
-        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
+        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, position)},
+        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, textureCoordinate)},
     };
-    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), pixelData.size()*sizeof(decltype(pixelData)::value_type));
     vb.bind();
 
     yaui::gles2::VertexArrayBuffer va({0, 1, 2, 0, 3, 2});
@@ -160,11 +160,11 @@ TEST_CASE("Texture batching", "[yaui][experiment]") {
         {glm::vec2{3*winWidth/4.f - offset, winHeight/2.f + offset}, glm::vec2{0.f, 1.f}, 2},// top left
     };
     yaui::gles2::VertexBufferLayout layout {
-        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
-        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
-        {"aTextureIndex", 2, 1, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureIdx)},
+        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, position)},
+        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, textureCoordinate)},
+        {"aTextureIndex", 2, 1, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, textureIdx)},
     };
-    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), pixelData.size()*sizeof(decltype(pixelData)::value_type));
     vb.bind();
 
     yaui::gles2::VertexArrayBuffer va({0, 1, 2, 0, 3, 2, 4, 5, 6, 4, 7, 6});
@@ -257,10 +257,10 @@ TEST_CASE("Render text", "[yaui][experiment]") {
     }
 
     yaui::gles2::VertexBufferLayout layout {
-        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, position)},
-        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, offsetof(Pixel, textureCoordinate)},
+        {"aPosition", 0, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, position)},
+        {"aTextureCoordinate", 1, 2, GL_FLOAT, GL_FALSE, sizeof(Pixel), offsetof(Pixel, textureCoordinate)},
     };
-    yaui::gles2::VertexBuffer vb(pixelData.data(), sizeof(decltype(pixelData)::value_type), pixelData.size(), layout);
+    yaui::gles2::VertexBuffer vb(pixelData.data(), pixelData.size()*sizeof(decltype(pixelData)::value_type));
     vb.bind();
 
     yaui::gles2::VertexArrayBuffer va;

@@ -66,6 +66,12 @@ void yaui::gles2::Shader::compile(const char *vertexShaderSource, const char *fr
 }
 
 void yaui::gles2::Shader::bind() const {
+    // set attribute locations
+    for(const auto &layout: mVertexBufferLayout) {
+        debugGlCall(glEnableVertexAttribArray(layout.location));
+        debugGlCall(glVertexAttribPointer(layout.location, layout.size, layout.type, layout.isNormalised, layout.stride, (void*)layout.offset));
+    }
+
     // check if program is already linked
     GLint isLinked = 0;
     debugGlCall(glGetProgramiv(mProgramId, GL_LINK_STATUS, &isLinked));
